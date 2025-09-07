@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-09-01T13:27:13.483Z",
+  "testType": "Massive Viewer Test",
+  "summary": {
+    "advertisers": 25,
+    "adsCreated": 100,
+    "adsApproved": 100,
+    "adsActivated": 100,
+    "viewers": 10000,
+    "viewsCompleted": 0,
+    "totalRewards": 0
+  },
+  "performance": {
+    "successRate": 0,
+    "averageViewsPerViewer": 0,
+    "averageRewardPerViewer": 0
+  },
+  "errors": [],
+  "recommendations": [
+    "Optimize viewer flow and ad availability",
+    "Enhance ad content and viewer engagement"
+  ]
+}

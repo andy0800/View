@@ -1,0 +1,675 @@
+/* Font Optimization and Performance Styles */
+
+/* Font display optimization */
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 900;
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2') format('woff2');
+}
+
+/* Open Sans font optimization */
+@font-face {
+  font-family: 'Open Sans';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/opensans/v34/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVI.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/opensans/v34/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVI.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/opensans/v34/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVI.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/opensans/v34/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVI.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://fonts.gstatic.com/s/opensans/v34/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVI.woff2') format('woff2');
+}
+
+/* Roboto font optimization */
+@font-face {
+  font-family: 'Roboto';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9fBBc4.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 900;
+  src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmYUtfBBc4.woff2') format('woff2');
+}
+
+/* Roboto Mono font optimization */
+@font-face {
+  font-family: 'Roboto Mono';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/robotomono/v22/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW9.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/robotomono/v22/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW9.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/robotomono/v22/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW9.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/robotomono/v22/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW9.woff2') format('woff2');
+}
+
+/* Playfair Display font optimization */
+@font-face {
+  font-family: 'Playfair Display';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwc.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwc.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwc.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwc.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwc.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 900;
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwc.woff2') format('woff2');
+}
+
+/* Cairo font optimization (Arabic) */
+@font-face {
+  font-family: 'Cairo';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/cairo/v20/SLXVc1nY6HkvangtZmpcWmhzfH5lWWgcQyyS4J0.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Cairo';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/cairo/v20/SLXVc1nY6HkvangtZmpcWmhzfH5lWWgcQyyS4J0.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Cairo';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/cairo/v20/SLXVc1nY6HkvangtZmpcWmhzfH5lWWgcQyyS4J0.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Cairo';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/cairo/v20/SLXVc1nY6HkvangtZmpcWmhzfH5lWWgcQyyS4J0.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Cairo';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://fonts.gstatic.com/s/cairo/v20/SLXVc1nY6HkvangtZmpcWmhzfH5lWWgcQyyS4J0.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Cairo';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 900;
+  src: url('https://fonts.gstatic.com/s/cairo/v20/SLXVc1nY6HkvangtZmpcWmhzfH5lWWgcQyyS4J0.woff2') format('woff2');
+}
+
+/* Tajawal font optimization (Arabic) */
+@font-face {
+  font-family: 'Tajawal';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/tajawal/v8/Iurf6YBj_oK4Ih2j7h2hCA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/tajawal/v8/Iurf6YBj_oK4Ih2j7h2hCA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/tajawal/v8/Iurf6YBj_oK4Ih2j7h2hCA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/tajawal/v8/Iurf6YBj_oK4Ih2j7h2hCA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://fonts.gstatic.com/s/tajawal/v8/Iurf6YBj_oK4Ih2j7h2hCA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 900;
+  src: url('https://fonts.gstatic.com/s/tajawal/v8/Iurf6YBj_oK4Ih2j7h2hCA.woff2') format('woff2');
+}
+
+/* Amiri font optimization (Arabic) */
+@font-face {
+  font-family: 'Amiri';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/amiri/v16/J7aRnpd8CGxBHpUrtLMA7w.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Amiri';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/amiri/v16/J7aRnpd8CGxBHpUrtLMA7w.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Amiri';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://fonts.gstatic.com/s/amiri/v16/J7aRnpd8CGxBHpUrtLMA7w.woff2') format('woff2');
+}
+
+/* Noto Sans Arabic font optimization */
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrOAZMl5nJ_wTJRBL8YwzW8aJg.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrOAZMl5nJ_wTJRBL8YwzW8aJg.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrOAZMl5nJ_wTJRBL8YwzW8aJg.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrOAZMl5nJ_wTJRBL8YwzW8aJg.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 800;
+  src: url('https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrOAZMl5nJ_wTJRBL8YwzW8aJg.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 900;
+  src: url('https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrOAZMl5nJ_wTJRBL8YwzW8aJg.woff2') format('woff2');
+}
+
+/* Noto Naskh Arabic font optimization */
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/notonaskharabic/v15/RWmCoLQv5-o3Zx8n7jQKCeZ9JjCoa4EMw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url('https://fonts.gstatic.com/s/notonaskharabic/v15/RWmCoLQv5-o3Zx8n7jQKCeZ9JjCoa4EMw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/notonaskharabic/v15/RWmCoLQv5-o3Zx8n7jQKCeZ9JjCoa4EMw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://fonts.gstatic.com/s/notonaskharabic/v15/RWmCoLQv5-o3Zx8n7jQKCeZ9JjCoa4EMw.woff2') format('woff2');
+}
+
+/* Font loading performance optimizations */
+.font-loading {
+  font-display: swap;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+}
+
+.font-optimized {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font fallback optimization */
+.font-fallback-en {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.font-fallback-ar {
+  font-family: 'Arial', 'Tahoma', 'Verdana', sans-serif;
+}
+
+/* Font size optimization for different screen densities */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .font-hidpi {
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+  }
+}
+
+/* Font loading states */
+.font-loading-state {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.font-loaded {
+  opacity: 1;
+}
+
+/* Font performance monitoring */
+.font-performance {
+  font-display: optional;
+}
+
+/* Critical font loading */
+.font-critical {
+  font-display: block;
+}
+
+/* Font preloading hints */
+.font-preload {
+  font-display: swap;
+}
+
+/* Font subset optimization */
+.font-subset {
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Arabic font subset */
+.font-subset-arabic {
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+/* Font loading animation */
+@keyframes fontLoad {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.font-load-animation {
+  animation: fontLoad 0.5s ease-out;
+}
+
+/* Font weight optimization */
+.font-weight-optimized {
+  font-variation-settings: 'wght' var(--font-weight, 400);
+}
+
+/* Font feature optimization */
+.font-features {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1, 'ss02' 1;
+}
+
+/* Font loading performance classes */
+.font-load-fast {
+  font-display: swap;
+}
+
+.font-load-slow {
+  font-display: fallback;
+}
+
+.font-load-blocking {
+  font-display: block;
+}
+
+/* Font optimization utilities */
+.font-optimize {
+  font-display: swap;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font loading performance monitoring */
+.font-load-monitor {
+  font-display: swap;
+  font-loading: auto;
+}
+
+/* Font optimization for different connection speeds */
+@media (prefers-reduced-data: reduce) {
+  .font-optimize {
+    font-display: fallback;
+  }
+}
+
+/* Font optimization for different motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .font-load-animation {
+    animation: none;
+  }
+}
+
+/* Professional font classes */
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.font-opensans {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+}
+
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+}
+
+.font-cairo {
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+}
+
+.font-tajawal {
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+}
+
+.font-amiri {
+  font-family: 'Amiri', serif;
+  font-weight: 800;
+}
+
+/* Bold font utilities */
+.font-bold {
+  font-weight: 700 !important;
+}
+
+.font-bolder {
+  font-weight: 800 !important;
+}
+
+.font-black {
+  font-weight: 900 !important;
+}
+
+/* Font size utilities */
+.text-xs {
+  font-size: 0.75rem !important;
+}
+
+.text-sm {
+  font-size: 0.875rem !important;
+}
+
+.text-base {
+  font-size: 1rem !important;
+}
+
+.text-lg {
+  font-size: 1.125rem !important;
+}
+
+.text-xl {
+  font-size: 1.25rem !important;
+}
+
+.text-2xl {
+  font-size: 1.5rem !important;
+}
+
+.text-3xl {
+  font-size: 1.875rem !important;
+}
+
+.text-4xl {
+  font-size: 2.25rem !important;
+}
+
+.text-5xl {
+  font-size: 3rem !important;
+}
+
+/* Letter spacing utilities */
+.tracking-tight {
+  letter-spacing: -0.025em !important;
+}
+
+.tracking-normal {
+  letter-spacing: 0em !important;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em !important;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em !important;
+}
+
+.tracking-widest {
+  letter-spacing: 0.1em !important;
+}
+
+/* Line height utilities */
+.leading-none {
+  line-height: 1 !important;
+}
+
+.leading-tight {
+  line-height: 1.25 !important;
+}
+
+.leading-snug {
+  line-height: 1.375 !important;
+}
+
+.leading-normal {
+  line-height: 1.5 !important;
+}
+
+.leading-relaxed {
+  line-height: 1.625 !important;
+}
+
+.leading-loose {
+  line-height: 2 !important;
+}

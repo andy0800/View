@@ -1,0 +1,714 @@
+/* Arabic-specific styles and enhancements */
+
+/* Arabic typography enhancements */
+[lang="ar"] {
+  /* Better text rendering for Arabic */
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  -moz-font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  
+  /* Improved spacing for Arabic text */
+  word-spacing: 0.05em;
+  letter-spacing: 0.01em;
+  
+  /* Arabic-specific line height */
+  line-height: 1.8;
+}
+
+/* Arabic headings with serif fonts */
+[lang="ar"] h1,
+[lang="ar"] h2,
+[lang="ar"] h3,
+[lang="ar"] h4,
+[lang="ar"] h5,
+[lang="ar"] h6 {
+  font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  text-align: right;
+}
+
+/* Arabic body text with sans-serif fonts */
+[lang="ar"] p,
+[lang="ar"] span,
+[lang="ar"] div,
+[lang="ar"] li {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  text-align: right;
+}
+
+/* Arabic form elements */
+[lang="ar"] input,
+[lang="ar"] textarea,
+[lang="ar"] select {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 700;
+  text-align: right;
+  direction: rtl;
+}
+
+/* Arabic buttons */
+[lang="ar"] button,
+[lang="ar"] .MuiButton-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Arabic navigation */
+[lang="ar"] nav,
+[lang="ar"] .MuiAppBar-root,
+[lang="ar"] .MuiDrawer-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+/* Arabic tables */
+[lang="ar"] table,
+[lang="ar"] .MuiTable-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+[lang="ar"] th,
+[lang="ar"] .MuiTableCell-head {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 700;
+}
+
+/* Arabic cards */
+[lang="ar"] .MuiCard-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+[lang="ar"] .MuiCardHeader-root {
+  font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+}
+
+/* Arabic dialogs */
+[lang="ar"] .MuiDialog-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+[lang="ar"] .MuiDialogTitle-root {
+  font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+}
+
+/* Arabic menus */
+[lang="ar"] .MuiMenu-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic tooltips */
+[lang="ar"] .MuiTooltip-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic alerts */
+[lang="ar"] .MuiAlert-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic chips */
+[lang="ar"] .MuiChip-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic tabs */
+[lang="ar"] .MuiTab-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+/* Arabic stepper */
+[lang="ar"] .MuiStepper-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+/* Arabic accordion */
+[lang="ar"] .MuiAccordion-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+/* Arabic breadcrumbs */
+[lang="ar"] .MuiBreadcrumbs-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic pagination */
+[lang="ar"] .MuiPagination-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic rating */
+[lang="ar"] .MuiRating-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic skeleton */
+[lang="ar"] .MuiSkeleton-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic speed dial */
+[lang="ar"] .MuiSpeedDial-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+/* Arabic timeline */
+[lang="ar"] .MuiTimeline-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic tree view */
+[lang="ar"] .MuiTreeView-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic autocomplete */
+[lang="ar"] .MuiAutocomplete-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic date picker */
+[dir="rtl"] .MuiDatePicker-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic time picker */
+[dir="rtl"] .MuiTimePicker-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic data grid */
+[dir="rtl"] .MuiDataGrid-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Arabic charts */
+[dir="rtl"] .recharts-wrapper {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* Custom Arabic component classes */
+.arabic-text {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  text-align: right;
+  direction: rtl;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+.arabic-heading {
+  font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+  text-align: right;
+  direction: rtl;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.arabic-button {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.arabic-input {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 700;
+  text-align: right;
+  direction: rtl;
+}
+
+/* Arabic-specific spacing */
+.arabic-spacing {
+  word-spacing: 0.05em;
+  letter-spacing: 0.01em;
+}
+
+/* Arabic text alignment utilities */
+.arabic-text-right {
+  text-align: right !important;
+}
+
+.arabic-text-left {
+  text-align: left !important;
+}
+
+.arabic-text-center {
+  text-align: center !important;
+}
+
+/* Arabic direction utilities */
+.arabic-rtl {
+  direction: rtl !important;
+}
+
+.arabic-ltr {
+  direction: ltr !important;
+}
+
+/* Arabic font weight utilities */
+.arabic-font-light {
+  font-weight: 300 !important;
+}
+
+.arabic-font-regular {
+  font-weight: 400 !important;
+}
+
+.arabic-font-medium {
+  font-weight: 500 !important;
+}
+
+.arabic-font-semibold {
+  font-weight: 600 !important;
+}
+
+.arabic-font-bold {
+  font-weight: 700 !important;
+}
+
+.arabic-font-bolder {
+  font-weight: 800 !important;
+}
+
+.arabic-font-black {
+  font-weight: 900 !important;
+}
+
+/* Arabic line height utilities */
+.arabic-line-tight {
+  line-height: 1.4 !important;
+}
+
+.arabic-line-normal {
+  line-height: 1.6 !important;
+}
+
+.arabic-line-relaxed {
+  line-height: 1.8 !important;
+}
+
+/* Arabic letter spacing utilities */
+.arabic-tracking-tight {
+  letter-spacing: -0.01em !important;
+}
+
+.arabic-tracking-normal {
+  letter-spacing: 0.01em !important;
+}
+
+.arabic-tracking-wide {
+  letter-spacing: 0.02em !important;
+}
+
+/* Arabic responsive typography */
+@media (max-width: 600px) {
+  [lang="ar"] {
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  
+  [lang="ar"] h1 {
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+  
+  [lang="ar"] h2 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+  
+  [lang="ar"] h3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  [lang="ar"] {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+}
+
+@media (min-width: 961px) {
+  [lang="ar"] {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+}
+
+/* Arabic print styles */
+@media print {
+  [lang="ar"] {
+    font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+    text-align: right;
+    direction: rtl;
+  }
+  
+  [lang="ar"] h1,
+  [lang="ar"] h2,
+  [lang="ar"] h3,
+  [lang="ar"] h4,
+  [lang="ar"] h5,
+  [lang="ar"] h6 {
+    font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+    text-align: right;
+  }
+}
+
+/* Arabic high contrast mode */
+@media (prefers-contrast: high) {
+  [lang="ar"] {
+    font-weight: 700;
+  }
+  
+  [lang="ar"] h1,
+  [lang="ar"] h2,
+  [lang="ar"] h3,
+  [lang="ar"] h4,
+  [lang="ar"] h5,
+  [lang="ar"] h6 {
+    font-weight: 800;
+  }
+}
+
+/* Arabic reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  [lang="ar"] * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Arabic dark mode support */
+@media (prefers-color-scheme: dark) {
+  [lang="ar"] {
+    color: #e0e0e0;
+  }
+  
+  [lang="ar"] h1,
+  [lang="ar"] h2,
+  [lang="ar"] h3,
+  [lang="ar"] h4,
+  [lang="ar"] h5,
+  [lang="ar"] h6 {
+    color: #ffffff;
+  }
+}
+
+/* Arabic focus styles */
+[lang="ar"] *:focus {
+  outline: 2px solid #1a237e;
+  outline-offset: 2px;
+}
+
+/* Arabic hover effects */
+[lang="ar"] .MuiButton-root:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 35, 126, 0.4);
+}
+
+[lang="ar"] .MuiCard-root:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.16);
+}
+
+/* Arabic loading states */
+[lang="ar"] .MuiCircularProgress-root {
+  direction: rtl;
+}
+
+[lang="ar"] .MuiLinearProgress-root {
+  direction: rtl;
+}
+
+/* Arabic skeleton loading */
+[lang="ar"] .MuiSkeleton-root {
+  direction: rtl;
+}
+
+/* Arabic badge adjustments */
+[lang="ar"] .MuiBadge-root {
+  direction: rtl;
+}
+
+[lang="ar"] .MuiBadge-badge {
+  direction: rtl;
+}
+
+/* Arabic avatar adjustments */
+[lang="ar"] .MuiAvatar-root {
+  direction: rtl;
+}
+
+/* Arabic divider adjustments */
+[lang="ar"] .MuiDivider-root {
+  direction: rtl;
+}
+
+/* Arabic paper adjustments */
+[lang="ar"] .MuiPaper-root {
+  direction: rtl;
+}
+
+/* Arabic list adjustments */
+[lang="ar"] .MuiList-root {
+  direction: rtl;
+}
+
+[lang="ar"] .MuiListItemButton-root {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Arabic fab adjustments */
+[lang="ar"] .MuiFab-root {
+  direction: rtl;
+}
+
+/* Arabic bottom navigation adjustments */
+[lang="ar"] .MuiBottomNavigation-root {
+  direction: rtl;
+}
+
+[lang="ar"] .MuiBottomNavigationAction-root {
+  direction: rtl;
+}
+
+/* Arabic app bar adjustments */
+[lang="ar"] .MuiAppBar-root {
+  direction: rtl;
+}
+
+[lang="ar"] .MuiToolbar-root {
+  direction: rtl;
+}
+
+/* Arabic toolbar adjustments */
+[lang="ar"] .MuiToolbar-root {
+  direction: rtl;
+}
+
+/* Arabic breadcrumb specific */
+[lang="ar"] .MuiBreadcrumbs-ol {
+  direction: rtl;
+}
+
+[lang="ar"] .MuiBreadcrumbs-li {
+  direction: rtl;
+}
+
+/* Arabic link adjustments */
+[lang="ar"] a {
+  direction: rtl;
+}
+
+/* Arabic image adjustments */
+[lang="ar"] img {
+  direction: rtl;
+}
+
+/* Arabic video adjustments */
+[lang="ar"] video {
+  direction: rtl;
+}
+
+/* Arabic iframe adjustments */
+[lang="ar"] iframe {
+  direction: rtl;
+}
+
+/* Arabic canvas adjustments */
+[lang="ar"] canvas {
+  direction: rtl;
+}
+
+/* Arabic svg adjustments */
+[lang="ar"] svg {
+  direction: rtl;
+}
+
+/* Arabic input group adjustments */
+[lang="ar"] .MuiInputAdornment-root {
+  direction: rtl;
+}
+
+[lang="ar"] .MuiInputAdornment-positionStart {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[lang="ar"] .MuiInputAdornment-positionEnd {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+/* Professional Arabic styling */
+.arabic-professional {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+.arabic-professional-heading {
+  font-family: 'Amiri', 'Noto Naskh Arabic', serif;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+.arabic-professional-button {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.arabic-professional-card {
+  font-family: 'Tajawal', 'Cairo', sans-serif;
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+/* Arabic section titles for LTR pages */
+.arabic-section-title {
+  font-family: 'Amiri', 'Noto Naskh Arabic', serif;
+  font-weight: 800;
+  color: #1a237e;
+  text-align: right;
+  direction: rtl;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.arabic-section-description {
+  font-family: 'Tajawal', 'Cairo', sans-serif;
+  font-weight: 500;
+  color: #424242;
+  text-align: right;
+  direction: rtl;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* Arabic professional gradients */
+.arabic-gradient-text {
+  background: linear-gradient(135deg, #1a237e 0%, #534bae 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arabic-gradient-bg {
+  background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+}
+
+/* Arabic professional shadows */
+.arabic-shadow {
+  box-shadow: 0 8px 32px rgba(26, 35, 126, 0.15);
+}
+
+.arabic-shadow-hover {
+  box-shadow: 0 16px 48px rgba(26, 35, 126, 0.25);
+}
+
+/* Arabic professional borders */
+.arabic-border {
+  border: 2px solid rgba(26, 35, 126, 0.2);
+}
+
+.arabic-border-hover {
+  border: 2px solid rgba(26, 35, 126, 0.4);
+}
+
+/* Arabic professional transitions */
+.arabic-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.arabic-transition-slow {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Arabic professional animations */
+@keyframes arabicFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.arabic-fade-in {
+  animation: arabicFadeIn 0.5s ease-out;
+}
+
+@keyframes arabicSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.arabic-slide-up {
+  animation: arabicSlideUp 0.6s ease-out;
+}
+
+/* Arabic professional utilities */
+.arabic-text-gradient {
+  background: linear-gradient(135deg, #1a237e 0%, #534bae 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arabic-bg-gradient {
+  background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+}
+
+.arabic-border-gradient {
+  border: 2px solid;
+  border-image: linear-gradient(135deg, #1a237e 0%, #534bae 100%) 1;
+}
+
+/* Arabic professional responsive */
+@media (max-width: 600px) {
+  .arabic-professional-heading {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  .arabic-professional {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  .arabic-professional-heading {
+    font-size: 1.75rem;
+    line-height: 1.25;
+  }
+}
+
+@media (min-width: 961px) {
+  .arabic-professional-heading {
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+}

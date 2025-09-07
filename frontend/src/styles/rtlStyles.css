@@ -1,0 +1,783 @@
+/* RTL (Right-to-Left) Styles for Arabic Language */
+
+/* Base RTL styles */
+[dir="rtl"] {
+  /* Text alignment */
+  text-align: right;
+  direction: rtl;
+}
+
+/* Typography RTL adjustments */
+[dir="rtl"] .MuiTypography-root {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+  text-align: right;
+  font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+[dir="rtl"] p, [dir="rtl"] span, [dir="rtl"] div {
+  text-align: right;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* RTL layout adjustments */
+[dir="rtl"] .MuiGrid-container {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiGrid-item {
+  direction: rtl;
+}
+
+/* RTL button adjustments */
+[dir="rtl"] .MuiButton-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+[dir="rtl"] .MuiButton-startIcon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[dir="rtl"] .MuiButton-endIcon {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+/* RTL card adjustments */
+[dir="rtl"] .MuiCard-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  font-weight: 600;
+}
+
+[dir="rtl"] .MuiCardHeader-root {
+  font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+  font-weight: 800;
+}
+
+/* RTL text field adjustments */
+[dir="rtl"] .MuiTextField-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  font-weight: 500;
+}
+
+[dir="rtl"] .MuiInputBase-input {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiInputLabel-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 600;
+}
+
+/* RTL chip adjustments */
+[dir="rtl"] .MuiChip-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  font-weight: 600;
+}
+
+/* RTL table adjustments */
+[dir="rtl"] .MuiTable-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+[dir="rtl"] .MuiTableHead-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 700;
+}
+
+[dir="rtl"] .MuiTableCell-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* RTL dialog adjustments */
+[dir="rtl"] .MuiDialog-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+[dir="rtl"] .MuiDialogTitle-root {
+  font-family: 'Amiri', 'Noto Naskh Arabic', 'Georgia', serif;
+  font-weight: 800;
+}
+
+/* RTL alert adjustments */
+[dir="rtl"] .MuiAlert-root {
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+  font-weight: 500;
+}
+
+/* RTL snackbar adjustments */
+[dir="rtl"] .MuiSnackbar-root {
+  direction: rtl;
+}
+
+/* RTL tabs adjustments */
+[dir="rtl"] .MuiTabs-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiTab-root {
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* RTL stepper adjustments */
+[dir="rtl"] .MuiStepper-root {
+  direction: rtl;
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+/* RTL accordion adjustments */
+[dir="rtl"] .MuiAccordion-root {
+  direction: rtl;
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+/* RTL breadcrumbs adjustments */
+[dir="rtl"] .MuiBreadcrumbs-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL pagination adjustments */
+[dir="rtl"] .MuiPagination-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL rating adjustments */
+[dir="rtl"] .MuiRating-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL skeleton adjustments */
+[dir="rtl"] .MuiSkeleton-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL speed dial adjustments */
+[dir="rtl"] .MuiSpeedDial-root {
+  direction: rtl;
+  font-family: 'Cairo', 'Tajawal', 'Noto Sans Arabic', 'Arial', sans-serif;
+}
+
+/* RTL timeline adjustments */
+[dir="rtl"] .MuiTimeline-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL tree view adjustments */
+[dir="rtl"] .MuiTreeView-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL autocomplete adjustments */
+[dir="rtl"] .MuiAutocomplete-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL date picker adjustments */
+[dir="rtl"] .MuiDatePicker-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL time picker adjustments */
+[dir="rtl"] .MuiTimePicker-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL data grid adjustments */
+[dir="rtl"] .MuiDataGrid-root {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL charts adjustments */
+[dir="rtl"] .recharts-wrapper {
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+}
+
+/* RTL margin and padding adjustments */
+[dir="rtl"] .ml-auto {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+[dir="rtl"] .mr-auto {
+  margin-right: 0 !important;
+  margin-left: auto !important;
+}
+
+[dir="rtl"] .ml-0 {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+[dir="rtl"] .mr-0 {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+[dir="rtl"] .pl-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+[dir="rtl"] .pr-0 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* RTL border adjustments */
+[dir="rtl"] .border-left {
+  border-left: none !important;
+  border-right: 1px solid !important;
+}
+
+[dir="rtl"] .border-right {
+  border-right: none !important;
+  border-left: 1px solid !important;
+}
+
+/* RTL icon positioning */
+[dir="rtl"] .MuiSvgIcon-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiIconButton-root {
+  direction: rtl;
+}
+
+/* RTL list adjustments */
+[dir="rtl"] .MuiList-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiListItem-root {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .MuiListItemIcon-root {
+  margin-right: 0;
+  margin-left: 16px;
+}
+
+[dir="rtl"] .MuiListItemText-root {
+  margin-right: 0;
+  margin-left: 16px;
+}
+
+/* RTL menu adjustments */
+[dir="rtl"] .MuiMenu-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiMenuItem-root {
+  direction: rtl;
+  text-align: right;
+}
+
+/* RTL tooltip adjustments */
+[dir="rtl"] .MuiTooltip-root {
+  direction: rtl;
+}
+
+/* RTL popover adjustments */
+[dir="rtl"] .MuiPopover-root {
+  direction: rtl;
+}
+
+/* RTL paper adjustments */
+[dir="rtl"] .MuiPaper-root {
+  direction: rtl;
+}
+
+/* RTL container adjustments */
+[dir="rtl"] .MuiContainer-root {
+  direction: rtl;
+}
+
+/* RTL box adjustments */
+[dir="rtl"] .MuiBox-root {
+  direction: rtl;
+}
+
+/* RTL stack adjustments */
+[dir="rtl"] .MuiStack-root {
+  direction: rtl;
+}
+
+/* RTL form control adjustments */
+[dir="rtl"] .MuiFormControl-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiFormControlLabel-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiFormGroup-root {
+  direction: rtl;
+}
+
+/* RTL switch adjustments */
+[dir="rtl"] .MuiSwitch-root {
+  direction: rtl;
+}
+
+/* RTL checkbox adjustments */
+[dir="rtl"] .MuiCheckbox-root {
+  direction: rtl;
+}
+
+/* RTL radio adjustments */
+[dir="rtl"] .MuiRadio-root {
+  direction: rtl;
+}
+
+/* RTL select adjustments */
+[dir="rtl"] .MuiSelect-root {
+  direction: rtl;
+  text-align: right;
+}
+
+/* RTL slider adjustments */
+[dir="rtl"] .MuiSlider-root {
+  direction: rtl;
+}
+
+/* RTL progress adjustments */
+[dir="rtl"] .MuiLinearProgress-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiCircularProgress-root {
+  direction: rtl;
+}
+
+/* RTL skeleton adjustments */
+[dir="rtl"] .MuiSkeleton-root {
+  direction: rtl;
+}
+
+/* RTL badge adjustments */
+[dir="rtl"] .MuiBadge-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiBadge-badge {
+  direction: rtl;
+}
+
+/* RTL avatar adjustments */
+[dir="rtl"] .MuiAvatar-root {
+  direction: rtl;
+}
+
+/* RTL divider adjustments */
+[dir="rtl"] .MuiDivider-root {
+  direction: rtl;
+}
+
+/* RTL link adjustments */
+[dir="rtl"] .MuiLink-root {
+  direction: rtl;
+}
+
+/* RTL image adjustments */
+[dir="rtl"] img {
+  direction: rtl;
+}
+
+/* RTL video adjustments */
+[dir="rtl"] video {
+  direction: rtl;
+}
+
+/* RTL iframe adjustments */
+[dir="rtl"] iframe {
+  direction: rtl;
+}
+
+/* RTL canvas adjustments */
+[dir="rtl"] canvas {
+  direction: rtl;
+}
+
+/* RTL svg adjustments */
+[dir="rtl"] svg {
+  direction: rtl;
+}
+
+/* RTL input adornment adjustments */
+[dir="rtl"] .MuiInputAdornment-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiInputAdornment-positionStart {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[dir="rtl"] .MuiInputAdornment-positionEnd {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+/* RTL responsive adjustments */
+@media (max-width: 600px) {
+  [dir="rtl"] .MuiContainer-root {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  [dir="rtl"] .MuiGrid-container {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+  
+  [dir="rtl"] .MuiGrid-item {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  [dir="rtl"] .MuiContainer-root {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 961px) {
+  [dir="rtl"] .MuiContainer-root {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+/* RTL print styles */
+@media print {
+  [dir="rtl"] {
+    direction: rtl;
+  }
+  
+  [dir="rtl"] * {
+    direction: rtl;
+  }
+}
+
+/* RTL high contrast mode */
+@media (prefers-contrast: high) {
+  [dir="rtl"] .MuiButton-root {
+    border: 2px solid currentColor;
+  }
+  
+  [dir="rtl"] .MuiCard-root {
+    border: 2px solid currentColor;
+  }
+}
+
+/* RTL reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  [dir="rtl"] * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* RTL dark mode support */
+@media (prefers-color-scheme: dark) {
+  [dir="rtl"] {
+    color: #e0e0e0;
+  }
+  
+  [dir="rtl"] .MuiCard-root {
+    background-color: #2d2d2d;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* RTL focus styles */
+[dir="rtl"] *:focus {
+  outline: 2px solid #1a237e;
+  outline-offset: 2px;
+}
+
+/* RTL hover effects */
+[dir="rtl"] .MuiButton-root:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 35, 126, 0.4);
+}
+
+[dir="rtl"] .MuiCard-root:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.16);
+}
+
+/* RTL loading states */
+[dir="rtl"] .MuiCircularProgress-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiLinearProgress-root {
+  direction: rtl;
+}
+
+/* RTL skeleton loading */
+[dir="rtl"] .MuiSkeleton-root {
+  direction: rtl;
+}
+
+/* RTL badge adjustments */
+[dir="rtl"] .MuiBadge-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiBadge-badge {
+  direction: rtl;
+}
+
+/* RTL avatar adjustments */
+[dir="rtl"] .MuiAvatar-root {
+  direction: rtl;
+}
+
+/* RTL divider adjustments */
+[dir="rtl"] .MuiDivider-root {
+  direction: rtl;
+}
+
+/* RTL paper adjustments */
+[dir="rtl"] .MuiPaper-root {
+  direction: rtl;
+}
+
+/* RTL list adjustments */
+[dir="rtl"] .MuiList-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiListItemButton-root {
+  direction: rtl;
+  text-align: right;
+}
+
+/* RTL fab adjustments */
+[dir="rtl"] .MuiFab-root {
+  direction: rtl;
+}
+
+/* RTL bottom navigation adjustments */
+[dir="rtl"] .MuiBottomNavigation-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiBottomNavigationAction-root {
+  direction: rtl;
+}
+
+/* RTL app bar adjustments */
+[dir="rtl"] .MuiAppBar-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiToolbar-root {
+  direction: rtl;
+}
+
+/* RTL toolbar adjustments */
+[dir="rtl"] .MuiToolbar-root {
+  direction: rtl;
+}
+
+/* RTL breadcrumb specific */
+[dir="rtl"] .MuiBreadcrumbs-ol {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiBreadcrumbs-li {
+  direction: rtl;
+}
+
+/* RTL link adjustments */
+[dir="rtl"] a {
+  direction: rtl;
+}
+
+/* RTL image adjustments */
+[dir="rtl"] img {
+  direction: rtl;
+}
+
+/* RTL video adjustments */
+[dir="rtl"] video {
+  direction: rtl;
+}
+
+/* RTL iframe adjustments */
+[dir="rtl"] iframe {
+  direction: rtl;
+}
+
+/* RTL canvas adjustments */
+[dir="rtl"] canvas {
+  direction: rtl;
+}
+
+/* RTL svg adjustments */
+[dir="rtl"] svg {
+  direction: rtl;
+}
+
+/* RTL input group adjustments */
+[dir="rtl"] .MuiInputAdornment-root {
+  direction: rtl;
+}
+
+[dir="rtl"] .MuiInputAdornment-positionStart {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[dir="rtl"] .MuiInputAdornment-positionEnd {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+/* Professional RTL styling */
+[dir="rtl"] .professional-card {
+  font-family: 'Tajawal', 'Cairo', sans-serif;
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+[dir="rtl"] .professional-button {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+[dir="rtl"] .section-title {
+  font-family: 'Amiri', 'Noto Naskh Arabic', serif;
+  font-weight: 800;
+  text-transform: none;
+}
+
+/* RTL professional gradients */
+[dir="rtl"] .arabic-gradient-text {
+  background: linear-gradient(135deg, #1a237e 0%, #534bae 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[dir="rtl"] .arabic-gradient-bg {
+  background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+}
+
+/* RTL professional shadows */
+[dir="rtl"] .arabic-shadow {
+  box-shadow: 0 8px 32px rgba(26, 35, 126, 0.15);
+}
+
+[dir="rtl"] .arabic-shadow-hover {
+  box-shadow: 0 16px 48px rgba(26, 35, 126, 0.25);
+}
+
+/* RTL professional borders */
+[dir="rtl"] .arabic-border {
+  border: 2px solid rgba(26, 35, 126, 0.2);
+}
+
+[dir="rtl"] .arabic-border-hover {
+  border: 2px solid rgba(26, 35, 126, 0.4);
+}
+
+/* RTL professional transitions */
+[dir="rtl"] .arabic-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[dir="rtl"] .arabic-transition-slow {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* RTL professional animations */
+[dir="rtl"] .arabic-fade-in {
+  animation: arabicFadeIn 0.5s ease-out;
+}
+
+[dir="rtl"] .arabic-slide-up {
+  animation: arabicSlideUp 0.6s ease-out;
+}
+
+/* RTL professional utilities */
+[dir="rtl"] .arabic-text-gradient {
+  background: linear-gradient(135deg, #1a237e 0%, #534bae 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[dir="rtl"] .arabic-bg-gradient {
+  background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+}
+
+[dir="rtl"] .arabic-border-gradient {
+  border: 2px solid;
+  border-image: linear-gradient(135deg, #1a237e 0%, #534bae 100%) 1;
+}
+
+/* RTL professional responsive */
+@media (max-width: 600px) {
+  [dir="rtl"] .arabic-professional-heading {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  [dir="rtl"] .arabic-professional {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  [dir="rtl"] .arabic-professional-heading {
+    font-size: 1.75rem;
+    line-height: 1.25;
+  }
+}
+
+@media (min-width: 961px) {
+  [dir="rtl"] .arabic-professional-heading {
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+}
+

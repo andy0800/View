@@ -1,0 +1,95 @@
+/* 🔧 Browser Compatibility Fix for Console Errors */
+
+/* Fix for -moz-focus-inner pseudo-element */
+*::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* Fix for -moz-osx-font-smoothing - use standard alternative */
+* {
+  -webkit-font-smoothing: antialiased;
+  /* -moz-osx-font-smoothing is Mac-specific, provide fallback */
+  font-smooth: always;
+}
+
+/* Additional font smoothing fixes */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: always;
+  text-rendering: optimizeLegibility;
+}
+
+/* Fix for text-size-adjust - provide proper syntax */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Fix for -ms-fill pseudo-elements - convert to standard */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+/* Fix for -ms-input-placeholder - use standard ::placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: rgba(0, 0, 0, 0.54);
+  opacity: 1;
+}
+
+/* Fix for -ms-expand - convert to standard */
+select::-ms-expand {
+  display: none;
+}
+
+/* Fix for -internal-autofill-selected - provide standard alternative */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* Fix for column-gap issues */
+.flex-container {
+  gap: 1rem; /* Standard gap property */
+  -webkit-column-gap: 1rem;
+  -moz-column-gap: 1rem;
+  column-gap: 1rem;
+}
+
+/* Fix for wrap property issues */
+.flex-wrap {
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+}
+
+/* High contrast mode media query fix */
+@media (prefers-contrast: high) {
+  /* Provide high contrast styles here */
+  * {
+    outline: 1px solid;
+  }
+}
+
+/* Microsoft Edge specific fixes */
+@supports (-ms-ime-align: auto) {
+  /* Edge-specific styles */
+  .edge-fix {
+    display: block;
+  }
+}
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+  /* Firefox-specific styles */
+  .firefox-fix {
+    display: block;
+  }
+}

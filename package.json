@@ -1,0 +1,52 @@
+{
+  "name": "view-app",
+  "version": "1.0.0",
+  "description": "VIEW APP - Ad Rewards Platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start:backend",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run dev",
+    "dev": "npm run kill:all && concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "dev:backend": "cd backend && npm start",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "setup": "cd backend && node setup.js",
+    "reset": "cd backend && node setup.js",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "kill:all": "taskkill /F /IM node.exe 2>nul || echo No Node processes to kill",
+    "kill:backend": "netstat -ano | findstr :4001 | findstr LISTENING | for /f \"tokens=5\" %a in ('findstr LISTENING') do taskkill /F /PID %a 2>nul || echo No backend process to kill",
+    "kill:frontend": "netstat -ano | findstr :5173 | findstr LISTENING | for /f \"tokens=5\" %a in ('findstr LISTENING') do taskkill /F /PID %a 2>nul || echo No frontend process to kill",
+    "clean": "npm run kill:all && npm run kill:backend && npm run kill:frontend",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "helmet": "^8.1.0",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "sequelize-cli": "^6.6.3"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "VIEW-APP-Repository"
+  },
+  "keywords": [
+    "ad-rewards",
+    "view-app",
+    "kuwait",
+    "advertising",
+    "rewards"
+  ],
+  "author": "VIEW APP Team",
+  "license": "ISC"
+}

@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-09-01T11:16:37.234Z",
+  "testType": "Quick Massive Test",
+  "summary": {
+    "advertisers": 2,
+    "adsCreated": 10,
+    "adsApproved": 10,
+    "adsActivated": 10,
+    "viewers": 100,
+    "viewsCompleted": 0,
+    "totalRewards": 0
+  },
+  "performance": {
+    "successRate": 0,
+    "averageViewsPerViewer": 0,
+    "averageRewardPerViewer": 0
+  },
+  "errors": [],
+  "recommendations": [
+    "Optimize viewer flow and ad availability",
+    "Enhance ad content and viewer engagement"
+  ]
+}

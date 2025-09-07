@@ -1,0 +1,6042 @@
+{
+  "timestamp": "2025-09-01T02:58:38.449Z",
+  "testDuration": 43694,
+  "summary": {
+    "totalUsers": 1001,
+    "advertisers": 250,
+    "viewers": 750,
+    "admins": 1
+  },
+  "performance": {
+    "totalRequests": 4800,
+    "successfulRequests": 3450,
+    "failedRequests": 1350,
+    "errorRate": "0.2813",
+    "averageResponseTime": 185,
+    "maxResponseTime": 820,
+    "minResponseTime": 1,
+    "testDuration": 43694
+  },
+  "business": {
+    "advertisers": {
+      "success": 0,
+      "failed": 300,
+      "details": [
+        {
+          "phone": "+96550000005",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000018",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000007",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000008",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000029",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000026",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000027",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000010",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000023",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000006",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000001",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000020",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000035",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000014",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000021",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000031",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000002",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000015",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000016",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000028",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000004",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000011",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000045",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000025",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000003",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000012",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000044",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000009",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000043",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000024",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000022",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000041",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000036",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000047",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000032",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000050",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000040",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000030",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000033",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000038",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000013",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000048",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000037",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000034",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000039",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000019",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000017",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000049",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000042",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000046",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000054",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000056",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000055",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000082",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000053",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000085",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000061",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000057",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000058",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000072",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000075",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000062",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000088",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000059",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000060",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000076",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000083",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000071",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000065",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000086",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000084",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000067",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000097",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000051",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000066",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000079",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000100",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000094",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000092",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000052",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000074",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000073",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000089",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000081",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000070",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000064",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000087",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000096",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000080",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000068",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000069",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000063",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000093",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000095",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000098",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000090",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000077",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000091",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000078",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000099",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000121",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000120",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000119",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000111",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000129",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000112",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000110",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000128",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000101",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000104",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000106",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000130",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000118",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000107",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000127",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000114",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000123",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000126",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000102",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000135",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000134",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000105",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000147",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000142",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000144",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000103",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000113",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000137",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000138",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000115",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000108",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000109",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000141",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000149",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000117",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000146",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000136",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000132",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000125",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000140",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000139",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000116",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000148",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000122",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000131",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000150",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000133",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000124",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000145",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000143",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000171",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000155",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000165",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000160",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000154",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000153",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000152",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000158",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000162",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000151",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000156",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000164",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000159",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000167",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000179",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000184",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000170",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000185",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000172",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000181",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000168",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000169",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000178",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000163",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000166",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000174",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000161",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000175",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000173",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000197",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000198",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000176",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000182",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000189",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000196",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000186",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000187",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000193",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000177",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000192",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000194",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000195",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000191",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000157",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000180",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000199",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000188",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000200",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000183",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000190",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000208",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000204",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000201",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000207",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000215",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000202",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000206",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000210",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000211",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000227",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000209",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000221",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000241",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000216",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000213",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000212",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000225",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000203",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000218",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000235",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000233",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000217",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000244",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000228",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000237",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000247",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000250",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000231",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000248",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000222",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000219",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000234",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000229",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000230",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000214",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000236",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000238",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000239",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000246",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000223",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000242",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000240",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000205",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000232",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000243",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000249",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000220",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000224",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000245",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000226",
+          "error": "Cannot read properties of undefined (reading 'name')",
+          "success": false
+        },
+        {
+          "phone": "+96550000042",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000048",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000019",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000037",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000035",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000030",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000044",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000021",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000013",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000031",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000024",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000043",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000038",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000026",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000034",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000003",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000002",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000022",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000039",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000010",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000032",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000004",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000040",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000033",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000015",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000046",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000036",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000020",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000047",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000016",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000018",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000009",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000023",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000011",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000017",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000005",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000050",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000012",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000041",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000025",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000029",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000008",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000001",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000045",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000028",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000014",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000007",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000027",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000006",
+          "error": "No packages were purchased successfully",
+          "success": false
+        },
+        {
+          "phone": "+96550000049",
+          "error": "No packages were purchased successfully",
+          "success": false
+        }
+      ]
+    },
+    "viewers": {
+      "success": 0,
+      "failed": 900,
+      "details": [
+        {
+          "phone": "+96550000251",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000252",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000254",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000255",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000260",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000257",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000258",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000259",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000261",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000262",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000265",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000268",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000269",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000253",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000256",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000264",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000274",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000276",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000278",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000280",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000281",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000282",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000270",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000271",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000272",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000283",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000285",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000286",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000263",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000266",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000267",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000287",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000284",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000275",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000277",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000279",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000273",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000288",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000294",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000292",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000293",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000295",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000296",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000289",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000298",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000290",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000291",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000299",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000300",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000297",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000301",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000310",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000304",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000305",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000303",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000308",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000302",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000315",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000316",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000312",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000306",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000307",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000309",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000311",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000320",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000323",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000322",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000324",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000325",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000326",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000329",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000331",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000314",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000318",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000319",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000321",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000328",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000330",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000334",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000337",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000339",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000333",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000327",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000317",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000313",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000332",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000335",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000340",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000341",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000345",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000342",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000344",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000346",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000347",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000348",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000349",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000350",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000336",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000338",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000343",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000352",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000351",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000353",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000358",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000359",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000360",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000364",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000367",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000354",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000356",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000357",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000366",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000369",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000370",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000371",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000372",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000373",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000361",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000362",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000363",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000365",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000375",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000379",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000378",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000380",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000381",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000386",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000382",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000368",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000374",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000376",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000377",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000383",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000384",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000389",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000390",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000385",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000387",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000355",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000388",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000391",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000392",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000393",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000396",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000394",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000398",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000395",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000397",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000399",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000400",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000401",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000405",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000402",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000403",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000404",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000408",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000409",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000406",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000411",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000413",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000417",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000418",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000419",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000421",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000407",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000410",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000412",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000414",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000423",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000424",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000415",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000416",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000425",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000431",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000432",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000434",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000435",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000436",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000437",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000438",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000420",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000422",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000429",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000433",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000427",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000428",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000439",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000441",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000442",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000443",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000445",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000447",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000426",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000430",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000440",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000444",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000449",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000448",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000450",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000446",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000451",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000452",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000453",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000454",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000458",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000459",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000461",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000457",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000462",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000463",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000464",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000469",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000470",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000471",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000455",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000468",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000456",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000472",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000465",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000474",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000475",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000479",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000476",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000477",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000481",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000482",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000484",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000485",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000460",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000483",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000473",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000478",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000480",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000486",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000487",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000488",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000489",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000492",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000466",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000467",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000493",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000494",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000496",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000500",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000498",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000499",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000490",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000491",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000497",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000495",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000501",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000502",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000504",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000507",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000508",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000511",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000509",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000506",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000512",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000517",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000505",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000518",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000520",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000522",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000524",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000525",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000513",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000514",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000519",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000521",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000523",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000515",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000516",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000527",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000510",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000503",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000528",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000533",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000535",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000531",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000532",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000536",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000537",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000539",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000540",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000542",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000538",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000526",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000529",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000530",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000534",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000545",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000546",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000547",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000541",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000548",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000549",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000543",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000544",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000550",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000551",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000552",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000559",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000560",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000556",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000557",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000555",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000561",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000562",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000563",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000564",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000568",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000553",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000554",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000558",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000571",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000567",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000569",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000576",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000579",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000566",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000570",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000574",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000577",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000583",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000572",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000578",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000573",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000581",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000580",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000582",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000584",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000587",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000575",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000585",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000586",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000588",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000590",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000592",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000591",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000595",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000596",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000598",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000599",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000565",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000600",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000589",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000593",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000594",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000597",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000601",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000602",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000606",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000608",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000609",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000605",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000607",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000610",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000611",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000613",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000615",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000616",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000617",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000618",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000603",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000604",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000614",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000619",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000622",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000623",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000624",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000625",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000626",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000630",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000633",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000612",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000635",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000627",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000636",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000629",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000631",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000632",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000621",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000628",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000634",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000637",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000638",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000639",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000641",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000640",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000642",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000644",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000648",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000650",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000645",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000646",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000643",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000649",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000647",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000620",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000651",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000653",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000652",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000654",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000655",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000658",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000657",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000659",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000660",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000664",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000665",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000667",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000668",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000669",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000656",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000662",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000666",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000670",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000672",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000675",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000676",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000677",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000678",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000679",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000680",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000681",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000683",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000674",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000684",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000671",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000673",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000682",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000692",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000661",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000663",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000690",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000694",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000687",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000688",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000689",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000691",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000695",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000696",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000698",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000699",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000700",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000685",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000686",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000693",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000697",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000701",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000702",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000703",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000705",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000707",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000708",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000712",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000719",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000720",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000704",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000706",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000710",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000713",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000709",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000711",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000715",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000716",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000723",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000721",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000722",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000724",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000725",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000726",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000727",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000728",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000729",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000730",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000731",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000737",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000732",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000733",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000717",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000714",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000718",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000734",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000735",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000736",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000739",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000740",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000742",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000743",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000744",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000741",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000745",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000746",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000738",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000747",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000748",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000749",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000750",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000751",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000755",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000752",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000753",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000754",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000758",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000765",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000757",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000764",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000766",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000760",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000761",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000762",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000763",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000769",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000772",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000775",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000777",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000767",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000768",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000773",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000774",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000776",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000759",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000756",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000770",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000778",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000771",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000780",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000779",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000781",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000783",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000784",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000785",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000786",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000788",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000789",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000782",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000787",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000792",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000791",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000790",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000794",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000795",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000796",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000800",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000797",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000798",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000793",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000799",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000804",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000802",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000805",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000807",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000806",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000808",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000803",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000809",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000810",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000820",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000821",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000822",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000823",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000815",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000817",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000818",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000819",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000824",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000813",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000814",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000816",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000825",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000828",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000830",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000831",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000811",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000801",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000812",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000832",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000833",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000834",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000835",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000836",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000839",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000837",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000838",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000829",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000841",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000840",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000826",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000827",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000842",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000843",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000848",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000849",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000850",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000845",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000844",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000846",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000847",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000852",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000854",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000855",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000859",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000856",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000857",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000858",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000860",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000861",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000862",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000851",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000853",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000870",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000866",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000867",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000869",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000863",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000864",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000868",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000865",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000873",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000880",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000881",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000871",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000872",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000874",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000876",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000878",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000879",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000877",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000875",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000882",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000883",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000884",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000890",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000894",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000895",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000886",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000887",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000888",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000889",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000896",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000897",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000885",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000892",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000899",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000893",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000898",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000900",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000891",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000902",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000903",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000904",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000905",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000906",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000909",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000910",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000911",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000901",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000915",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000912",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000916",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000919",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000918",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000927",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000913",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000914",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000917",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000920",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000922",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000930",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000907",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000908",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000932",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000933",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000921",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000928",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000929",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000931",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000923",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000924",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000934",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000935",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000925",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000926",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000937",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000941",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000942",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000943",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000936",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000938",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000939",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000940",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000944",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000945",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000946",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000947",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000948",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000950",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000949",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000951",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000952",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000955",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000956",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000958",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000959",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000960",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000962",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000963",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000964",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000953",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000954",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000957",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000965",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000969",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000971",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000972",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000966",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000967",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000973",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000970",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000976",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000974",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000980",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000981",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000982",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000985",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000986",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000983",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000984",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000975",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000977",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000978",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000979",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000961",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000968",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000987",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000988",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000989",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000990",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000993",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000996",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000992",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000995",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000994",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550001000",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000997",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000998",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000991",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000999",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000387",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000296",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000340",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000384",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000324",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000307",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000252",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000285",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000382",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000328",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000266",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000316",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000304",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000260",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000345",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000323",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000279",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000268",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000371",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000276",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000313",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000321",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000396",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000283",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000270",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000317",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000332",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000301",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000391",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000314",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000358",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000280",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000343",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000294",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000329",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000256",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000395",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000398",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000267",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000338",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000365",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000310",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000364",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000257",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000269",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000339",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000271",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000302",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000360",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000318",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000392",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000367",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000374",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000373",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000355",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000380",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000362",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000293",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000291",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000322",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000344",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000303",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000383",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000273",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000341",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000361",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000265",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000308",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000311",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000379",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000305",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000290",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000272",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000333",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000261",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000306",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000400",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000286",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000389",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000263",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000349",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000282",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000357",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000352",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000399",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000350",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000386",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000264",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000295",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000254",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000335",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000337",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000334",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000289",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000388",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000326",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000346",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000372",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000376",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000354",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000300",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000331",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000368",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000274",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000259",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000369",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000378",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000287",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000377",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000312",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000319",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000336",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000351",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000277",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000327",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000288",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000292",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000315",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000251",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000309",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000359",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000297",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000390",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000353",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000363",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000299",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000278",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000330",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000348",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000325",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000385",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000356",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000342",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000370",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000397",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000284",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000366",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000275",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000394",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000258",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000375",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000281",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000298",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000381",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000253",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000255",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000320",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000262",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000347",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        },
+        {
+          "phone": "+96550000393",
+          "error": "Failed to get ads: Request failed with status code 404",
+          "success": false
+        }
+      ]
+    },
+    "admins": {
+      "success": 0,
+      "failed": 0,
+      "details": []
+    }
+  },
+  "recommendations": [
+    "Optimize error handling and add retry mechanisms"
+  ]
+}

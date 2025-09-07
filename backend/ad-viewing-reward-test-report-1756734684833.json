@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-09-01T13:51:24.833Z",
+  "testType": "Ad Viewing and Reward Distribution Test",
+  "summary": {
+    "viewersProcessed": 9,
+    "totalAdsViewed": 0,
+    "totalRewardsDistributed": 0,
+    "transactionsRecorded": 0,
+    "totalViewers": 9,
+    "totalAds": 100
+  },
+  "performance": {
+    "testDuration": 61111,
+    "averageAdsPerViewer": 0,
+    "averageRewardPerViewer": 0,
+    "processingRate": 0.14727299504180918
+  },
+  "errors": [],
+  "recommendations": [
+    "Optimize ad viewing flow and ad availability"
+  ]
+}

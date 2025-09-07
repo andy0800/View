@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-09-01T11:59:15.141Z",
+  "testType": "Comprehensive Reward Test",
+  "summary": {
+    "advertisersCreated": 5,
+    "adsCreated": 10,
+    "adsActivated": 10,
+    "totalViewers": 27,
+    "viewersProcessed": 27,
+    "viewsStarted": 0,
+    "viewsCompleted": 0,
+    "viewsFailed": 0,
+    "totalRewards": 0,
+    "totalTransactions": 0
+  },
+  "performance": {
+    "successRate": 0,
+    "averageViewsPerViewer": 0,
+    "averageRewardPerViewer": 0,
+    "testDuration": 1956,
+    "processingRate": 13.803680981595093
+  },
+  "errors": [],
+  "recommendations": [
+    "Optimize ad viewing flow and reduce failure rates"
+  ]
+}

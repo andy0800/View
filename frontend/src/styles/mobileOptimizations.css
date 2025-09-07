@@ -1,0 +1,180 @@
+/* Mobile-specific optimizations for View app */
+
+/* Ensure proper viewport behavior */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 600px) {
+  /* Improve mobile navigation */
+  .MuiDrawer-paper {
+    width: 100% !important;
+    max-width: 320px !important;
+  }
+  
+  /* Better mobile spacing */
+  .MuiContainer-root {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  
+  /* Mobile-optimized cards */
+  .MuiCard-root {
+    margin-bottom: 16px !important;
+  }
+  
+  /* Mobile-optimized buttons */
+  .MuiButton-root {
+    height: 48px !important;
+    font-size: 14px !important;
+  }
+  
+  /* Mobile-optimized text fields */
+  .MuiTextField-root {
+    margin-bottom: 16px !important;
+  }
+  
+  /* Mobile-optimized grids */
+  .MuiGrid-container {
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+  }
+  
+  .MuiGrid-item {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  
+  /* Mobile-optimized typography */
+  .MuiTypography-h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .MuiTypography-h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .MuiTypography-h3 {
+    font-size: 1.25rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .MuiTypography-h4 {
+    font-size: 1.125rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  .MuiTypography-h5 {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  .MuiTypography-h6 {
+    font-size: 0.875rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  .MuiTypography-body1 {
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .MuiTypography-body2 {
+    font-size: 0.8125rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Mobile-optimized spacing */
+  .MuiBox-root {
+    margin-bottom: 16px !important;
+  }
+  
+  /* Mobile-optimized alerts */
+  .MuiAlert-root {
+    margin-bottom: 16px !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Mobile-optimized chips */
+  .MuiChip-root {
+    height: 24px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  /* Mobile-optimized icons */
+  .MuiSvgIcon-root {
+    font-size: 1.25rem !important;
+  }
+  
+  /* Mobile-optimized dividers */
+  .MuiDivider-root {
+    margin: 16px 0 !important;
+  }
+  
+  /* Mobile-optimized lists */
+  .MuiListItem-root {
+    padding: 12px 16px !important;
+  }
+  
+  /* Mobile-optimized paper */
+  .MuiPaper-root {
+    border-radius: 8px !important;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 601px) and (max-width: 960px) {
+  .MuiContainer-root {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  
+  .MuiButton-root {
+    height: 44px !important;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .MuiSvgIcon-root {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 600px) and (orientation: landscape) {
+  .MuiAppBar-root {
+    min-height: 48px !important;
+  }
+  
+  .MuiToolbar-root {
+    min-height: 48px !important;
+  }
+}
+
+/* Dark mode support for mobile */
+@media (prefers-color-scheme: dark) {
+  .MuiPaper-root {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+  }
+  
+  .MuiCard-root {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
