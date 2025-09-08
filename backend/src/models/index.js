@@ -69,4 +69,27 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// Disable sync in production to prevent model sync conflicts
+if (process.env.NODE_ENV === 'production') {
+  console.log('🔄 Disabling model sync in production...');
+  
+  // Override sequelize.sync() to do nothing in production
+  sequelize.sync = function(options) {
+    console.log('🔄 Model sync disabled in production');
+    return Promise.resolve();
+  };
+  
+  // Override individual model sync methods
+  Object.keys(db).forEach(modelName => {
+    if (db[modelName] && typeof db[modelName].sync === 'function') {
+      db[modelName].sync = function(options) {
+        console.log(`🔄 Model ${modelName} sync disabled in production`);
+        return Promise.resolve();
+      };
+    }
+  });
+  
+  console.log('✅ Model sync disabled for all models in production');
+}
+
 module.exports = db;
