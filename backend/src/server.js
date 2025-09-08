@@ -164,34 +164,101 @@ app.use(errorHandler);
       await sequelize.sync(); // ⚠️ Sync only in dev
       console.log('✅ Database synced successfully.');
     } else {
-      // In production, run migrations first, then disable sync
-      console.log('🔄 Initializing production database...');
+      // In production, create tables manually using raw SQL
+      console.log('🔄 Initializing production database with raw SQL...');
       try {
-        // Run migrations first
-        console.log('🔄 Running database migrations...');
-        const { execSync } = require('child_process');
-        try {
-          execSync('npx sequelize-cli db:migrate', { stdio: 'inherit' });
-          console.log('✅ Database migrations completed successfully.');
-        } catch (migrateError) {
-          console.error('❌ Migration command failed:', migrateError.message);
-          console.error('❌ Migration stderr:', migrateError.stderr?.toString());
-          console.error('❌ Migration stdout:', migrateError.stdout?.toString());
-          throw migrateError;
-        }
+        // Create tables using raw SQL to avoid model sync issues
+        console.log('🔄 Creating core tables...');
         
-        // Disable sync in production to prevent model sync
-        console.log('🔄 Disabling model sync in production...');
-        sequelize.options.define = {
-          ...sequelize.options.define,
-          freezeTableName: true,
-          timestamps: false
-        };
+        // Create users table
+        await sequelize.query(`
+          CREATE TABLE IF NOT EXISTS users (
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            name VARCHAR(255) NOT NULL,
+            phone VARCHAR(255) UNIQUE NOT NULL,
+            role VARCHAR(255) CHECK (role IN ('viewer', 'advertiser', 'admin')) DEFAULT 'viewer',
+            kyc_status VARCHAR(255) CHECK (kyc_status IN ('pending', 'verified', 'rejected')) DEFAULT 'pending',
+            company_name VARCHAR(255),
+            license_number VARCHAR(255),
+            signatory_name VARCHAR(255),
+            license_doc_key VARCHAR(255),
+            verified_at TIMESTAMPTZ,
+            is_active BOOLEAN DEFAULT true,
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+          );
+        `);
         
-        console.log('✅ Production database initialized with migrations only.');
-      } catch (migrationError) {
-        console.error('❌ Migration failed:', migrationError.message);
-        console.error('❌ Full error:', migrationError);
+        // Create videos table
+        await sequelize.query(`
+          CREATE TABLE IF NOT EXISTS videos (
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            url VARCHAR(255) NOT NULL,
+            sections TEXT[],
+            views INTEGER DEFAULT 0,
+            spent DECIMAL(10, 2) DEFAULT 0,
+            budget DECIMAL(10, 2) DEFAULT 0,
+            duration INTEGER DEFAULT 30,
+            is_active BOOLEAN DEFAULT true,
+            advertiser_id UUID REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL,
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+          );
+        `);
+        
+        // Create view_events table
+        await sequelize.query(`
+          CREATE TABLE IF NOT EXISTS view_events (
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            video_id UUID NOT NULL REFERENCES videos(id) ON UPDATE CASCADE ON DELETE NO ACTION,
+            user_id UUID REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL,
+            viewed_at TIMESTAMPTZ DEFAULT NOW(),
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+          );
+        `);
+        
+        // Create wallets table
+        await sequelize.query(`
+          CREATE TABLE IF NOT EXISTS wallets (
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            user_id UUID NOT NULL REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+            balance DECIMAL(20, 3) DEFAULT 0,
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+          );
+        `);
+        
+        // Create sections table
+        await sequelize.query(`
+          CREATE TABLE IF NOT EXISTS sections (
+            id SERIAL PRIMARY KEY,
+            key VARCHAR(255) UNIQUE NOT NULL,
+            name VARCHAR(255) NOT NULL,
+            is_active BOOLEAN DEFAULT true,
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+          );
+        `);
+        
+        // Create advertiser_packages table
+        await sequelize.query(`
+          CREATE TABLE IF NOT EXISTS advertiser_packages (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            price DECIMAL(10, 2) NOT NULL,
+            views INTEGER NOT NULL,
+            is_active BOOLEAN DEFAULT true,
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+          );
+        `);
+        
+        console.log('✅ Core tables created successfully.');
+        console.log('✅ Production database initialized with raw SQL.');
+      } catch (sqlError) {
+        console.error('❌ Raw SQL table creation failed:', sqlError.message);
+        console.error('❌ Full error:', sqlError);
         console.log('🔄 Attempting to continue without database initialization...');
         // Don't throw error, just continue
       }
