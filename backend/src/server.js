@@ -7,24 +7,10 @@ const Redis         = require('ioredis');
 const path          = require('path');
 const jwt           = require('jsonwebtoken');
 const cookieParser  = require('cookie-parser');
-const { sequelize } = require('./models');
+// Models will be loaded conditionally after table creation
+let sequelize;
 
-// Middleware
-const { handleWebhook } = require('./controllers/paymentController');
-const { authenticate, authorizeRoles, requireKyc } = require('./middleware/authMiddleware');
-
-// ✅ Routes
-const { router: authRoutes } = require('./routes/auth');
-const adRoutes          = require('./routes/ads');
-const videoRoutes       = require('./routes/videos');
-const walletRoutes      = require('./routes/wallet');
-const paymentRoutes     = require('./routes/payment');
-const sectionRoutes     = require('./routes/sections'); // ✅ this is now correct
-const advertiserRoutes  = require('./routes/advertiser');
-const adminRoutes       = require('./routes/admin');
-const viewerRoutes      = require('./routes/viewerRoutes');
-const companyRoutes     = require('./routes/company'); // ✅ <-- Company dashboard routes
-const commentRoutes     = require('./routes/comments'); // ✅ <-- Comment system routes
+// Middleware and routes will be loaded after table creation
 
 const app   = express();
 const redis = new Redis(process.env.REDIS_URL);
@@ -89,54 +75,13 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// ✅ Stripe webhook (raw body)
-app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), handleWebhook);
-
 // ✅ Inject Redis
 app.use((req, _, next) => {
   req.redis = redis;
   next();
 });
 
-// ─────────────────────────
-// ✅ PUBLIC ROUTES
-// ─────────────────────────
-app.use('/auth',        authRoutes);
-app.use('/api/ad',      adRoutes);
-app.use('/api/videos',  videoRoutes);
-app.use('/api/wallet',  walletRoutes);
-app.use('/api/payment', paymentRoutes);
-app.use('/api/sections', sectionRoutes); // ✅ <-- Now connected to DB-backed sections
-app.use('/api/company', companyRoutes); // ✅ <-- Company dashboard routes
-app.use('/api/comments', commentRoutes); // ✅ <-- Comment system routes
-
-// ─────────────────────────
-// ✅ PROTECTED ROUTES
-// ─────────────────────────
-
-// Viewer - Updated to use /api/viewer for consistency
-app.use(
-  '/api/viewer',
-  authenticate,
-  authorizeRoles('viewer'),
-  viewerRoutes
-);
-
-// Advertiser - Updated to use /api/advertiser for consistency
-app.use(
-  '/api/advertiser',
-  authenticate,
-  authorizeRoles('advertiser'),
-  advertiserRoutes
-);
-
-// Admin
-app.use(
-  '/api/admin',
-  authenticate,
-  authorizeRoles('admin'),
-  adminRoutes
-);
+// Routes will be defined after table creation
 
 // ─────────────────────────
 // ✅ UTILITY
@@ -157,12 +102,78 @@ app.use(errorHandler);
 // ─────────────────────────
 (async () => {
   try {
+    // Create sequelize connection manually to avoid loading models
+    const Sequelize = require('sequelize');
+    sequelize = process.env.DATABASE_URL 
+      ? new Sequelize(process.env.DATABASE_URL, {
+          dialect: 'postgres',
+          logging: false,
+          dialectOptions: {
+            ssl: process.env.NODE_ENV === 'production' ? {
+              require: true,
+              rejectUnauthorized: false
+            } : false
+          }
+        })
+      : new Sequelize(
+          process.env.DB_NAME,
+          process.env.DB_USER,
+          process.env.DB_PASS,
+          {
+            host: process.env.DB_HOST,
+            port: process.env.DB_PORT,
+            dialect: 'postgres',
+            logging: false,
+          }
+        );
+
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
     
     if (NODE_ENV === 'development') {
+      // In development, load models and sync
+      const models = require('./models');
+      sequelize = models.sequelize;
       await sequelize.sync(); // ⚠️ Sync only in dev
       console.log('✅ Database synced successfully.');
+      
+      // Load middleware and routes for development
+      console.log('🔄 Loading middleware and routes...');
+      const { handleWebhook } = require('./controllers/paymentController');
+      const { authenticate, authorizeRoles, requireKyc } = require('./middleware/authMiddleware');
+      
+      // Load routes
+      const { router: authRoutes } = require('./routes/auth');
+      const adRoutes = require('./routes/ads');
+      const videoRoutes = require('./routes/videos');
+      const walletRoutes = require('./routes/wallet');
+      const paymentRoutes = require('./routes/payment');
+      const sectionRoutes = require('./routes/sections');
+      const advertiserRoutes = require('./routes/advertiser');
+      const adminRoutes = require('./routes/admin');
+      const viewerRoutes = require('./routes/viewerRoutes');
+      const companyRoutes = require('./routes/company');
+      const commentRoutes = require('./routes/comments');
+      
+      // Define routes
+      app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), handleWebhook);
+      
+      // Public routes
+      app.use('/auth', authRoutes);
+      app.use('/api/ad', adRoutes);
+      app.use('/api/videos', videoRoutes);
+      app.use('/api/wallet', walletRoutes);
+      app.use('/api/payment', paymentRoutes);
+      app.use('/api/sections', sectionRoutes);
+      app.use('/api/company', companyRoutes);
+      app.use('/api/comments', commentRoutes);
+      
+      // Protected routes
+      app.use('/api/viewer', authenticate, authorizeRoles('viewer'), viewerRoutes);
+      app.use('/api/advertiser', authenticate, authorizeRoles('advertiser'), advertiserRoutes);
+      app.use('/api/admin', authenticate, authorizeRoles('admin'), adminRoutes);
+      
+      console.log('✅ Routes loaded successfully.');
     } else {
       // In production, create tables manually using raw SQL
       console.log('🔄 Initializing production database with raw SQL...');
@@ -255,6 +266,49 @@ app.use(errorHandler);
         `);
         
         console.log('✅ Core tables created successfully.');
+        
+        // Now load models after tables are created
+        console.log('🔄 Loading models after table creation...');
+        const models = require('./models');
+        console.log('✅ Models loaded successfully.');
+        
+        // Load middleware and routes after models are ready
+        console.log('🔄 Loading middleware and routes...');
+        const { handleWebhook } = require('./controllers/paymentController');
+        const { authenticate, authorizeRoles, requireKyc } = require('./middleware/authMiddleware');
+        
+        // Load routes
+        const { router: authRoutes } = require('./routes/auth');
+        const adRoutes = require('./routes/ads');
+        const videoRoutes = require('./routes/videos');
+        const walletRoutes = require('./routes/wallet');
+        const paymentRoutes = require('./routes/payment');
+        const sectionRoutes = require('./routes/sections');
+        const advertiserRoutes = require('./routes/advertiser');
+        const adminRoutes = require('./routes/admin');
+        const viewerRoutes = require('./routes/viewerRoutes');
+        const companyRoutes = require('./routes/company');
+        const commentRoutes = require('./routes/comments');
+        
+        // Define routes
+        app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), handleWebhook);
+        
+        // Public routes
+        app.use('/auth', authRoutes);
+        app.use('/api/ad', adRoutes);
+        app.use('/api/videos', videoRoutes);
+        app.use('/api/wallet', walletRoutes);
+        app.use('/api/payment', paymentRoutes);
+        app.use('/api/sections', sectionRoutes);
+        app.use('/api/company', companyRoutes);
+        app.use('/api/comments', commentRoutes);
+        
+        // Protected routes
+        app.use('/api/viewer', authenticate, authorizeRoles('viewer'), viewerRoutes);
+        app.use('/api/advertiser', authenticate, authorizeRoles('advertiser'), advertiserRoutes);
+        app.use('/api/admin', authenticate, authorizeRoles('admin'), adminRoutes);
+        
+        console.log('✅ Routes loaded successfully.');
         console.log('✅ Production database initialized with raw SQL.');
       } catch (sqlError) {
         console.error('❌ Raw SQL table creation failed:', sqlError.message);
