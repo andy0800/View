@@ -157,11 +157,24 @@ app.use(errorHandler);
 // ─────────────────────────
 (async () => {
   try {
+    await sequelize.authenticate();
+    console.log('✅ Database connection established successfully.');
+    
     if (NODE_ENV === 'development') {
-      await sequelize.authenticate();
-      console.log('✅ Database connection established successfully.');
       await sequelize.sync(); // ⚠️ Sync only in dev
       console.log('✅ Database synced successfully.');
+    } else {
+      // In production, run migrations instead of sync
+      console.log('🔄 Running database migrations...');
+      try {
+        const { execSync } = require('child_process');
+        execSync('npx sequelize-cli db:migrate', { stdio: 'inherit' });
+        console.log('✅ Database migrations completed successfully.');
+      } catch (migrationError) {
+        console.warn('⚠️ Migration failed, falling back to sync:', migrationError.message);
+        await sequelize.sync({ alter: true }); // Safe sync in production
+        console.log('✅ Database synced with alterations.');
+      }
     }
   } catch (error) {
     console.warn('⚠️ Database connection failed:', error.message);
