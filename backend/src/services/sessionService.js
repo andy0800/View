@@ -10,7 +10,7 @@ class SessionService {
   static async createSession(userId, ipAddress, userAgent, expiresIn = '30d') {
     try {
       // Generate JWT token
-      const jwtSecret = process.env.JWT_SECRET || 'fallback-secret-key-change-in-production';
+      const jwtSecret = process.env.JWT_SECRET || '2d8ea8f818adbb33b8d878efb2b13cad8b9c256eb6330773c201dfb36c2cfd0b';
       const token = jwt.sign(
         { id: userId },
         jwtSecret.trim(),

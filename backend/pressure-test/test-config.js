@@ -4,7 +4,7 @@
 module.exports = {
   // Test Environment Configuration
   TEST_CONFIG: {
-    database: 'adrewards', // Use existing database with test prefixes
+    database: 'viewapp_postgres', // Use existing database with test prefixes
     userPrefix: 'pressure_test_',
     maxConcurrentUsers: 1000,
     testDuration: 30 * 60 * 1000, // 30 minutes

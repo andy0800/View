@@ -98,7 +98,7 @@ router.post('/admin-login', (req, res) => {
     const jwt = require('jsonwebtoken');
     
     // Ensure JWT_SECRET is available
-    const jwtSecret = process.env.JWT_SECRET || 'fallback-secret-key-change-in-production';
+    const jwtSecret = process.env.JWT_SECRET || '2d8ea8f818adbb33b8d878efb2b13cad8b9c256eb6330773c201dfb36c2cfd0b';
     
     const token = jwt.sign(
       { id: 0, role: 'admin' },

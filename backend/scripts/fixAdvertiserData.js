@@ -3,9 +3,9 @@ require('dotenv').config();
 
 // Database connection
 const sequelize = new Sequelize(
-  process.env.DB_NAME || 'adrewards',
-  process.env.DB_USER || 'postgres',
-  process.env.DB_PASS || 'postgres',
+  process.env.DB_NAME || 'viewapp_postgres',
+  process.env.DB_USER || 'viewapp_postgres_user',
+  process.env.DB_PASS || 'Hj82NSRMhqsi2GgTzoG0Wmzs8Se21GAf',
   {
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,

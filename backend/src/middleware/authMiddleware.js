@@ -27,7 +27,7 @@ async function authenticate(req, res, next) {
     }
 
     // Verify JWT token - use environment variable only
-    const jwtSecret = process.env.JWT_SECRET || 'fallback-secret-key-change-in-production';
+    const jwtSecret = process.env.JWT_SECRET || '2d8ea8f818adbb33b8d878efb2b13cad8b9c256eb6330773c201dfb36c2cfd0b';
     const payload = jwt.verify(token, jwtSecret.trim());
     
     console.log('🔍 JWT payload:', payload);

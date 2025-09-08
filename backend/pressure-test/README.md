@@ -77,7 +77,7 @@ This runs the complete 1000 user pressure test.
 ### **Test Configuration** (`test-config.js`)
 ```javascript
 TEST_CONFIG: {
-  database: 'adrewards',
+  database: 'viewapp_postgres',
   userPrefix: 'pressure_test_',
   maxConcurrentUsers: 1000,
   testDuration: 30 * 60 * 1000, // 30 minutes

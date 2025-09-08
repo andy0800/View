@@ -5,7 +5,7 @@ const { URL } = require('url');
 const BASE_URL = process.env.BASE_URL || 'http://localhost:4001';
 // Prefer seeded viewer phone if env not set
 const TEST_VIEWER_PHONE = process.env.TEST_VIEWER_PHONE || '+96560000000';
-const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
+const REDIS_URL = process.env.REDIS_URL || 'redis://red-d2vdrcmr433s73f4oaj0:6379';
 let Redis;
 try { Redis = require('ioredis'); } catch {}
 

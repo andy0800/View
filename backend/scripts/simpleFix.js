@@ -4,9 +4,9 @@ async function fixDatabase() {
   const client = new Client({
     host: 'localhost',
     port: 5432,
-    user: 'postgres',
-    password: 'postgres',
-    database: 'adrewards'
+    user: 'viewapp_postgres_user',
+    password: 'Hj82NSRMhqsi2GgTzoG0Wmzs8Se21GAf',
+    database: 'viewapp_postgres'
   });
 
   try {
