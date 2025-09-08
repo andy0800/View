@@ -164,15 +164,23 @@ app.use(errorHandler);
       await sequelize.sync(); // ⚠️ Sync only in dev
       console.log('✅ Database synced successfully.');
     } else {
-      // In production, run migrations instead of sync
-      console.log('🔄 Running database migrations...');
+      // In production, run migrations first, then sync if needed
+      console.log('🔄 Initializing production database...');
       try {
+        // First try to run migrations
+        console.log('🔄 Running database migrations...');
         const { execSync } = require('child_process');
         execSync('npx sequelize-cli db:migrate', { stdio: 'inherit' });
         console.log('✅ Database migrations completed successfully.');
+        
+        // After migrations, sync to ensure all models are properly set up
+        console.log('🔄 Syncing models after migrations...');
+        await sequelize.sync({ alter: true });
+        console.log('✅ Database models synced successfully.');
       } catch (migrationError) {
-        console.warn('⚠️ Migration failed, falling back to sync:', migrationError.message);
-        await sequelize.sync({ alter: true }); // Safe sync in production
+        console.warn('⚠️ Migration failed, using safe sync:', migrationError.message);
+        // Fallback to safe sync
+        await sequelize.sync({ alter: true });
         console.log('✅ Database synced with alterations.');
       }
     }
