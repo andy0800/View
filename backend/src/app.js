@@ -1,4 +1,6 @@
 require('dotenv').config();
+// Build timestamp: 2025-01-09T11:30:00.000Z - Force cache invalidation
+console.log('🚀 STARTING FRESH APP.JS - CACHE INVALIDATED - 2025-01-09T11:30:00.000Z');
 const express       = require('express');
 const helmet        = require('helmet');
 const cors          = require('cors');
