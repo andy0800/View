@@ -176,7 +176,8 @@ app.use(errorHandler);
       } catch (migrationError) {
         console.error('❌ Migration failed:', migrationError.message);
         console.error('❌ Full error:', migrationError);
-        throw migrationError;
+        console.log('🔄 Attempting to continue without database initialization...');
+        // Don't throw error, just continue
       }
     }
   } catch (error) {
