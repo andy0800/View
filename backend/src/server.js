@@ -7,38 +7,7 @@ const Redis         = require('ioredis');
 const path          = require('path');
 const jwt           = require('jsonwebtoken');
 const cookieParser  = require('cookie-parser');
-// Load models conditionally based on environment
-let sequelize;
-if (process.env.NODE_ENV === 'production') {
-  // In production, create sequelize connection without loading models
-  const Sequelize = require('sequelize');
-  sequelize = process.env.DATABASE_URL 
-    ? new Sequelize(process.env.DATABASE_URL, {
-        dialect: 'postgres',
-        logging: false,
-        dialectOptions: {
-          ssl: {
-            require: true,
-            rejectUnauthorized: false
-          }
-        }
-      })
-    : new Sequelize(
-        process.env.DB_NAME,
-        process.env.DB_USER,
-        process.env.DB_PASS,
-        {
-          host: process.env.DB_HOST,
-          port: process.env.DB_PORT,
-          dialect: 'postgres',
-          logging: false,
-        }
-      );
-} else {
-  // In development, load models normally
-  const models = require('./models');
-  sequelize = models.sequelize;
-}
+const { sequelize } = require('./models');
 
 // Middleware
 const { handleWebhook } = require('./controllers/paymentController');
@@ -195,19 +164,30 @@ app.use(errorHandler);
       await sequelize.sync(); // ⚠️ Sync only in dev
       console.log('✅ Database synced successfully.');
     } else {
-      // In production, run migrations first, then load models
+      // In production, run migrations first, then disable sync
       console.log('🔄 Initializing production database...');
       try {
-        // Run migrations only
+        // Run migrations first
         console.log('🔄 Running database migrations...');
         const { execSync } = require('child_process');
-        execSync('npx sequelize-cli db:migrate', { stdio: 'inherit' });
-        console.log('✅ Database migrations completed successfully.');
+        try {
+          execSync('npx sequelize-cli db:migrate', { stdio: 'inherit' });
+          console.log('✅ Database migrations completed successfully.');
+        } catch (migrateError) {
+          console.error('❌ Migration command failed:', migrateError.message);
+          console.error('❌ Migration stderr:', migrateError.stderr?.toString());
+          console.error('❌ Migration stdout:', migrateError.stdout?.toString());
+          throw migrateError;
+        }
         
-        // Now load models after migration succeeds
-        console.log('🔄 Loading models after migration...');
-        const models = require('./models');
-        console.log('✅ Models loaded successfully.');
+        // Disable sync in production to prevent model sync
+        console.log('🔄 Disabling model sync in production...');
+        sequelize.options.define = {
+          ...sequelize.options.define,
+          freezeTableName: true,
+          timestamps: false
+        };
+        
         console.log('✅ Production database initialized with migrations only.');
       } catch (migrationError) {
         console.error('❌ Migration failed:', migrationError.message);
