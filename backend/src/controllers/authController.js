@@ -320,6 +320,13 @@ exports.register = async (req, res, next) => {
       });
     }
 
+    // Validate Civil ID format for viewers
+    if (userType === 'viewer' && civilId && !validateCivilId(civilId)) {
+      return res.status(400).json({ 
+        message: 'Invalid Civil ID. Must be 12 digits' 
+      });
+    }
+
     // Validate phone format
     if (!validateKuwaitPhone(phone)) {
       return res.status(400).json({ 
