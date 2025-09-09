@@ -49,7 +49,6 @@ export default function RegisterForm() {
     civilId: '',
     companyName: '',
     licenseNumber: '',
-    commercialRegistrationNumber: '',
     signatoryName: '',
     licenseDocument: null,
     civilIdFront: null,
@@ -144,7 +143,7 @@ export default function RegisterForm() {
 
     // Validate advertiser-specific fields
     if (userType === 'advertiser') {
-      if (!regData.companyName || !regData.licenseNumber || !regData.commercialRegistrationNumber || !regData.signatoryName) {
+      if (!regData.companyName || !regData.licenseNumber || !regData.signatoryName) {
         setMessage(t('auth.advertiserFieldsRequired'));
         setMessageType('error');
         return;
@@ -180,7 +179,6 @@ export default function RegisterForm() {
       if (userType === 'advertiser') {
         formData.append('companyName', regData.companyName);
         formData.append('licenseNumber', regData.licenseNumber);
-        formData.append('commercialRegistrationNumber', regData.commercialRegistrationNumber);
         formData.append('signatoryName', regData.signatoryName);
         formData.append('licenseDocument', regData.licenseDocument);
       }
@@ -198,7 +196,6 @@ export default function RegisterForm() {
         civilId: '',
         companyName: '',
         licenseNumber: '',
-        commercialRegistrationNumber: '',
         signatoryName: '',
         licenseDocument: null,
         civilIdFront: null,
@@ -495,36 +492,6 @@ export default function RegisterForm() {
             }}
           />
 
-          <TextField
-            fullWidth
-            label={t('auth.commercialRegistrationNumber')}
-            value={regData.commercialRegistrationNumber}
-            onChange={(e) => setRegData(prev => ({ ...prev, commercialRegistrationNumber: e.target.value }))}
-            margin="normal"
-            required
-            placeholder="Enter your commercial registration number"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Description sx={{ color: 'primary.main' }} />
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: 3,
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 25px rgba(25, 118, 210, 0.15)'
-                },
-                '&.Mui-focused': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 25px rgba(25, 118, 210, 0.25)'
-                }
-              }
-            }}
-          />
 
           <TextField
             fullWidth

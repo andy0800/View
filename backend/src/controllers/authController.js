@@ -232,13 +232,12 @@ exports.registerAdvertiser = async (req, res, next) => {
       phone, 
       company_name, 
       license_number, 
-      commercial_registration_number,
       signatory_name 
     } = req.body;
     const files = req.files || {};
 
     // Validation
-    if (!name || !phone || !company_name || !license_number || !commercial_registration_number || !signatory_name) {
+    if (!name || !phone || !company_name || !license_number || !signatory_name) {
       return res.status(400).json({ 
         message: 'All fields are required' 
       });
@@ -273,7 +272,6 @@ exports.registerAdvertiser = async (req, res, next) => {
       kyc_status: 'pending',
       company_name,
       license_number,
-      commercial_registration_number,
       signatory_name,
       license_doc_key: files.license_doc[0].filename
     });
@@ -355,11 +353,11 @@ exports.register = async (req, res, next) => {
 
     // Validate advertiser-specific requirements
     if (userType === 'advertiser') {
-      const { companyName, licenseNumber, commercialRegistrationNumber, signatoryName } = req.body;
+      const { companyName, licenseNumber, signatoryName } = req.body;
       
-      if (!companyName || !licenseNumber || !commercialRegistrationNumber || !signatoryName) {
+      if (!companyName || !licenseNumber || !signatoryName) {
         return res.status(400).json({ 
-          message: 'Company name, license number, commercial registration number, and signatory name are required for advertisers' 
+          message: 'Company name, license number, and signatory name are required for advertisers' 
         });
       }
 
@@ -384,7 +382,6 @@ exports.register = async (req, res, next) => {
     if (userType === 'advertiser') {
       userData.company_name = req.body.companyName;
       userData.license_number = req.body.licenseNumber;
-      userData.commercial_registration_number = req.body.commercialRegistrationNumber;
       userData.signatory_name = req.body.signatoryName;
       userData.license_doc_key = req.files.licenseDocument[0].filename;
     }
