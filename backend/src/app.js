@@ -73,7 +73,17 @@ app.options('/uploads/*', (req, res) => {
 
 // ✅ Serve frontend static files (in production)
 if (NODE_ENV === 'production') {
-  app.use(express.static(FRONT_BUILD));
+  console.log('🔍 Frontend build path:', FRONT_BUILD);
+  console.log('🔍 Frontend build path exists:', require('fs').existsSync(FRONT_BUILD));
+  
+  // Check if frontend build directory exists
+  if (require('fs').existsSync(FRONT_BUILD)) {
+    app.use(express.static(FRONT_BUILD));
+    console.log('✅ Frontend static files served from:', FRONT_BUILD);
+  } else {
+    console.warn('⚠️ Frontend build directory not found:', FRONT_BUILD);
+    console.warn('⚠️ Frontend will not be served by backend');
+  }
 }
 
 // ✅ CORS + cookies
@@ -147,7 +157,24 @@ app.use(
 app.get('/health', (_, res) => res.send('OK'));
 
 if (NODE_ENV === 'production') {
-  app.get('*', (_, res) => res.sendFile(path.join(FRONT_BUILD, 'index.html')));
+  app.get('*', (req, res) => {
+    const indexPath = path.join(FRONT_BUILD, 'index.html');
+    console.log('🔍 Catch-all route hit for:', req.path);
+    console.log('🔍 Looking for index.html at:', indexPath);
+    console.log('🔍 Index file exists:', require('fs').existsSync(indexPath));
+    
+    if (require('fs').existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      console.error('❌ Index.html not found at:', indexPath);
+      res.status(404).json({ 
+        error: 'Frontend not found', 
+        message: 'The frontend application is not available. Please check the deployment.',
+        path: req.path,
+        indexPath: indexPath
+      });
+    }
+  });
 }
 
 // Global error handler

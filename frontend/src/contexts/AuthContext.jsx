@@ -50,6 +50,11 @@ export function AuthProvider({ children }) {
         localStorage.removeItem('token');
         localStorage.removeItem('sessionId');
         setUser(null);
+        
+        // Don't treat 401 as an error - it's normal for unauthenticated users
+        if (error.response?.status === 401) {
+          console.log('AuthContext: User not authenticated - this is normal');
+        }
       } finally {
         setLoading(false);
         sessionChecked.current = true; // Mark as checked locally
