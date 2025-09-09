@@ -302,6 +302,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'purchased_package_id', 
       as: 'purchasedPackage' 
     });
+    ViewEvent.belongsTo(models.AdvertiserPackage, { 
+      foreignKey: 'package_id', 
+      as: 'package' 
+    });
   };
 
   return ViewEvent;

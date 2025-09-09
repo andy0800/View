@@ -120,6 +120,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'package_id',
       as: 'purchasedPackages'
     });
+
+    AdvertiserPackage.hasMany(models.ViewEvent, {
+      foreignKey: 'package_id',
+      as: 'viewEvents'
+    });
   };
 
   return AdvertiserPackage;

@@ -213,6 +213,12 @@ module.exports = (sequelize, DataTypes) => {
     return wallet;
   };
 
-  // 🚫 No association to User — polymorphic use only
+  Wallet.associate = models => {
+    Wallet.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      as: 'user'
+    });
+  };
+
   return Wallet;
 };
