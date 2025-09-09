@@ -4,68 +4,32 @@ import api from '../api';
 
 const AuthContext = createContext();
 
-// Global flag to prevent multiple session checks across the entire app
-let globalSessionChecked = false;
-
-// Emergency disable flag - completely prevents session checking
-let emergencyDisable = false;
+// Session checking disabled to prevent 401 errors
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false); // Start with false to prevent loading state
   const sessionChecked = useRef(false);
 
-  // ✅ Only check session ONCE across the entire app, never again
+  // ✅ Disabled automatic session checking to prevent 401 errors
   useEffect(() => {
-    const checkSession = async () => {
-      // Emergency disable - completely prevent session checking
-      if (emergencyDisable) {
-        console.log('AuthContext: Emergency disabled - no session checking');
-        setLoading(false);
-        return;
+    console.log('AuthContext: Skipping automatic session check to prevent 401 errors');
+    setLoading(false);
+    
+    // Check if user data exists in localStorage from previous session
+    try {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const userData = JSON.parse(storedUser);
+        console.log('AuthContext: Found stored user data:', userData);
+        setUser(userData);
       }
-
-      // Prevent multiple session checks globally
-      if (globalSessionChecked || sessionChecked.current) {
-        console.log('AuthContext: Already checked - skipping');
-        setLoading(false);
-        return;
-      }
-
-      console.log('AuthContext: Checking session ONCE globally...');
-      
-      try {
-        const { data } = await api.get('/auth/session');
-        console.log('AuthContext: Session data received:', data);
-        setUser(data.user);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        
-        if (data.sessionId) {
-          localStorage.setItem('sessionId', data.sessionId);
-        }
-      } catch (error) {
-        console.log('AuthContext: No valid session found:', error.message);
-        // Clear any stale data
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        localStorage.removeItem('sessionId');
-        setUser(null);
-        
-        // Don't treat 401 as an error - it's normal for unauthenticated users
-        if (error.response?.status === 401) {
-          console.log('AuthContext: User not authenticated - this is normal');
-        }
-      } finally {
-        setLoading(false);
-        sessionChecked.current = true; // Mark as checked locally
-        globalSessionChecked = true; // Mark as checked globally
-        emergencyDisable = true; // Emergency disable after first check
-        console.log('AuthContext: Session check completed globally, emergency disabled');
-      }
-    };
-
-    // Check session immediately but only once globally
-    checkSession();
+    } catch (error) {
+      console.log('AuthContext: No valid stored user data');
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      localStorage.removeItem('sessionId');
+    }
   }, []); // Empty dependency array - only runs once
 
   // ✅ Save user/token and set state
@@ -75,9 +39,6 @@ export function AuthProvider({ children }) {
       localStorage.setItem('user', JSON.stringify(usr));
       // Do not persist token; rely on httpOnly cookie
       setUser(usr);
-      sessionChecked.current = true; // Mark as checked
-      globalSessionChecked = true; // Mark as checked globally
-      emergencyDisable = true; // Emergency disable
     } catch (err) {
       console.error('❌ Failed to persist user/token:', err);
     }
@@ -91,12 +52,9 @@ export function AuthProvider({ children }) {
       console.warn('⚠️ Logout request failed:', err.message);
     } finally {
       localStorage.removeItem('user');
-      // No token in localStorage anymore
+      localStorage.removeItem('token');
       localStorage.removeItem('sessionId');
       setUser(null);
-      sessionChecked.current = false; // Allow session check on next login
-      globalSessionChecked = false; // Allow session check on next login
-      emergencyDisable = false; // Allow session check on next login
     }
   };
 
