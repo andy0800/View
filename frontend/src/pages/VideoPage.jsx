@@ -404,7 +404,7 @@ export default function VideoPage() {
                     const mediaUrl = currentVideo.mediaUrl;
                     let videoUrl;
                     
-                    const backendUrl = import.meta.env.VITE_API_BASE_URL || '${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001'}';
+                    const backendUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001';
                     if (mediaUrl.startsWith('http')) {
                       // If it's already a full URL, check if it needs the /uploads/ads/ path
                       if (mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
