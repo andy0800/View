@@ -1,18 +1,18 @@
 // backend/src/models/video.js
+// This model is kept for backward compatibility but functionality moved to Ad model
 module.exports = (sequelize, DataTypes) => {
   const Video = sequelize.define(
     'Video',
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         primaryKey: true,
-        autoIncrement: true
+        defaultValue: DataTypes.UUIDV4
       },
       url: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      // NEW: track which sections this video belongs to
       sections: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
@@ -28,6 +28,31 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0
       },
+      budget: {
+        type: DataTypes.DECIMAL(10,2),
+        allowNull: false,
+        defaultValue: 0
+      },
+      duration: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 30
+      },
+      is_active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      },
+      advertiser_id: {
+        type: DataTypes.UUID,
+        allowNull: true,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -38,8 +63,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: 'Videos',
-      underscored: true
+      tableName: 'videos',
+      underscored: true,
+      timestamps: true
     }
   )
 

@@ -8,76 +8,61 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
-    advertiser_id: {
+    user_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: { model: 'users', key: 'id' }
+      references: {
+        model: 'users',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     package_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: { model: 'advertiser_packages', key: 'id' }
+      references: {
+        model: 'advertiser_packages',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'RESTRICT'
     },
-    // KWD values for compatibility with existing database schema
-    purchased_budget: {
-      type: DataTypes.DECIMAL(10, 2), // Budget in KWD (e.g., 300.00)
+    total_budget_micro: {
+      type: DataTypes.BIGINT,
       allowNull: false,
-      comment: 'Total budget in KWD (same as budget_micro/1_000_000)'
+      comment: 'Total budget in micro units (1,000,000 = 1 KWD)'
     },
-    remaining_budget: {
-      type: DataTypes.DECIMAL(10, 2), // Remaining budget in KWD
-      allowNull: false,
-      comment: 'Remaining budget in KWD (same as remaining_micro/1_000_000)'
-    },
-    used_budget: {
-      type: DataTypes.DECIMAL(10, 2), // Used budget in KWD
-      allowNull: false,
-      defaultValue: 0.00,
-      comment: 'Used budget in KWD (same as used_micro/1_000_000)'
-    },
-    // Micro unit values for precise calculations
-    budget_micro: {
-      type: DataTypes.BIGINT, // Budget in micro units (1,000,000 = 1 KWD)
-      allowNull: false,
-      comment: 'Total budget in micro units'
-    },
-    remaining_micro: {
-      type: DataTypes.BIGINT, // Remaining budget in micro units
+    remaining_budget_micro: {
+      type: DataTypes.BIGINT,
       allowNull: false,
       comment: 'Remaining budget in micro units'
-    },
-    used_micro: {
-      type: DataTypes.BIGINT, // Used budget in micro units
-      allowNull: false,
-      defaultValue: 0,
-      comment: 'Used budget in micro units'
     },
     estimated_views: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      comment: 'Estimated views based on budget and package price'
+      comment: 'Estimated number of views based on budget'
     },
-    views_completed: {
+    actual_views: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
-      comment: 'Number of views completed'
+      comment: 'Actual number of views generated'
     },
     status: {
-      type: DataTypes.ENUM('active', 'used', 'expired'),
+      type: DataTypes.ENUM('active', 'used', 'expired', 'cancelled'),
       allowNull: false,
       defaultValue: 'active'
+    },
+    purchased_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     },
     expires_at: {
       type: DataTypes.DATE,
       allowNull: true,
-      comment: 'When package expires (if applicable)'
-    },
-    version: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1,
-      comment: 'Optimistic locking version for concurrency control'
+      comment: 'Package expiration date'
     }
   }, {
     tableName: 'purchased_packages',
@@ -85,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     indexes: [
       {
-        fields: ['advertiser_id']
+        fields: ['user_id']
       },
       {
         fields: ['package_id']
@@ -95,42 +80,29 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         fields: ['expires_at']
-      },
-      {
-        fields: ['version']
       }
     ]
   });
 
-  // Instance methods for KWD calculations (primary interface)
-  PurchasedPackage.prototype.getBudgetKWD = function() {
-    // Use stored KWD value if available, otherwise calculate from micro units
-    return this.purchased_budget || (this.budget_micro / 1_000_000);
+  // Instance methods for budget calculations
+  PurchasedPackage.prototype.getTotalBudgetKWD = function() {
+    return this.total_budget_micro / 1_000_000;
   };
 
-  PurchasedPackage.prototype.getRemainingKWD = function() {
-    // Use stored KWD value if available, otherwise calculate from micro units
-    return this.remaining_budget || (this.remaining_micro / 1_000_000);
+  PurchasedPackage.prototype.getRemainingBudgetKWD = function() {
+    return this.remaining_budget_micro / 1_000_000;
   };
 
-  PurchasedPackage.prototype.getUsedKWD = function() {
-    // Use stored KWD value if available, otherwise calculate from micro units
-    return this.used_budget || (this.used_micro / 1_000_000);
+  PurchasedPackage.prototype.getSpentBudgetKWD = function() {
+    return (this.total_budget_micro - this.remaining_budget_micro) / 1_000_000;
   };
 
-  PurchasedPackage.prototype.getUtilizationPercentage = function() {
-    if (this.budget_micro === 0) return 0;
-    return Math.round((this.used_micro / this.budget_micro) * 100);
-  };
-
-  PurchasedPackage.prototype.getRemainingViews = function() {
-    return Math.floor(this.remaining_micro / this.getPackagePricePerViewMicro());
+  PurchasedPackage.prototype.getSpentBudgetMicro = function() {
+    return this.total_budget_micro - this.remaining_budget_micro;
   };
 
   PurchasedPackage.prototype.canAffordView = function() {
-    // Allow viewing if there's remaining budget, regardless of status
-    // Status 'used' means the package has been converted to an ad, which is valid for viewing
-    return this.remaining_micro > 0;
+    return this.remaining_budget_micro > 0 && this.status === 'active';
   };
 
   PurchasedPackage.prototype.isExpired = function() {
@@ -138,176 +110,130 @@ module.exports = (sequelize, DataTypes) => {
     return new Date() > this.expires_at;
   };
 
-  // Instance method to get package price (requires association)
-  PurchasedPackage.prototype.getPackagePricePerViewMicro = function() {
-    if (!this.package) {
-      throw new Error('Package association not loaded. Use include: [{ model: AdvertiserPackage, as: "package" }]');
-    }
-    return this.package.price_per_view_micro;
+  PurchasedPackage.prototype.getRemainingKWD = function() {
+    return this.remaining_budget_micro / 1_000_000;
   };
 
-  // Enhanced instance method to deduct view cost with robust concurrency handling
-  PurchasedPackage.prototype.deductViewCost = async function(transaction) {
-    // Get the package price from the associated package
-    if (!this.package) {
-      throw new Error('Package association not loaded. Use include: [{ model: AdvertiserPackage, as: "package" }]');
-    }
-    
-    const pricePerViewMicro = this.package.price_per_view_micro;
-    
-    if (this.remaining_micro < pricePerViewMicro) {
-      throw new Error('Insufficient budget for view');
+  PurchasedPackage.prototype.getRemainingMicro = function() {
+    return this.remaining_budget_micro;
+  };
+
+  // Instance methods for budget operations
+  PurchasedPackage.prototype.deductViewCost = async function(viewCostMicro, transaction) {
+    if (viewCostMicro <= 0) {
+      throw new Error('View cost must be positive');
     }
 
-    // ✅ REMOVED: Status check - allow 'used' packages with budget to be viewed
-    // if (this.status !== 'active') {
-    //   throw new Error('Package is not active for viewing');
-    // }
-
-    // ✅ FIXED: Ensure values are within safe numeric limits
-    const newRemaining = Math.max(0, this.remaining_micro - pricePerViewMicro);
-    const newUsed = this.used_micro + pricePerViewMicro;
-    const newViewsCompleted = this.views_completed + 1;
-    const newVersion = this.version + 1;
-    
-    // ✅ FIXED: Don't change status back to 'active' during view deduction
-    // Once a package is 'used' (converted to ad), it should stay 'used'
-    const newStatus = this.status; // Keep current status
-
-    // ✅ FIXED: Validate numeric values before database update
-    if (newUsed > 999999999999999) { // 15 digits max for DECIMAL(20,0)
-      throw new Error('Used budget would exceed maximum allowed value');
-    }
-    
-    if (newRemaining > 999999999999999) { // 15 digits max for DECIMAL(20,0)
-      throw new Error('Remaining budget would exceed maximum allowed value');
+    if (this.remaining_budget_micro < viewCostMicro) {
+      throw new Error('Insufficient remaining budget');
     }
 
-    // Enhanced optimistic locking with retry logic
-    let updatedRows = 0;
-    let retryCount = 0;
-    const maxRetries = 3;
-
-    while (updatedRows === 0 && retryCount < maxRetries) {
-      try {
-        // ✅ FIXED: Use proper numeric handling for database update
-        const [updateResult] = await this.constructor.update({
-          remaining_micro: newRemaining,
-          used_micro: newUsed,
-          remaining_budget: Number((newRemaining / 1_000_000).toFixed(2)), // Update KWD fields with proper rounding
-          used_budget: Number((newUsed / 1_000_000).toFixed(2)),
-          views_completed: newViewsCompleted,
-          version: newVersion,
-          status: newStatus
-        }, {
-          where: {
-            id: this.id,
-            version: this.version, // Optimistic lock check
-            // ✅ REMOVED: status: 'active' - allow updates to 'used' packages with budget
-          },
-          transaction
-        });
-
-        updatedRows = updateResult;
-
-        if (updatedRows === 0) {
-          // Refresh instance data and retry
-          await this.reload({ transaction });
-          retryCount++;
-          
-          if (retryCount < maxRetries) {
-            // Wait briefly before retry
-            await new Promise(resolve => setTimeout(resolve, 50 * retryCount));
-          }
-        }
-      } catch (error) {
-        console.error(`Error in deductViewCost attempt ${retryCount + 1}:`, error);
-        retryCount++;
-        
-        if (retryCount >= maxRetries) {
-          throw new Error('Failed to update package after multiple attempts');
-        }
-      }
+    if (this.status !== 'active') {
+      throw new Error('Package is not active');
     }
 
-    if (updatedRows === 0) {
-      throw new Error('Concurrent modification detected. Please retry.');
+    this.remaining_budget_micro -= viewCostMicro;
+    this.actual_views += 1;
+
+    // Mark as used if budget is exhausted
+    if (this.remaining_budget_micro <= 0) {
+      this.status = 'used';
     }
 
-    // Update local instance
-    this.remaining_micro = newRemaining;
-    this.used_micro = newUsed;
-    this.remaining_budget = Number((newRemaining / 1_000_000).toFixed(2)); // Update KWD fields with proper rounding
-    this.used_budget = Number((newUsed / 1_000_000).toFixed(2));
-    this.views_completed = newViewsCompleted;
-    this.version = newVersion;
-    this.status = newStatus;
+    await this.save({ transaction });
+    return this.remaining_budget_micro;
+  };
 
-    return {
-      remaining_micro: newRemaining,
-      used_micro: newUsed,
-      views_completed: newViewsCompleted,
-      status: newStatus,
-      retryCount
-    };
+  PurchasedPackage.prototype.markAsUsed = async function(transaction) {
+    this.status = 'used';
+    await this.save({ transaction });
+  };
+
+  PurchasedPackage.prototype.markAsExpired = async function(transaction) {
+    this.status = 'expired';
+    await this.save({ transaction });
+  };
+
+  PurchasedPackage.prototype.cancel = async function(transaction) {
+    this.status = 'cancelled';
+    await this.save({ transaction });
   };
 
   // Class methods for package management
-  PurchasedPackage.getActiveByAdvertiser = function(advertiserId) {
+  PurchasedPackage.createFromPackage = async function(userId, packageId, totalBudgetMicro, transaction) {
+    const advertiserPackage = await sequelize.models.AdvertiserPackage.findByPk(packageId);
+    if (!advertiserPackage) {
+      throw new Error('Advertiser package not found');
+    }
+
+    const estimatedViews = Math.floor(totalBudgetMicro / advertiserPackage.price_per_view_micro);
+
+    return this.create({
+      user_id: userId,
+      package_id: packageId,
+      total_budget_micro: totalBudgetMicro,
+      remaining_budget_micro: totalBudgetMicro,
+      estimated_views: estimatedViews,
+      actual_views: 0,
+      status: 'active',
+      purchased_at: new Date()
+    }, { transaction });
+  };
+
+  PurchasedPackage.getActiveForUser = function(userId) {
     return this.findAll({
       where: {
-        advertiser_id: advertiserId,
-        status: 'active' // Only return truly active packages (not 'used')
+        user_id: userId,
+        status: 'active',
+        remaining_budget_micro: {
+          [sequelize.Sequelize.Op.gt]: 0
+        }
       },
-      include: [{
-        model: sequelize.models.AdvertiserPackage,
-        as: 'package'
-      }],
-      order: [['created_at', 'DESC']]
+      include: [
+        {
+          model: sequelize.models.AdvertiserPackage,
+          as: 'package',
+          attributes: ['name', 'duration', 'price_per_view_micro']
+        }
+      ],
+      order: [['purchased_at', 'ASC']] // FIFO order
     });
   };
 
-  // Method to get all packages including used ones (for history)
-  PurchasedPackage.getAllByAdvertiser = function(advertiserId) {
+  PurchasedPackage.getAvailableForViewing = function() {
     return this.findAll({
       where: {
-        advertiser_id: advertiserId
+        status: 'active',
+        remaining_budget_micro: {
+          [sequelize.Sequelize.Op.gt]: 0
+        }
       },
-      include: [{
-        model: sequelize.models.AdvertiserPackage,
-        as: 'package'
-      }],
-      order: [['created_at', 'DESC']]
-    });
-  };
-
-  PurchasedPackage.getActiveByPackage = function(packageId) {
-    return this.findAll({
-      where: {
-        package_id: packageId,
-        status: 'active'
-      },
-      include: [{
-        model: sequelize.models.User,
-        as: 'advertiser'
-      }]
+      include: [
+        {
+          model: sequelize.models.AdvertiserPackage,
+          as: 'package',
+          where: { is_active: true },
+          attributes: ['name', 'duration', 'price_per_view_micro']
+        }
+      ],
+      order: [['purchased_at', 'ASC']]
     });
   };
 
   PurchasedPackage.associate = models => {
-    PurchasedPackage.belongsTo(models.User, { 
-      foreignKey: 'advertiser_id', 
-      as: 'advertiser' 
+    PurchasedPackage.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      as: 'user'
     });
-    
-    PurchasedPackage.belongsTo(models.AdvertiserPackage, { 
-      foreignKey: 'package_id', 
-      as: 'package' 
+
+    PurchasedPackage.belongsTo(models.AdvertiserPackage, {
+      foreignKey: 'package_id',
+      as: 'package'
     });
-    
-    PurchasedPackage.hasMany(models.Ad, { 
-      foreignKey: 'purchased_package_id', 
-      as: 'ads' 
+
+    PurchasedPackage.hasMany(models.Ad, {
+      foreignKey: 'purchased_package_id',
+      as: 'ads'
     });
 
     PurchasedPackage.hasMany(models.ViewEvent, {

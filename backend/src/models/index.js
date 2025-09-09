@@ -59,6 +59,72 @@ if (!db.Advertiser) {
   db.Advertiser = Advertiser;
 }
 
+// ✅ 5) Manual fallback for PurchasedPackage
+if (!db.PurchasedPackage) {
+  const PurchasedPackage = require('./purchased_package')(sequelize, Sequelize.DataTypes);
+  db.PurchasedPackage = PurchasedPackage;
+}
+
+// ✅ 6) Manual fallback for Transaction
+if (!db.Transaction) {
+  const Transaction = require('./transaction')(sequelize, Sequelize.DataTypes);
+  db.Transaction = Transaction;
+}
+
+// ✅ 7) Manual fallback for CompanyWallet
+if (!db.CompanyWallet) {
+  const CompanyWallet = require('./companyWallet')(sequelize, Sequelize.DataTypes);
+  db.CompanyWallet = CompanyWallet;
+}
+
+// ✅ 8) Manual fallback for Session
+if (!db.Session) {
+  const Session = require('./session')(sequelize, Sequelize.DataTypes);
+  db.Session = Session;
+}
+
+// ✅ 9) Manual fallback for OtpCode
+if (!db.OtpCode) {
+  const OtpCode = require('./otp_code')(sequelize, Sequelize.DataTypes);
+  db.OtpCode = OtpCode;
+}
+
+// ✅ 10) Manual fallback for Withdrawal
+if (!db.Withdrawal) {
+  const Withdrawal = require('./withdrawal')(sequelize, Sequelize.DataTypes);
+  db.Withdrawal = Withdrawal;
+}
+
+// ✅ 11) Manual fallback for Notification
+if (!db.Notification) {
+  const Notification = require('./notification')(sequelize, Sequelize.DataTypes);
+  db.Notification = Notification;
+}
+
+// ✅ 12) Manual fallback for Comment
+if (!db.Comment) {
+  const Comment = require('./comment')(sequelize, Sequelize.DataTypes);
+  db.Comment = Comment;
+}
+
+// ✅ 13) Manual fallback for CommentLike
+if (!db.CommentLike) {
+  const CommentLike = require('./commentLike')(sequelize, Sequelize.DataTypes);
+  db.CommentLike = CommentLike;
+}
+
+// ✅ 14) Manual fallback for AdAppeal
+if (!db.AdAppeal) {
+  const AdAppeal = require('./adAppeal')(sequelize, Sequelize.DataTypes);
+  db.AdAppeal = AdAppeal;
+}
+
+// ✅ 15) Manual fallback for AdVerificationHistory
+if (!db.AdVerificationHistory) {
+  const AdVerificationHistory = require('./adVerificationHistory')(sequelize, Sequelize.DataTypes);
+  db.AdVerificationHistory = AdVerificationHistory;
+}
+
 // 5) Register associations if defined
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
