@@ -23,7 +23,8 @@
     "create-test-package": "node scripts/createTestPurchasedPackage.js",
     "create-test-ad": "node scripts/createTestAd.js",
     "create-test-data": "node scripts/createTestData.js",
-    "test-video-completion": "node scripts/testVideoCompletionAPI.js"
+    "test-video-completion": "node scripts/testVideoCompletionAPI.js",
+    "fix-is-active-column": "node scripts/fixIsActiveColumn.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.848.0",

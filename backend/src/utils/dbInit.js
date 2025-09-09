@@ -1,6 +1,64 @@
 // backend/src/utils/dbInit.js
 // Database initialization utility for production
 
+async function checkAndAddMissingColumns(sequelize) {
+  console.log('🔍 Checking for missing columns in existing tables...');
+  
+  try {
+    // Check if is_active column exists in users table
+    const [results] = await sequelize.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'users' 
+      AND column_name = 'is_active'
+      AND table_schema = 'public'
+    `);
+    
+    if (results.length === 0) {
+      console.log('❌ is_active column missing in users table. Adding it now...');
+      
+      await sequelize.query(`
+        ALTER TABLE users ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT true
+      `);
+      
+      await sequelize.query(`
+        COMMENT ON COLUMN users.is_active IS 'Account status - whether user is active'
+      `);
+      
+      console.log('✅ is_active column added to users table');
+    } else {
+      console.log('ℹ️ is_active column already exists in users table');
+    }
+    
+    // Check if verified_by column exists in users table
+    const [verifiedByResults] = await sequelize.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'users' 
+      AND column_name = 'verified_by'
+      AND table_schema = 'public'
+    `);
+    
+    if (verifiedByResults.length === 0) {
+      console.log('❌ verified_by column missing in users table. Adding it now...');
+      
+      await sequelize.query(`
+        ALTER TABLE users ADD COLUMN verified_by UUID REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL
+      `);
+      
+      console.log('✅ verified_by column added to users table');
+    } else {
+      console.log('ℹ️ verified_by column already exists in users table');
+    }
+    
+    console.log('✅ Column check completed');
+    
+  } catch (error) {
+    console.error('❌ Error checking/adding missing columns:', error.message);
+    throw error;
+  }
+}
+
 async function initializeDatabase(sequelize) {
   console.log('🔄 Initializing database tables...');
   
@@ -22,6 +80,10 @@ async function initializeDatabase(sequelize) {
     
     if (missingTables.length === 0) {
       console.log('✅ All required tables already exist');
+      
+      // Check for missing columns in existing tables
+      await checkAndAddMissingColumns(sequelize);
+      
       return true;
     }
     
