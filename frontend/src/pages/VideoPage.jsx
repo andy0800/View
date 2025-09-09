@@ -404,21 +404,22 @@ export default function VideoPage() {
                     const mediaUrl = currentVideo.mediaUrl;
                     let videoUrl;
                     
+                    const backendUrl = import.meta.env.VITE_API_BASE_URL || '${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001'}';
                     if (mediaUrl.startsWith('http')) {
                       // If it's already a full URL, check if it needs the /uploads/ads/ path
                       if (mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
                         // Extract the filename and add the correct path
                         const filename = mediaUrl.split('/').pop();
-                        videoUrl = `http://localhost:4001/uploads/ads/${filename}`;
+                        videoUrl = `${backendUrl}/uploads/ads/${filename}`;
                       } else {
                         videoUrl = mediaUrl;
                       }
                     } else if (!mediaUrl.includes('/')) {
                       // If just filename, add the full path
-                      videoUrl = `http://localhost:4001/uploads/ads/${mediaUrl}`;
+                      videoUrl = `${backendUrl}/uploads/ads/${mediaUrl}`;
                     } else {
                       // If already has path, use as is
-                      videoUrl = `http://localhost:4001${mediaUrl}`;
+                      videoUrl = `${backendUrl}${mediaUrl}`;
                     }
                     
                     console.log('🔍 VideoPage - Video source (direct):', { 
@@ -442,7 +443,7 @@ export default function VideoPage() {
                       const mediaUrl = currentVideo.mediaUrl;
                       if (mediaUrl.startsWith('http') && mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
                         const filename = mediaUrl.split('/').pop();
-                        return `http://localhost:4001/uploads/ads/${filename}`;
+                        return `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001'}/uploads/ads/${filename}`;
                       }
                       return mediaUrl;
                     })();
@@ -453,7 +454,7 @@ export default function VideoPage() {
                       const mediaUrl = currentVideo.mediaUrl;
                       if (mediaUrl.startsWith('http') && mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
                         const filename = mediaUrl.split('/').pop();
-                        return `http://localhost:4001/uploads/ads/${filename}`;
+                        return `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001'}/uploads/ads/${filename}`;
                       }
                       return mediaUrl;
                     })();
@@ -464,7 +465,7 @@ export default function VideoPage() {
                       const mediaUrl = currentVideo.mediaUrl;
                       if (mediaUrl.startsWith('http') && mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
                         const filename = mediaUrl.split('/').pop();
-                        return `http://localhost:4001/uploads/ads/${filename}`;
+                        return `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001'}/uploads/ads/${filename}`;
                       }
                       return mediaUrl;
                     })();
