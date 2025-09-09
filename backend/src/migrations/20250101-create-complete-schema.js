@@ -24,10 +24,23 @@ module.exports = {
         allowNull: false,
         defaultValue: 'viewer'
       },
+      civil_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true
+      },
       kyc_status: {
         type: Sequelize.ENUM('pending', 'verified', 'rejected'),
         allowNull: false,
         defaultValue: 'pending'
+      },
+      civil_front_key: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      civil_back_key: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       company_name: {
         type: Sequelize.STRING,
