@@ -894,18 +894,18 @@ module.exports = {
       comment: 'Price per view in micro units (1,000,000 = 1 KWD)'
     });
 
-    await queryInterface.addColumn('advertiser_packages', 'viewer_reward_micro', {
+    await queryInterface.addColumn('advertiser_packages', 'min_budget_micro', {
       type: Sequelize.BIGINT,
       allowNull: false,
-      defaultValue: 5000, // 0.005 KWD in micro units
-      comment: 'Viewer reward in micro units'
+      defaultValue: 300000000, // 300 KWD in micro units
+      comment: 'Minimum budget in micro units (300 KWD)'
     });
 
-    await queryInterface.addColumn('advertiser_packages', 'company_fee_micro', {
+    await queryInterface.addColumn('advertiser_packages', 'budget_increment_micro', {
       type: Sequelize.BIGINT,
       allowNull: false,
-      defaultValue: 5000, // 0.005 KWD in micro units
-      comment: 'Company fee in micro units'
+      defaultValue: 100000000, // 100 KWD in micro units
+      comment: 'Budget increment in micro units (100 KWD)'
     });
 
     // Add micro-unit fields to wallets
@@ -1159,8 +1159,8 @@ module.exports = {
     await queryInterface.removeColumn('wallets', 'balance_micro');
 
     // Remove columns from advertiser_packages
-    await queryInterface.removeColumn('advertiser_packages', 'company_fee_micro');
-    await queryInterface.removeColumn('advertiser_packages', 'viewer_reward_micro');
+    await queryInterface.removeColumn('advertiser_packages', 'budget_increment_micro');
+    await queryInterface.removeColumn('advertiser_packages', 'min_budget_micro');
     await queryInterface.removeColumn('advertiser_packages', 'price_per_view_micro');
 
     // Remove columns from users

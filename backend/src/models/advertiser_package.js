@@ -21,6 +21,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       comment: 'Price per view in micro units (1,000,000 = 1 KWD)'
     },
+    min_budget_micro: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      defaultValue: 300000000, // 300 KWD in micro units
+      comment: 'Minimum budget in micro units (300 KWD)'
+    },
+    budget_increment_micro: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      defaultValue: 100000000, // 100 KWD in micro units
+      comment: 'Budget increment in micro units (100 KWD)'
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: true
@@ -66,6 +78,18 @@ module.exports = (sequelize, DataTypes) => {
 
   AdvertiserPackage.prototype.getCompanyShareKWD = function() {
     return this.getCompanyShareMicro() / 1_000_000;
+  };
+
+  AdvertiserPackage.prototype.getMinBudgetKWD = function() {
+    return this.min_budget_micro / 1_000_000;
+  };
+
+  AdvertiserPackage.prototype.getBudgetIncrementKWD = function() {
+    return this.budget_increment_micro / 1_000_000;
+  };
+
+  AdvertiserPackage.prototype.calculateEstimatedViews = function(budgetMicro) {
+    return Math.floor(budgetMicro / this.price_per_view_micro);
   };
 
   // Class methods for package management
