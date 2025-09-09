@@ -44,21 +44,63 @@ async function fixIsActiveColumn() {
       console.log('ℹ️ is_active column already exists in users table');
     }
     
-    // Verify the column was added
+    // Check and add verified_at column
+    const [verifiedAtResults] = await sequelize.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'users' 
+      AND column_name = 'verified_at'
+      AND table_schema = 'public'
+    `);
+    
+    if (verifiedAtResults.length === 0) {
+      console.log('❌ verified_at column does not exist. Adding it now...');
+      
+      await sequelize.query(`
+        ALTER TABLE users ADD COLUMN verified_at TIMESTAMPTZ
+      `);
+      
+      console.log('✅ verified_at column added successfully!');
+    } else {
+      console.log('ℹ️ verified_at column already exists in users table');
+    }
+    
+    // Check and add verified_by column
+    const [verifiedByResults] = await sequelize.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'users' 
+      AND column_name = 'verified_by'
+      AND table_schema = 'public'
+    `);
+    
+    if (verifiedByResults.length === 0) {
+      console.log('❌ verified_by column does not exist. Adding it now...');
+      
+      await sequelize.query(`
+        ALTER TABLE users ADD COLUMN verified_by UUID REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL
+      `);
+      
+      console.log('✅ verified_by column added successfully!');
+    } else {
+      console.log('ℹ️ verified_by column already exists in users table');
+    }
+    
+    // Verify all columns were added
     const [verifyResults] = await sequelize.query(`
       SELECT column_name, data_type, is_nullable, column_default
       FROM information_schema.columns 
       WHERE table_name = 'users' 
-      AND column_name = 'is_active'
+      AND column_name IN ('is_active', 'verified_at', 'verified_by')
       AND table_schema = 'public'
+      ORDER BY column_name
     `);
     
     if (verifyResults.length > 0) {
       console.log('✅ Verification successful:');
-      console.log('   Column:', verifyResults[0].column_name);
-      console.log('   Type:', verifyResults[0].data_type);
-      console.log('   Nullable:', verifyResults[0].is_nullable);
-      console.log('   Default:', verifyResults[0].column_default);
+      verifyResults.forEach(col => {
+        console.log(`   ${col.column_name}: ${col.data_type} (nullable: ${col.is_nullable}, default: ${col.column_default})`);
+      });
     }
     
   } catch (error) {

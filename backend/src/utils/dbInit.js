@@ -30,6 +30,27 @@ async function checkAndAddMissingColumns(sequelize) {
       console.log('ℹ️ is_active column already exists in users table');
     }
     
+    // Check if verified_at column exists in users table
+    const [verifiedAtResults] = await sequelize.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'users' 
+      AND column_name = 'verified_at'
+      AND table_schema = 'public'
+    `);
+    
+    if (verifiedAtResults.length === 0) {
+      console.log('❌ verified_at column missing in users table. Adding it now...');
+      
+      await sequelize.query(`
+        ALTER TABLE users ADD COLUMN verified_at TIMESTAMPTZ
+      `);
+      
+      console.log('✅ verified_at column added to users table');
+    } else {
+      console.log('ℹ️ verified_at column already exists in users table');
+    }
+    
     // Check if verified_by column exists in users table
     const [verifiedByResults] = await sequelize.query(`
       SELECT column_name 
