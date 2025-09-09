@@ -125,6 +125,30 @@ if (!db.AdVerificationHistory) {
   db.AdVerificationHistory = AdVerificationHistory;
 }
 
+// ✅ 16) Manual fallback for AdvertiserPackage
+if (!db.AdvertiserPackage) {
+  const AdvertiserPackage = require('./advertiser_package')(sequelize, Sequelize.DataTypes);
+  db.AdvertiserPackage = AdvertiserPackage;
+}
+
+// ✅ 17) Manual fallback for ViewEvent
+if (!db.ViewEvent) {
+  const ViewEvent = require('./view_event')(sequelize, Sequelize.DataTypes);
+  db.ViewEvent = ViewEvent;
+}
+
+// ✅ 18) Manual fallback for Section
+if (!db.Section) {
+  const Section = require('./section')(sequelize, Sequelize.DataTypes);
+  db.Section = Section;
+}
+
+// ✅ 19) Manual fallback for Wallet
+if (!db.Wallet) {
+  const Wallet = require('./wallet')(sequelize, Sequelize.DataTypes);
+  db.Wallet = Wallet;
+}
+
 // 5) Register associations if defined
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {

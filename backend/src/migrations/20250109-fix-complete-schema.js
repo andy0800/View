@@ -1013,6 +1013,39 @@ module.exports = {
       allowNull: true
     });
 
+    // Add missing fields from view_event model
+    await queryInterface.addColumn('view_events', 'proof_token', {
+      type: Sequelize.STRING(255),
+      allowNull: false,
+      unique: true,
+      comment: 'HMAC proof token for view validation'
+    });
+
+    await queryInterface.addColumn('view_events', 'proof_token_expires_at', {
+      type: Sequelize.DATE,
+      allowNull: false,
+      comment: 'When proof token expires'
+    });
+
+    await queryInterface.addColumn('view_events', 'charged_micro', {
+      type: Sequelize.BIGINT,
+      allowNull: false,
+      defaultValue: 0,
+      comment: 'Amount charged in micro units'
+    });
+
+    await queryInterface.addColumn('view_events', 'watched_duration_ms', {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      comment: 'Actual milliseconds watched'
+    });
+
+    await queryInterface.addColumn('view_events', 'required_duration_ms', {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      comment: 'Required milliseconds from package'
+    });
+
     // 4. Create indexes for performance
     console.log('📝 Creating indexes...');
 
@@ -1086,6 +1119,11 @@ module.exports = {
     // View events indexes
     await queryInterface.addIndex('view_events', ['ad_id']);
     await queryInterface.addIndex('view_events', ['is_completed']);
+    await queryInterface.addIndex('view_events', ['proof_token']);
+    await queryInterface.addIndex('view_events', ['proof_token_expires_at']);
+    await queryInterface.addIndex('view_events', ['user_id']);
+    await queryInterface.addIndex('view_events', ['purchased_package_id']);
+    await queryInterface.addIndex('view_events', ['viewed_at']);
 
     console.log('✅ Comprehensive schema fix completed successfully!');
   },
@@ -1147,10 +1185,20 @@ module.exports = {
     await queryInterface.removeIndex('ads', ['package_id']);
     await queryInterface.removeIndex('ads', ['advertiser_id']);
 
+    await queryInterface.removeIndex('view_events', ['viewed_at']);
+    await queryInterface.removeIndex('view_events', ['purchased_package_id']);
+    await queryInterface.removeIndex('view_events', ['user_id']);
+    await queryInterface.removeIndex('view_events', ['proof_token_expires_at']);
+    await queryInterface.removeIndex('view_events', ['proof_token']);
     await queryInterface.removeIndex('view_events', ['is_completed']);
     await queryInterface.removeIndex('view_events', ['ad_id']);
 
     // Remove columns from view_events
+    await queryInterface.removeColumn('view_events', 'required_duration_ms');
+    await queryInterface.removeColumn('view_events', 'watched_duration_ms');
+    await queryInterface.removeColumn('view_events', 'charged_micro');
+    await queryInterface.removeColumn('view_events', 'proof_token_expires_at');
+    await queryInterface.removeColumn('view_events', 'proof_token');
     await queryInterface.removeColumn('view_events', 'completed_at');
     await queryInterface.removeColumn('view_events', 'required_duration');
     await queryInterface.removeColumn('view_events', 'completion_duration');
