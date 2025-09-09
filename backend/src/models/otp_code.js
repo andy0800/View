@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     phone:     { type: DataTypes.STRING, allowNull: false },
     code:      { type: DataTypes.STRING, allowNull: false },
-    expiresAt: { type: DataTypes.DATE,   allowNull: false }
+    expires_at: { type: DataTypes.DATE,   allowNull: false }
   }, {
     tableName:   'otp_codes',
     underscored: true,

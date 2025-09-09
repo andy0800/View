@@ -64,6 +64,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      image_key: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      link: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       title: {
         type: Sequelize.STRING,
         allowNull: false
