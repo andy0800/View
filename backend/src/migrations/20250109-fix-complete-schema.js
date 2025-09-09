@@ -9,6 +9,13 @@ module.exports = {
     console.log('📝 Adding missing columns to existing tables...');
 
     // Add missing columns to users table
+    await queryInterface.addColumn('users', 'is_active', {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+      comment: 'Account status - whether user is active'
+    });
+
     await queryInterface.addColumn('users', 'verified_by', {
       type: Sequelize.UUID,
       allowNull: true,
@@ -1221,6 +1228,7 @@ module.exports = {
 
     // Remove columns from users
     await queryInterface.removeColumn('users', 'verified_by');
+    await queryInterface.removeColumn('users', 'is_active');
 
     // Drop tables in reverse order
     await queryInterface.dropTable('ad_verification_history');
