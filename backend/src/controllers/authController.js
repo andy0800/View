@@ -89,7 +89,10 @@ exports.verifyOtp = async (req, res, next) => {
     await Wallet.findOrCreate({
       where: { user_id: user.id },
       defaults: {
-        balance: 0.00
+        balance_micro: 0,
+        held_micro: 0,
+        confirmed_points: 0,
+        pending_points: 0
       }
     });
 

@@ -46,14 +46,14 @@ async function renderDeploy() {
       console.log('⚠️ is_active fix error:', error.message);
     }
     
-    // Fix wallet schema
+    // Force fix wallet schema
     try {
-      console.log('💰 Fixing wallet schema...');
-      const { fixWalletSchema } = require('./fixWalletSchema');
-      await fixWalletSchema();
-      console.log('✅ Wallet schema fixed');
+      console.log('💰 FORCE FIXING wallet schema...');
+      const { forceFixWalletSchema } = require('./forceFixWalletSchema');
+      await forceFixWalletSchema();
+      console.log('✅ Wallet schema force fixed');
     } catch (error) {
-      console.log('⚠️ Wallet schema error:', error.message);
+      console.log('⚠️ Wallet schema force fix error:', error.message);
     }
     
     // Fix verified_at column
