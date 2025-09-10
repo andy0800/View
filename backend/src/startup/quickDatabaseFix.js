@@ -16,6 +16,14 @@ async function quickDatabaseFix() {
     await Promise.race([connectionPromise, timeoutPromise]);
     console.log('✅ Database connection established');
 
+    // Check if critical tables are missing
+    const missingTables = await checkMissingTables();
+    if (missingTables.length > 0) {
+      console.log('⚠️ Missing critical tables detected:', missingTables);
+      console.log('🔄 This requires a complete database rebuild');
+      return false; // This will trigger the complete rebuild
+    }
+
     // Only create the most critical tables that are causing 502 errors
     const criticalTables = [
       {
@@ -463,4 +471,28 @@ async function quickDatabaseFix() {
   }
 }
 
-module.exports = { quickDatabaseFix };
+async function checkMissingTables() {
+  const criticalTables = [
+    'users', 'wallets', 'sections', 'advertiser_packages', 
+    'purchased_packages', 'ads', 'view_events', 'transactions',
+    'sessions', 'otp_codes', 'notifications', 'admin_settings',
+    'company_wallets', 'withdrawals', 'comments', 'comment_likes',
+    'ad_appeals', 'ad_verification_history'
+  ];
+  
+  const missingTables = [];
+  
+  for (const tableName of criticalTables) {
+    try {
+      await sequelize.query(`SELECT 1 FROM "${tableName}" LIMIT 1;`);
+    } catch (error) {
+      if (error.message.includes('does not exist') || error.message.includes('relation') || error.message.includes('table')) {
+        missingTables.push(tableName);
+      }
+    }
+  }
+  
+  return missingTables;
+}
+
+module.exports = { quickDatabaseFix, checkMissingTables };

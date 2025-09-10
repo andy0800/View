@@ -519,7 +519,7 @@ exports.getAllAds = async (req, res) => {
           model: PurchasedPackage,
           as: 'purchasedPackage',
           where: {
-            remaining_budget: { [Op.gt]: 0 }
+            remaining_budget_micro: { [Op.gt]: 0 }
             // ✅ REMOVED: status: 'active' - packages are marked 'used' after ad creation
             // We only need remaining budget > 0 for viewing
           },

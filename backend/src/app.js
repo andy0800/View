@@ -175,7 +175,7 @@ app.use(errorHandler);
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
     
-    // CRITICAL: Database initialization with rebuild option
+    // CRITICAL: Database initialization with aggressive rebuild
     console.log('⚡ RUNNING DATABASE INITIALIZATION...');
     try {
       // Check if we should do a complete rebuild
@@ -187,13 +187,21 @@ app.use(errorHandler);
         await completeDatabaseRebuild();
         console.log('✅ Complete database rebuild completed successfully');
       } else {
-        // Run quick database fix
+        // First try quick fix
         console.log('🔧 Running quick database fix...');
         const quickFixSuccess = await quickDatabaseFix();
+        
         if (quickFixSuccess) {
           console.log('✅ Quick database fix completed successfully');
         } else {
-          console.log('⚠️ Quick database fix completed with warnings');
+          console.log('⚠️ Quick database fix failed, attempting complete rebuild...');
+          try {
+            await completeDatabaseRebuild();
+            console.log('✅ Complete database rebuild completed successfully');
+          } catch (rebuildError) {
+            console.error('❌ Complete database rebuild also failed:', rebuildError.message);
+            console.log('⚠️ Continuing app startup despite database issues');
+          }
         }
       }
     } catch (error) {

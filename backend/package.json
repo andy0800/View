@@ -28,6 +28,7 @@
     "test-critical-tables": "node scripts/testCriticalTables.js",
     "verify-admin-settings": "node scripts/verifyAdminSettings.js",
     "force-rebuild": "node scripts/forceDatabaseRebuild.js",
+    "activate-rebuild": "node scripts/activateRebuild.js",
     "deploy": "npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run verify-admin-settings && npm start",
     "deploy-rebuild": "npm run force-rebuild && npm start",
     "deploy:force": "npm run migrate:undo && npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run verify-admin-settings && npm start",
