@@ -134,6 +134,166 @@ async function fixDatabaseOnStartup() {
       console.log('✅ verified_at column already exists');
     }
 
+    // Check sessions table
+    console.log('🔐 CHECKING SESSIONS TABLE...');
+    const [sessionsExists] = await sequelize.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_name = 'sessions'
+      );
+    `);
+
+    if (!sessionsExists[0].exists) {
+      console.log('🔧 Creating sessions table...');
+      await sequelize.query(`
+        CREATE TABLE sessions (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          user_id UUID NOT NULL REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+          token TEXT NOT NULL,
+          ip_address VARCHAR(45) NOT NULL,
+          user_agent TEXT,
+          expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+          is_active BOOLEAN NOT NULL DEFAULT true,
+          last_activity TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+          created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+          updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+        );
+      `);
+      console.log('✅ Created sessions table');
+
+      // Add indexes for sessions table
+      try {
+        await sequelize.query(`
+          CREATE INDEX idx_sessions_user_id ON sessions(user_id);
+        `);
+        console.log('✅ Added sessions user_id index');
+      } catch (err) {
+        console.log('⚠️ sessions user_id index already exists');
+      }
+
+      try {
+        await sequelize.query(`
+          CREATE INDEX idx_sessions_token ON sessions(token);
+        `);
+        console.log('✅ Added sessions token index');
+      } catch (err) {
+        console.log('⚠️ sessions token index already exists');
+      }
+
+      try {
+        await sequelize.query(`
+          CREATE INDEX idx_sessions_expires_at ON sessions(expires_at);
+        `);
+        console.log('✅ Added sessions expires_at index');
+      } catch (err) {
+        console.log('⚠️ sessions expires_at index already exists');
+      }
+    } else {
+      console.log('✅ sessions table already exists');
+    }
+
+    // Check otp_codes table
+    console.log('📱 CHECKING OTP_CODES TABLE...');
+    const [otpCodesExists] = await sequelize.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_name = 'otp_codes'
+      );
+    `);
+
+    if (!otpCodesExists[0].exists) {
+      console.log('🔧 Creating otp_codes table...');
+      await sequelize.query(`
+        CREATE TABLE otp_codes (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          phone VARCHAR(20) NOT NULL,
+          code VARCHAR(10) NOT NULL,
+          expires_at TIMESTAMP WITH TIME ZONE NOT NULL
+        );
+      `);
+      console.log('✅ Created otp_codes table');
+
+      // Add indexes for otp_codes table
+      try {
+        await sequelize.query(`
+          CREATE INDEX idx_otp_codes_phone ON otp_codes(phone);
+        `);
+        console.log('✅ Added otp_codes phone index');
+      } catch (err) {
+        console.log('⚠️ otp_codes phone index already exists');
+      }
+
+      try {
+        await sequelize.query(`
+          CREATE INDEX idx_otp_codes_expires_at ON otp_codes(expires_at);
+        `);
+        console.log('✅ Added otp_codes expires_at index');
+      } catch (err) {
+        console.log('⚠️ otp_codes expires_at index already exists');
+      }
+    } else {
+      console.log('✅ otp_codes table already exists');
+    }
+
+    // Check notifications table
+    console.log('🔔 CHECKING NOTIFICATIONS TABLE...');
+    const [notificationsExists] = await sequelize.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_name = 'notifications'
+      );
+    `);
+
+    if (!notificationsExists[0].exists) {
+      console.log('🔧 Creating notifications table...');
+      await sequelize.query(`
+        CREATE TABLE notifications (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          user_id UUID NOT NULL REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+          type VARCHAR(20) NOT NULL CHECK (type IN ('verification', 'withdrawal', 'appeal', 'kyc', 'system', 'alert')),
+          title VARCHAR(200) NOT NULL,
+          message TEXT NOT NULL,
+          status VARCHAR(20) NOT NULL DEFAULT 'unread' CHECK (status IN ('unread', 'read', 'archived')),
+          priority VARCHAR(10) NOT NULL DEFAULT 'normal' CHECK (priority IN ('low', 'normal', 'high', 'urgent')),
+          metadata JSONB,
+          read_at TIMESTAMP WITH TIME ZONE,
+          created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+          updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+        );
+      `);
+      console.log('✅ Created notifications table');
+
+      // Add indexes for notifications table
+      try {
+        await sequelize.query(`
+          CREATE INDEX idx_notifications_user_id ON notifications(user_id);
+        `);
+        console.log('✅ Added notifications user_id index');
+      } catch (err) {
+        console.log('⚠️ notifications user_id index already exists');
+      }
+
+      try {
+        await sequelize.query(`
+          CREATE INDEX idx_notifications_type ON notifications(type);
+        `);
+        console.log('✅ Added notifications type index');
+      } catch (err) {
+        console.log('⚠️ notifications type index already exists');
+      }
+
+      try {
+        await sequelize.query(`
+          CREATE INDEX idx_notifications_status ON notifications(status);
+        `);
+        console.log('✅ Added notifications status index');
+      } catch (err) {
+        console.log('⚠️ notifications status index already exists');
+      }
+    } else {
+      console.log('✅ notifications table already exists');
+    }
+
     // Check admin_settings table
     console.log('⚙️ CHECKING ADMIN_SETTINGS TABLE...');
     const [adminSettingsExists] = await sequelize.query(`
