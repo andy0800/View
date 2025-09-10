@@ -112,7 +112,7 @@ exports.verifyOtp = async (req, res, next) => {
     res.cookie('token', sessionData.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'none',
       path: '/',
       maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });

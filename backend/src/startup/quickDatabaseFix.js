@@ -45,6 +45,23 @@ async function quickDatabaseFix() {
             expires_at TIMESTAMP WITH TIME ZONE NOT NULL
           );
         `
+      },
+      {
+        name: 'sections',
+        sql: `
+          CREATE TABLE IF NOT EXISTS sections (
+            id SERIAL PRIMARY KEY,
+            key VARCHAR(50) NOT NULL UNIQUE,
+            title VARCHAR(100) NOT NULL,
+            description TEXT,
+            icon VARCHAR(50),
+            color VARCHAR(20),
+            is_active BOOLEAN NOT NULL DEFAULT true,
+            sort_order INTEGER NOT NULL DEFAULT 0,
+            created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+            updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+          );
+        `
       }
     ];
 
@@ -89,6 +106,31 @@ async function quickDatabaseFix() {
       }
     } catch (err) {
       console.log('⚠️ Wallet column fix error:', err.message);
+    }
+
+    // Add default sections if sections table is empty
+    try {
+      const [sectionCount] = await sequelize.query(`
+        SELECT COUNT(*) as count FROM sections;
+      `);
+      
+      if (sectionCount[0].count === '0') {
+        console.log('🔧 Adding default sections...');
+        await sequelize.query(`
+          INSERT INTO sections (key, title, description, icon, color, sort_order) VALUES
+          ('entertainment', 'Entertainment', 'Fun and engaging content', 'play_circle', '#FF6B6B', 1),
+          ('technology', 'Technology', 'Latest tech news and reviews', 'computer', '#4ECDC4', 2),
+          ('lifestyle', 'Lifestyle', 'Health, fashion, and daily life', 'favorite', '#45B7D1', 3),
+          ('business', 'Business', 'Finance, entrepreneurship, and markets', 'business', '#96CEB4', 4),
+          ('education', 'Education', 'Learning and skill development', 'school', '#FFEAA7', 5)
+          ON CONFLICT (key) DO NOTHING;
+        `);
+        console.log('✅ Added default sections');
+      } else {
+        console.log('✅ Sections already exist');
+      }
+    } catch (err) {
+      console.log('⚠️ Sections data error:', err.message);
     }
 
     console.log('⚡ QUICK DATABASE FIX COMPLETED!');
