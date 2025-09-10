@@ -66,24 +66,27 @@ async function ensureAllSections() {
     `);
     console.log('✅ Sections table ensured');
 
-    // Insert all 12 sections (will skip duplicates)
+    // Delete all existing sections to prevent duplicates
+    await sequelize.query('DELETE FROM sections;');
+    console.log('✅ Existing sections cleared');
+
+    // Insert all 12 sections (fresh insert)
     await sequelize.query(`
-      INSERT INTO sections (key, title, description, icon, color, sort_order) VALUES
-      ('restaurants', 'Restaurants & Food', 'Restaurants, cafes, food delivery, and culinary services', 'restaurant', '#FF6B6B', 1),
-      ('retail', 'Retail & Shopping', 'Clothing, electronics, home goods, and retail stores', 'shopping_bag', '#4ECDC4', 2),
-      ('automotive', 'Automotive', 'Car dealerships, auto services, and vehicle-related businesses', 'directions_car', '#45B7D1', 3),
-      ('healthcare', 'Healthcare & Medical', 'Hospitals, clinics, pharmacies, and medical services', 'local_hospital', '#96CEB4', 4),
-      ('education', 'Education & Training', 'Schools, universities, training centers, and educational services', 'school', '#FFEAA7', 5),
-      ('real_estate', 'Real Estate', 'Property sales, rentals, and real estate services', 'home', '#DDA0DD', 6),
-      ('finance', 'Finance & Banking', 'Banks, insurance, investment, and financial services', 'account_balance', '#FFD93D', 7),
-      ('technology', 'Technology & IT', 'Software, hardware, IT services, and tech solutions', 'computer', '#6C5CE7', 8),
-      ('beauty', 'Beauty & Wellness', 'Salons, spas, beauty products, and wellness services', 'spa', '#FD79A8', 9),
-      ('entertainment', 'Entertainment & Leisure', 'Cinemas, events, sports, and entertainment venues', 'movie', '#A29BFE', 10),
-      ('travel', 'Travel & Tourism', 'Hotels, travel agencies, and tourism services', 'flight', '#74B9FF', 11),
-      ('services', 'Professional Services', 'Legal, consulting, marketing, and professional services', 'business', '#55A3FF', 12)
-      ON CONFLICT (key) DO NOTHING;
+      INSERT INTO sections (key, title, description, icon, color, sort_order, is_active, ad_count, created_at, updated_at) VALUES
+      ('restaurants', 'Restaurants & Food', 'Restaurants, cafes, food delivery, and culinary services', 'restaurant', '#FF6B6B', 1, true, 0, NOW(), NOW()),
+      ('retail', 'Retail & Shopping', 'Clothing, electronics, home goods, and retail stores', 'shopping_bag', '#4ECDC4', 2, true, 0, NOW(), NOW()),
+      ('automotive', 'Automotive', 'Car dealerships, auto services, and vehicle-related businesses', 'directions_car', '#45B7D1', 3, true, 0, NOW(), NOW()),
+      ('healthcare', 'Healthcare & Medical', 'Hospitals, clinics, pharmacies, and medical services', 'local_hospital', '#96CEB4', 4, true, 0, NOW(), NOW()),
+      ('education', 'Education & Training', 'Schools, universities, training centers, and educational services', 'school', '#FFEAA7', 5, true, 0, NOW(), NOW()),
+      ('real_estate', 'Real Estate', 'Property sales, rentals, and real estate services', 'home', '#DDA0DD', 6, true, 0, NOW(), NOW()),
+      ('finance', 'Finance & Banking', 'Banks, insurance, investment, and financial services', 'account_balance', '#FFD93D', 7, true, 0, NOW(), NOW()),
+      ('technology', 'Technology & IT', 'Software, hardware, IT services, and tech solutions', 'computer', '#6C5CE7', 8, true, 0, NOW(), NOW()),
+      ('beauty', 'Beauty & Wellness', 'Salons, spas, beauty products, and wellness services', 'spa', '#FD79A8', 9, true, 0, NOW(), NOW()),
+      ('entertainment', 'Entertainment & Leisure', 'Cinemas, events, sports, and entertainment venues', 'movie', '#A29BFE', 10, true, 0, NOW(), NOW()),
+      ('travel', 'Travel & Tourism', 'Hotels, travel agencies, and tourism services', 'flight', '#74B9FF', 11, true, 0, NOW(), NOW()),
+      ('services', 'Professional Services', 'Legal, consulting, marketing, and professional services', 'business', '#55A3FF', 12, true, 0, NOW(), NOW());
     `);
-    console.log('✅ All 12 sections ensured');
+    console.log('✅ All 12 sections inserted');
 
     // Verify sections count
     const [result] = await sequelize.query('SELECT COUNT(*) as count FROM sections;');
