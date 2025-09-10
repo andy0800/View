@@ -25,7 +25,12 @@
     "create-test-data": "node scripts/createTestData.js",
     "test-video-completion": "node scripts/testVideoCompletionAPI.js",
     "fix-is-active-column": "node scripts/fixIsActiveColumn.js",
-    "verify-admin-settings": "node scripts/verifyAdminSettings.js"
+    "verify-admin-settings": "node scripts/verifyAdminSettings.js",
+    "deploy": "npm run migrate && npm run fix-is-active-column && npm run verify-admin-settings && npm start",
+    "deploy:force": "npm run migrate:undo && npm run migrate && npm run fix-is-active-column && npm run verify-admin-settings && npm start",
+    "deploy:full": "node scripts/deployWithMigrations.js && npm start",
+    "deploy:check": "node scripts/deployWithMigrations.js",
+    "render:deploy": "node scripts/renderDeploy.js && npm start"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.848.0",
