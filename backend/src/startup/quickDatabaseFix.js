@@ -244,14 +244,21 @@ async function quickDatabaseFix() {
         console.log('🔧 Adding default sections...');
         await sequelize.query(`
           INSERT INTO sections (key, title, description, icon, color, sort_order) VALUES
-          ('entertainment', 'Entertainment', 'Fun and engaging content', 'play_circle', '#FF6B6B', 1),
-          ('technology', 'Technology', 'Latest tech news and reviews', 'computer', '#4ECDC4', 2),
-          ('lifestyle', 'Lifestyle', 'Health, fashion, and daily life', 'favorite', '#45B7D1', 3),
-          ('business', 'Business', 'Finance, entrepreneurship, and markets', 'business', '#96CEB4', 4),
-          ('education', 'Education', 'Learning and skill development', 'school', '#FFEAA7', 5)
+          ('restaurants', 'Restaurants & Food', 'Restaurants, cafes, food delivery, and culinary services', 'restaurant', '#FF6B6B', 1),
+          ('retail', 'Retail & Shopping', 'Clothing, electronics, home goods, and retail stores', 'shopping_bag', '#4ECDC4', 2),
+          ('automotive', 'Automotive', 'Car dealerships, auto services, and vehicle-related businesses', 'directions_car', '#45B7D1', 3),
+          ('healthcare', 'Healthcare & Medical', 'Hospitals, clinics, pharmacies, and medical services', 'local_hospital', '#96CEB4', 4),
+          ('education', 'Education & Training', 'Schools, universities, training centers, and educational services', 'school', '#FFEAA7', 5),
+          ('real_estate', 'Real Estate', 'Property sales, rentals, and real estate services', 'home', '#DDA0DD', 6),
+          ('finance', 'Finance & Banking', 'Banks, insurance, investment, and financial services', 'account_balance', '#FFD93D', 7),
+          ('technology', 'Technology & IT', 'Software, hardware, IT services, and tech solutions', 'computer', '#6C5CE7', 8),
+          ('beauty', 'Beauty & Wellness', 'Salons, spas, beauty products, and wellness services', 'spa', '#FD79A8', 9),
+          ('entertainment', 'Entertainment & Leisure', 'Cinemas, events, sports, and entertainment venues', 'movie', '#A29BFE', 10),
+          ('travel', 'Travel & Tourism', 'Hotels, travel agencies, and tourism services', 'flight', '#74B9FF', 11),
+          ('services', 'Professional Services', 'Legal, consulting, marketing, and professional services', 'business', '#55A3FF', 12)
           ON CONFLICT (key) DO NOTHING;
         `);
-        console.log('✅ Added default sections');
+        console.log('✅ Added all 12 original sections');
       } else {
         console.log('✅ Sections already exist');
       }
