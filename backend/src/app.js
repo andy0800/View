@@ -11,10 +11,8 @@ const jwt           = require('jsonwebtoken');
 const cookieParser  = require('cookie-parser');
 const { sequelize } = require('./models');
 
-// Import startup database fix
-const { fixDatabaseOnStartup } = require('./startup/databaseFix');
-const { quickDatabaseFix } = require('./startup/quickDatabaseFix');
-const { completeDatabaseRebuild } = require('./startup/completeDatabaseRebuild');
+// Import startup database initialization
+const { initializeDatabase } = require('./startup/databaseInit');
 
 // Middleware
 const { handleWebhook } = require('./controllers/paymentController');
@@ -175,39 +173,19 @@ app.use(errorHandler);
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
     
-    // CRITICAL: Database initialization with aggressive rebuild
-    console.log('⚡ RUNNING DATABASE INITIALIZATION...');
-    try {
-      // Check if we should do a complete rebuild
-      const shouldRebuild = process.env.FORCE_DATABASE_REBUILD === 'true' || 
-                           process.env.NODE_ENV === 'development';
-      
-      if (shouldRebuild) {
-        console.log('🚀 FORCE REBUILD ENABLED - Running complete database rebuild...');
-        await completeDatabaseRebuild();
-        console.log('✅ Complete database rebuild completed successfully');
-      } else {
-        // First try quick fix
-        console.log('🔧 Running quick database fix...');
-        const quickFixSuccess = await quickDatabaseFix();
-        
-        if (quickFixSuccess) {
-          console.log('✅ Quick database fix completed successfully');
-        } else {
-          console.log('⚠️ Quick database fix failed, attempting complete rebuild...');
-          try {
-            await completeDatabaseRebuild();
-            console.log('✅ Complete database rebuild completed successfully');
-          } catch (rebuildError) {
-            console.error('❌ Complete database rebuild also failed:', rebuildError.message);
-            console.log('⚠️ Continuing app startup despite database issues');
-          }
-        }
-      }
-    } catch (error) {
-      console.error('❌ Database initialization failed:', error.message);
-      console.log('⚠️ Continuing app startup despite database initialization failure');
+  // SIMPLE DATABASE INITIALIZATION
+  console.log('⚡ RUNNING DATABASE INITIALIZATION...');
+  try {
+    const initSuccess = await initializeDatabase();
+    if (initSuccess) {
+      console.log('✅ Database initialization completed successfully');
+    } else {
+      console.log('⚠️ Database initialization failed, but continuing app startup');
     }
+  } catch (error) {
+    console.error('❌ Database initialization error:', error.message);
+    console.log('⚠️ Continuing app startup despite database initialization failure');
+  }
     
     if (NODE_ENV === 'development') {
       await sequelize.sync(); // ⚠️ Sync only in dev
