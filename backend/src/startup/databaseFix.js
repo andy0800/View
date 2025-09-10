@@ -80,6 +80,27 @@ async function fixDatabaseOnStartup() {
       console.log('✅ Wallet schema already correct - no fix needed');
     }
 
+    // Verify wallet table structure
+    console.log('🔍 Verifying wallet table structure...');
+    const [walletStructure] = await sequelize.query(`
+      SELECT column_name, data_type, is_nullable, column_default
+      FROM information_schema.columns 
+      WHERE table_name = 'wallets' 
+      ORDER BY ordinal_position;
+    `);
+    
+    console.log('📋 Current wallet table columns:');
+    walletStructure.forEach(col => {
+      console.log(`   • ${col.column_name}: ${col.data_type} (nullable: ${col.is_nullable})`);
+    });
+
+    // Ensure no orphaned columns exist
+    const hasOwnerId = walletStructure.some(col => col.column_name === 'owner_id');
+    if (hasOwnerId) {
+      console.log('⚠️ Found orphaned owner_id column - this should not exist');
+      console.log('   The wallet table should only use user_id as foreign key');
+    }
+
     // Fix users table is_active column
     console.log('👤 CHECKING USERS TABLE...');
     const [userColumns] = await sequelize.query(`

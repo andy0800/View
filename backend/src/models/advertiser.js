@@ -63,11 +63,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Advertiser.hasOne(models.Wallet, {
-      foreignKey: 'owner_id',
+      foreignKey: 'user_id',
       constraints: false,
-      scope: {
-        owner_type: 'advertiser'
-      },
       as: 'wallet'
     });
   };
