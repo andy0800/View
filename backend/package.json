@@ -23,6 +23,7 @@
     "fix-is-active-column": "node scripts/fixIsActiveColumn.js",
     "fix-wallet-schema": "node scripts/fixWalletSchema.js",
     "force-fix-wallet": "node scripts/forceFixWalletSchema.js",
+    "test-db-fix": "node scripts/testDatabaseFix.js",
     "verify-admin-settings": "node scripts/verifyAdminSettings.js",
     "deploy": "npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run verify-admin-settings && npm start",
     "deploy:force": "npm run migrate:undo && npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run verify-admin-settings && npm start",

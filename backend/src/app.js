@@ -11,6 +11,9 @@ const jwt           = require('jsonwebtoken');
 const cookieParser  = require('cookie-parser');
 const { sequelize } = require('./models');
 
+// Import startup database fix
+const { fixDatabaseOnStartup } = require('./startup/databaseFix');
+
 // Middleware
 const { handleWebhook } = require('./controllers/paymentController');
 const { authenticate, authorizeRoles, requireKyc } = require('./middleware/authMiddleware');
@@ -157,6 +160,11 @@ app.use(errorHandler);
   try {
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
+    
+    // CRITICAL: Fix database schema immediately on startup
+    console.log('🔧 RUNNING STARTUP DATABASE FIX...');
+    await fixDatabaseOnStartup();
+    console.log('✅ Startup database fix completed');
     
     if (NODE_ENV === 'development') {
       await sequelize.sync(); // ⚠️ Sync only in dev
