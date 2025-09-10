@@ -1,7 +1,7 @@
 // frontend/src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import App from './App.jsx';
 import { AppProvider } from './contexts/AppProvider.jsx';
@@ -17,10 +17,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <CssBaseline />
     <GlobalStyles />
-    <BrowserRouter>
+    <HashRouter>
       <AppProvider>
         <App />
       </AppProvider>
-    </BrowserRouter>
+    </HashRouter>
   </>
 );
