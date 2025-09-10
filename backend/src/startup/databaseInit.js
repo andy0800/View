@@ -17,6 +17,7 @@
  */
 
 const { sequelize } = require('../models');
+const { execSync } = require('child_process');
 
 async function initializeDatabase() {
   console.log('🚀 INITIALIZING DATABASE...');
@@ -29,10 +30,13 @@ async function initializeDatabase() {
     // 1. Ensure sections table exists and has all 12 sections
     await ensureAllSections();
     
-    // 2. Ensure admin user exists
+    // 2. Restore advertiser packages system
+    await restoreAdvertiserPackages();
+    
+    // 3. Ensure admin user exists
     await ensureAdminUser();
     
-    // 3. Ensure admin settings exist
+    // 4. Ensure admin settings exist
     await ensureAdminSettings();
     
     console.log('✅ Database initialization completed successfully');
@@ -150,6 +154,22 @@ async function ensureAdminSettings() {
     }
   } catch (error) {
     console.error('❌ Error ensuring admin settings:', error.message);
+    throw error;
+  }
+}
+
+async function restoreAdvertiserPackages() {
+  console.log('🔧 Restoring advertiser packages system...');
+  
+  try {
+    // Run the restoration script
+    execSync('node scripts/restoreAdvertiserPackages.js', { 
+      stdio: 'inherit',
+      cwd: process.cwd()
+    });
+    console.log('✅ Advertiser packages system restored');
+  } catch (error) {
+    console.error('❌ Error restoring advertiser packages:', error.message);
     throw error;
   }
 }
