@@ -14,6 +14,7 @@ const { sequelize } = require('./models');
 // Import startup database fix
 const { fixDatabaseOnStartup } = require('./startup/databaseFix');
 const { quickDatabaseFix } = require('./startup/quickDatabaseFix');
+const { completeDatabaseRebuild } = require('./startup/completeDatabaseRebuild');
 
 // Middleware
 const { handleWebhook } = require('./controllers/paymentController');
@@ -174,18 +175,30 @@ app.use(errorHandler);
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
     
-    // CRITICAL: Quick database fix to prevent 502 errors
-    console.log('⚡ RUNNING QUICK DATABASE FIX...');
+    // CRITICAL: Database initialization with rebuild option
+    console.log('⚡ RUNNING DATABASE INITIALIZATION...');
     try {
-      const quickFixSuccess = await quickDatabaseFix();
-      if (quickFixSuccess) {
-        console.log('✅ Quick database fix completed successfully');
+      // Check if we should do a complete rebuild
+      const shouldRebuild = process.env.FORCE_DATABASE_REBUILD === 'true' || 
+                           process.env.NODE_ENV === 'development';
+      
+      if (shouldRebuild) {
+        console.log('🚀 FORCE REBUILD ENABLED - Running complete database rebuild...');
+        await completeDatabaseRebuild();
+        console.log('✅ Complete database rebuild completed successfully');
       } else {
-        console.log('⚠️ Quick database fix completed with warnings');
+        // Run quick database fix
+        console.log('🔧 Running quick database fix...');
+        const quickFixSuccess = await quickDatabaseFix();
+        if (quickFixSuccess) {
+          console.log('✅ Quick database fix completed successfully');
+        } else {
+          console.log('⚠️ Quick database fix completed with warnings');
+        }
       }
     } catch (error) {
-      console.error('❌ Quick database fix failed:', error.message);
-      console.log('⚠️ Continuing app startup despite database fix failure');
+      console.error('❌ Database initialization failed:', error.message);
+      console.log('⚠️ Continuing app startup despite database initialization failure');
     }
     
     if (NODE_ENV === 'development') {
