@@ -393,6 +393,12 @@ exports.register = async (req, res, next) => {
       userData.license_doc_key = req.files.licenseDocument[0].filename;
     }
 
+    // Add viewer-specific fields (civil ID documents)
+    if (userType === 'viewer') {
+      userData.civil_front_key = req.files.civilIdFront[0].filename;
+      userData.civil_back_key = req.files.civilIdBack[0].filename;
+    }
+
     const user = await User.create(userData);
 
     // Create wallet
