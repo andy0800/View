@@ -35,6 +35,16 @@ async function deployWithMigrations() {
       console.log('⚠️ Fix error (continuing):', fixError.message);
     }
     
+    // Step 3.5: Fix wallet schema
+    console.log('💰 Fixing wallet schema...');
+    try {
+      const { fixWalletSchema } = require('./fixWalletSchema');
+      await fixWalletSchema();
+      console.log('✅ Wallet schema fixed');
+    } catch (walletError) {
+      console.log('⚠️ Wallet schema error (continuing):', walletError.message);
+    }
+    
     // Step 4: Verify admin settings
     console.log('🔍 Verifying admin settings...');
     try {

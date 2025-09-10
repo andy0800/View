@@ -46,6 +46,16 @@ async function renderDeploy() {
       console.log('⚠️ is_active fix error:', error.message);
     }
     
+    // Fix wallet schema
+    try {
+      console.log('💰 Fixing wallet schema...');
+      const { fixWalletSchema } = require('./fixWalletSchema');
+      await fixWalletSchema();
+      console.log('✅ Wallet schema fixed');
+    } catch (error) {
+      console.log('⚠️ Wallet schema error:', error.message);
+    }
+    
     // Fix verified_at column
     try {
       const [results] = await sequelize.query(`
