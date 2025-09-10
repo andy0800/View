@@ -7,8 +7,13 @@ async function fixDatabaseOnStartup() {
   try {
     console.log('🚀 STARTUP: Checking and fixing database schema...');
     
-    // Test database connection
-    await sequelize.authenticate();
+    // Test database connection with timeout
+    const connectionPromise = sequelize.authenticate();
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Database connection timeout')), 10000)
+    );
+    
+    await Promise.race([connectionPromise, timeoutPromise]);
     console.log('✅ Database connection established');
 
     // Fix wallet schema immediately
@@ -342,9 +347,15 @@ async function fixDatabaseOnStartup() {
 
   } catch (error) {
     console.error('❌ STARTUP DATABASE FIX ERROR:', error);
+    console.log('⚠️ Database fix failed, but continuing app startup...');
+    console.log('⚠️ Some features may not work until database is manually fixed');
+    
     // Don't throw - let the app start even if fix fails
-    console.log('⚠️ Continuing app startup despite database fix error');
+    // This prevents the entire server from crashing
+    return false;
   }
+  
+  return true;
 }
 
 module.exports = { fixDatabaseOnStartup };

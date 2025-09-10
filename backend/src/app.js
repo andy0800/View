@@ -13,6 +13,7 @@ const { sequelize } = require('./models');
 
 // Import startup database fix
 const { fixDatabaseOnStartup } = require('./startup/databaseFix');
+const { quickDatabaseFix } = require('./startup/quickDatabaseFix');
 
 // Middleware
 const { handleWebhook } = require('./controllers/paymentController');
@@ -102,6 +103,18 @@ app.use((req, _, next) => {
 });
 
 // ─────────────────────────
+// ✅ HEALTH CHECK
+// ─────────────────────────
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+// ─────────────────────────
 // ✅ PUBLIC ROUTES
 // ─────────────────────────
 app.use('/auth',        authRoutes);
@@ -161,10 +174,19 @@ app.use(errorHandler);
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
     
-    // CRITICAL: Fix database schema immediately on startup
-    console.log('🔧 RUNNING STARTUP DATABASE FIX...');
-    await fixDatabaseOnStartup();
-    console.log('✅ Startup database fix completed');
+    // CRITICAL: Quick database fix to prevent 502 errors
+    console.log('⚡ RUNNING QUICK DATABASE FIX...');
+    try {
+      const quickFixSuccess = await quickDatabaseFix();
+      if (quickFixSuccess) {
+        console.log('✅ Quick database fix completed successfully');
+      } else {
+        console.log('⚠️ Quick database fix completed with warnings');
+      }
+    } catch (error) {
+      console.error('❌ Quick database fix failed:', error.message);
+      console.log('⚠️ Continuing app startup despite database fix failure');
+    }
     
     if (NODE_ENV === 'development') {
       await sequelize.sync(); // ⚠️ Sync only in dev
