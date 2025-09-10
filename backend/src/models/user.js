@@ -80,20 +80,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     
     // Verification tracking
-      verified_at: {
-        type: DataTypes.DATE,
-        allowNull: true
+    verified_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    verified_by: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id'
       },
-      verified_by: {
-        type: DataTypes.UUID,
-        allowNull: true,
-        references: {
-          model: 'users',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
-      }
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    }
   }, {
     tableName: 'users',
     underscored: true,
