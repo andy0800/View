@@ -30,6 +30,7 @@
     "test-db-init": "node scripts/testDatabaseInit.js",
     "rebuild-sections": "node scripts/rebuildSectionsOnly.js",
     "restore-packages": "node scripts/restoreAdvertiserPackages.js",
+    "test-packages": "node scripts/testPackagesEndpoint.js",
     "deploy": "npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run verify-admin-settings && npm start",
     "deploy:force": "npm run migrate:undo && npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run verify-admin-settings && npm start",
     "deploy:full": "node scripts/deployWithMigrations.js && npm start",
