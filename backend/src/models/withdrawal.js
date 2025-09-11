@@ -11,18 +11,33 @@ module.exports = (sequelize, DataTypes) => {
     user_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: { model: 'users', key: 'id' }
+      references: {
+        model: 'users',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
-    amount:   { type: DataTypes.DECIMAL(10,2), allowNull: false },
-    approved: { type: DataTypes.BOOLEAN, defaultValue: null }
+    amount: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false
+    },
+    approved: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: null
+    }
   }, {
-    tableName:   'withdrawals',
+    tableName: 'withdrawals',
     underscored: true,
-    timestamps:  true
+    timestamps: true
   });
 
   Withdrawal.associate = models => {
-    Withdrawal.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    Withdrawal.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      as: 'user'
+    });
   };
 
   return Withdrawal;

@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   const Session = sequelize.define('Session', {
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
     },
     user_id: {
       type: DataTypes.UUID,
@@ -14,14 +14,16 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'users',
         key: 'id'
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     token: {
       type: DataTypes.TEXT,
       allowNull: false
     },
     ip_address: {
-      type: DataTypes.STRING(45), // IPv6 compatible
+      type: DataTypes.STRING(45),
       allowNull: false
     },
     user_agent: {
@@ -34,33 +36,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     is_active: {
       type: DataTypes.BOOLEAN,
+      allowNull: true,
       defaultValue: true
     },
     last_activity: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
+      allowNull: true
     }
   }, {
     tableName: 'sessions',
     underscored: true,
-    timestamps: true,
-    indexes: [
-      {
-        fields: ['user_id']
-      },
-      {
-        fields: ['token']
-      },
-      {
-        fields: ['ip_address']
-      },
-      {
-        fields: ['expires_at']
-      }
-    ]
+    timestamps: true
   });
 
-  Session.associate = function(models) {
+  Session.associate = models => {
     Session.belongsTo(models.User, {
       foreignKey: 'user_id',
       as: 'user'
@@ -68,4 +57,4 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   return Session;
-}; 
+};

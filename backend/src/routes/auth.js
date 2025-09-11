@@ -100,8 +100,11 @@ router.post('/admin-login', (req, res) => {
     // Ensure JWT_SECRET is available
     const jwtSecret = process.env.JWT_SECRET || '2d8ea8f818adbb33b8d878efb2b13cad8b9c256eb6330773c201dfb36c2cfd0b';
     
+    // Use a fixed admin UUID instead of integer 0
+    const adminId = '00000000-0000-0000-0000-000000000000';
+    
     const token = jwt.sign(
-      { id: 0, role: 'admin' },
+      { id: adminId, role: 'admin' },
       jwtSecret.trim(),
       { expiresIn: '7d' }
     );
@@ -115,7 +118,7 @@ router.post('/admin-login', (req, res) => {
     });
 
     res.json({
-      user: { id: 0, role: 'admin', kyc_status: 'verified' },
+      user: { id: adminId, role: 'admin', kyc_status: 'verified' },
       token: token // Include token for testing purposes
     });
   } else {

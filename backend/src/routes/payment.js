@@ -29,12 +29,24 @@ router.post(
 
       // Create a pending transaction
       const { Transaction } = require('../models');
+      
+      // Convert KWD to micro units (1 KWD = 1,000,000 micro units)
+      const amountMicro = Math.round(amount * 1000000);
+      
       await Transaction.create({
         user_id: req.user.id,
         type: 'deposit',
+        amount_micro: amountMicro,
         amount: amount,
+        transaction_category: 'deposit',
         description: `Deposit request via ${method}`,
-        status: 'pending'
+        status: 'pending',
+        reference_id: `DEP-${Date.now()}-${req.user.id.slice(-8)}`,
+        metadata: {
+          method: method,
+          source: 'manual_deposit',
+          timestamp: new Date().toISOString()
+        }
       });
 
       res.json({ 

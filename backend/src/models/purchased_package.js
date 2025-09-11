@@ -238,6 +238,8 @@ module.exports = (sequelize, DataTypes) => {
 
   // Add missing method for advertiser controller
   PurchasedPackage.getActiveByAdvertiser = function(advertiserId) {
+    const { AdvertiserPackage } = sequelize.models;
+    
     return this.findAll({
       where: {
         advertiser_id: advertiserId,
@@ -248,7 +250,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       include: [
         {
-          model: sequelize.models.AdvertiserPackage,
+          model: AdvertiserPackage,
           as: 'package',
           attributes: ['id', 'name', 'duration', 'price_per_view_micro']
         }

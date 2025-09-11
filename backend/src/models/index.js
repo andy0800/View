@@ -73,7 +73,7 @@ if (!db.Transaction) {
 
 // ✅ 7) Manual fallback for CompanyWallet
 if (!db.CompanyWallet) {
-  const CompanyWallet = require('./companyWallet')(sequelize, Sequelize.DataTypes);
+  const CompanyWallet = require('./company_wallet')(sequelize, Sequelize.DataTypes);
   db.CompanyWallet = CompanyWallet;
 }
 
@@ -109,19 +109,19 @@ if (!db.Comment) {
 
 // ✅ 13) Manual fallback for CommentLike
 if (!db.CommentLike) {
-  const CommentLike = require('./commentLike')(sequelize, Sequelize.DataTypes);
+  const CommentLike = require('./comment_like')(sequelize, Sequelize.DataTypes);
   db.CommentLike = CommentLike;
 }
 
 // ✅ 14) Manual fallback for AdAppeal
 if (!db.AdAppeal) {
-  const AdAppeal = require('./adAppeal')(sequelize, Sequelize.DataTypes);
+  const AdAppeal = require('./ad_appeal')(sequelize, Sequelize.DataTypes);
   db.AdAppeal = AdAppeal;
 }
 
 // ✅ 15) Manual fallback for AdVerificationHistory
 if (!db.AdVerificationHistory) {
-  const AdVerificationHistory = require('./adVerificationHistory')(sequelize, Sequelize.DataTypes);
+  const AdVerificationHistory = require('./ad_verification_history')(sequelize, Sequelize.DataTypes);
   db.AdVerificationHistory = AdVerificationHistory;
 }
 
@@ -147,6 +147,12 @@ if (!db.Section) {
 if (!db.Wallet) {
   const Wallet = require('./wallet')(sequelize, Sequelize.DataTypes);
   db.Wallet = Wallet;
+}
+
+// ✅ 20) Manual fallback for AdminSetting
+if (!db.AdminSetting) {
+  const AdminSetting = require('./admin_setting')(sequelize, Sequelize.DataTypes);
+  db.AdminSetting = AdminSetting;
 }
 
 // 5) Register associations if defined

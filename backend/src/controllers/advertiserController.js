@@ -51,7 +51,7 @@ async function getPackages(req, res) {
 async function purchasePackage(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });
@@ -179,7 +179,7 @@ async function purchasePackage(req, res) {
 async function getPurchasedPackages(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });
@@ -233,7 +233,7 @@ async function getPurchasedPackages(req, res) {
 async function createAd(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });
@@ -355,7 +355,7 @@ async function createAd(req, res) {
 async function getAds(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });
@@ -419,7 +419,7 @@ async function getAds(req, res) {
 async function getAdStats(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });
@@ -500,7 +500,7 @@ async function getAdStats(req, res) {
 async function toggleAdStatus(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });
@@ -550,7 +550,7 @@ async function toggleAdStatus(req, res) {
 async function getDashboardStats(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });
@@ -607,7 +607,7 @@ async function getDashboardStats(req, res) {
 async function updateProfile(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });
@@ -662,7 +662,7 @@ async function updateProfile(req, res) {
 async function getAdStatsEnhanced(req, res) {
   try {
     // Prevent admin users from accessing advertiser endpoints
-    if (req.user.id === 0) {
+    if (req.user.id === '00000000-0000-0000-0000-000000000000' || req.user.role === 'admin') {
       return res.status(403).json({ 
         message: 'Admin users cannot access advertiser endpoints' 
       });

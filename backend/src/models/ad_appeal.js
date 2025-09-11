@@ -1,8 +1,8 @@
-// backend/src/models/comment.js
+// backend/src/models/ad_appeal.js
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Comment = sequelize.define('Comment', {
+  const AdAppeal = sequelize.define('AdAppeal', {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
-    user_id: {
+    advertiser_id: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -28,71 +28,63 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
-    content: {
+    appeal_reason: {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    likes_count: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
+    appeal_evidence: {
+      type: DataTypes.TEXT,
+      allowNull: true
     },
-    replies_count: {
-      type: DataTypes.INTEGER,
+    status: {
+      type: DataTypes.ENUM('pending', 'under_review', 'approved', 'rejected'),
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 'pending'
     },
-    parent_id: {
+    admin_response: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    reviewed_by: {
       type: DataTypes.UUID,
       allowNull: true,
       references: {
-        model: 'comments',
+        model: 'users',
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      onDelete: 'SET NULL'
     },
-    is_deleted: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
+    reviewed_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     },
-    deleted_at: {
+    appeal_deadline: {
       type: DataTypes.DATE,
       allowNull: true
     }
   }, {
-    tableName: 'comments',
+    tableName: 'ad_appeals',
     underscored: true,
     timestamps: true
   });
 
-  Comment.associate = models => {
-    Comment.belongsTo(models.Ad, {
+  AdAppeal.associate = models => {
+    AdAppeal.belongsTo(models.Ad, {
       foreignKey: 'ad_id',
       as: 'ad'
     });
     
-    Comment.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user'
+    AdAppeal.belongsTo(models.User, {
+      foreignKey: 'advertiser_id',
+      as: 'advertiser'
     });
     
-    Comment.belongsTo(models.Comment, {
-      foreignKey: 'parent_id',
-      as: 'parent'
-    });
-    
-    Comment.hasMany(models.Comment, {
-      foreignKey: 'parent_id',
-      as: 'replies'
-    });
-    
-    Comment.hasMany(models.CommentLike, {
-      foreignKey: 'comment_id',
-      as: 'likes'
+    AdAppeal.belongsTo(models.User, {
+      foreignKey: 'reviewed_by',
+      as: 'reviewer'
     });
   };
 
-  return Comment;
+  return AdAppeal;
 };

@@ -8,13 +8,22 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
-    phone:     { type: DataTypes.STRING, allowNull: false },
-    code:      { type: DataTypes.STRING, allowNull: false },
-    expires_at: { type: DataTypes.DATE,   allowNull: false }
+    phone: {
+      type: DataTypes.STRING(20),
+      allowNull: false
+    },
+    code: {
+      type: DataTypes.STRING(10),
+      allowNull: false
+    },
+    expires_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
   }, {
-    tableName:   'otp_codes',
+    tableName: 'otp_codes',
     underscored: true,
-    timestamps:  false
+    timestamps: false
   });
 
   return OtpCode;
