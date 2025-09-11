@@ -114,6 +114,34 @@ app.get('/health', (req, res) => {
 });
 
 // ─────────────────────────
+// ✅ TEST ENDPOINTS
+// ─────────────────────────
+app.get('/test/packages', async (req, res) => {
+  try {
+    const { AdvertiserPackage } = require('./models');
+    const packages = await AdvertiserPackage.getActivePackages();
+    res.json({
+      success: true,
+      count: packages.length,
+      packages: packages.map(pkg => ({
+        id: pkg.id,
+        name: pkg.name,
+        duration: pkg.duration,
+        pricePerViewMicro: pkg.price_per_view_micro,
+        pricePerViewKWD: (pkg.price_per_view_micro / 1000000).toFixed(3),
+        isActive: pkg.is_active
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      stack: error.stack
+    });
+  }
+});
+
+// ─────────────────────────
 // ✅ PUBLIC ROUTES
 // ─────────────────────────
 app.use('/auth',        authRoutes);
