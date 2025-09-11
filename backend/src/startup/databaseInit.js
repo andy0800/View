@@ -161,80 +161,13 @@ async function restoreAdvertiserPackages() {
   console.log('🔧 Restoring advertiser packages system...');
   
   try {
-    // 1. Create advertiser_packages table
-    await sequelize.query(`
-      CREATE TABLE IF NOT EXISTS advertiser_packages (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        duration INTEGER NOT NULL,
-        price_per_view_micro BIGINT NOT NULL,
-        min_budget_micro BIGINT NOT NULL DEFAULT 300000000,
-        budget_increment_micro BIGINT NOT NULL DEFAULT 100000000,
-        description TEXT,
-        is_active BOOLEAN NOT NULL DEFAULT true,
-        created_at TIMESTAMPTZ DEFAULT NOW(),
-        updated_at TIMESTAMPTZ DEFAULT NOW()
-      );
-    `);
-    console.log('✅ advertiser_packages table created');
-    
-    // 2. Create purchased_packages table
-    await sequelize.query(`
-      CREATE TABLE IF NOT EXISTS purchased_packages (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-        package_id INTEGER NOT NULL REFERENCES advertiser_packages(id) ON DELETE RESTRICT,
-        total_budget_micro BIGINT NOT NULL,
-        remaining_budget_micro BIGINT NOT NULL,
-        estimated_views INTEGER NOT NULL,
-        actual_views INTEGER NOT NULL DEFAULT 0,
-        status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'used', 'expired', 'cancelled')),
-        purchased_at TIMESTAMPTZ DEFAULT NOW(),
-        expires_at TIMESTAMPTZ,
-        created_at TIMESTAMPTZ DEFAULT NOW(),
-        updated_at TIMESTAMPTZ DEFAULT NOW()
-      );
-    `);
-    console.log('✅ purchased_packages table created');
-    
-    // 3. Create indexes
-    await sequelize.query(`
-      CREATE INDEX IF NOT EXISTS idx_advertiser_packages_is_active ON advertiser_packages(is_active);
-      CREATE INDEX IF NOT EXISTS idx_advertiser_packages_duration ON advertiser_packages(duration);
-      CREATE INDEX IF NOT EXISTS idx_purchased_packages_user_id ON purchased_packages(user_id);
-      CREATE INDEX IF NOT EXISTS idx_purchased_packages_package_id ON purchased_packages(package_id);
-      CREATE INDEX IF NOT EXISTS idx_purchased_packages_status ON purchased_packages(status);
-      CREATE INDEX IF NOT EXISTS idx_purchased_packages_expires_at ON purchased_packages(expires_at);
-    `);
-    console.log('✅ Indexes created');
-    
-    // 4. Clear existing packages and insert defaults
-    await sequelize.query('DELETE FROM advertiser_packages;');
-    console.log('✅ Existing packages cleared');
-    
-    await sequelize.query(`
-      INSERT INTO advertiser_packages (name, duration, price_per_view_micro, min_budget_micro, budget_increment_micro, description, is_active) VALUES
-      ('Basic Package', 10, 10000, 300000000, 100000000, '10-second video ads with maximum engagement', true),
-      ('Standard Package', 15, 14000, 300000000, 100000000, '15-second video ads for detailed messaging', true),
-      ('Premium Package', 20, 16000, 300000000, 100000000, '20-second video ads with comprehensive content', true),
-      ('Extended Package', 30, 24000, 300000000, 100000000, '30-second video ads for full storytelling', true);
-    `);
-    console.log('✅ Default packages inserted');
-    
-    // 5. Verify restoration
-    const [packages] = await sequelize.query(`
-      SELECT id, name, duration, price_per_view_micro, is_active 
-      FROM advertiser_packages 
-      ORDER BY duration;
-    `);
-    
-    console.log(`📦 Advertiser packages restored: ${packages.length} packages`);
-    packages.forEach(pkg => {
-      const priceKWD = (pkg.price_per_view_micro / 1000000).toFixed(3);
-      console.log(`   ${pkg.id}. ${pkg.name} (${pkg.duration}s) - ${priceKWD} KWD/view`);
+    // Run the comprehensive schema fix script
+    const { execSync } = require('child_process');
+    execSync('node scripts/fixAdvertiserPackagesSchema.js', { 
+      stdio: 'inherit',
+      cwd: process.cwd()
     });
-    
-    console.log('✅ Advertiser packages system restored');
+    console.log('✅ Advertiser packages system restored with bullet-proof schema');
   } catch (error) {
     console.error('❌ Error restoring advertiser packages:', error.message);
     throw error;

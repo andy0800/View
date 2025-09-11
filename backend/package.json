@@ -31,8 +31,10 @@
     "rebuild-sections": "node scripts/rebuildSectionsOnly.js",
     "restore-packages": "node scripts/restoreAdvertiserPackages.js",
     "test-packages": "node scripts/testPackagesEndpoint.js",
-    "deploy": "npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run verify-admin-settings && npm start",
-    "deploy:force": "npm run migrate:undo && npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run verify-admin-settings && npm start",
+    "fix-packages-schema": "node scripts/fixAdvertiserPackagesSchema.js",
+    "test-packages-complete": "node scripts/testAdvertiserPackagesComplete.js",
+    "deploy": "npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run fix-packages-schema && npm run verify-admin-settings && npm start",
+    "deploy:force": "npm run migrate:undo && npm run migrate && npm run fix-is-active-column && npm run fix-wallet-schema && npm run fix-packages-schema && npm run verify-admin-settings && npm start",
     "deploy:full": "node scripts/deployWithMigrations.js && npm start",
     "deploy:check": "node scripts/deployWithMigrations.js",
     "render:deploy": "node scripts/renderDeploy.js && npm start"

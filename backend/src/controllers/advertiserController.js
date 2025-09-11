@@ -125,9 +125,10 @@ async function purchasePackage(req, res) {
 
       // Create PurchasedPackage record with all required fields
       const purchasedPackage = await PurchasedPackage.create({
-        advertiser_id: advertiserId,
+        user_id: advertiserId, // Use user_id for database compatibility
+        advertiser_id: advertiserId, // Also set advertiser_id for controller logic
         package_id: packageId,
-        // KWD values for database compatibility
+        // KWD values for backward compatibility
         purchased_budget: budgetValidation.budgetKWD,
         remaining_budget: budgetValidation.budgetKWD,
         used_budget: 0.00,
@@ -198,22 +199,22 @@ async function getPurchasedPackages(req, res) {
       return {
         id: pkg.id,
         package: {
-          id: pkg.package.id,
-          name: pkg.package.name,
-          duration: pkg.package.duration,
-          price_per_view: pkg.package.price_per_view,
-          pricePerView: pkg.package.getPricePerViewKWD ? pkg.package.getPricePerViewKWD() : (pkg.package.price_per_view_micro / 1_000_000),
-          price_per_view_micro: pkg.package.price_per_view_micro,
-          pricePerViewMicro: pkg.package.price_per_view_micro
+          id: pkg.package?.id || pkg.package_id,
+          name: pkg.package?.name || 'Unknown Package',
+          duration: pkg.package?.duration || 0,
+          price_per_view: pkg.package?.price_per_view || (pkg.package?.price_per_view_micro / 1_000_000) || 0,
+          pricePerView: pkg.package?.getPricePerViewKWD ? pkg.package.getPricePerViewKWD() : (pkg.package?.price_per_view_micro / 1_000_000) || 0,
+          price_per_view_micro: pkg.package?.price_per_view_micro || 0,
+          pricePerViewMicro: pkg.package?.price_per_view_micro || 0
         },
         purchased_budget: budgetKWD,
         remaining_budget: remainingKWD,
         used_budget: usedKWD,
-        estimated_views: pkg.estimated_views,
-        views_completed: pkg.views_completed,
-        utilizationPercentage: pkg.getUtilizationPercentage(),
-        status: pkg.status,
-        createdAt: pkg.created_at,
+        estimated_views: pkg.estimated_views || 0,
+        views_completed: pkg.views_completed || 0,
+        utilizationPercentage: pkg.getUtilizationPercentage ? pkg.getUtilizationPercentage() : 0,
+        status: pkg.status || 'active',
+        createdAt: pkg.created_at || pkg.purchased_at,
         expiresAt: pkg.expires_at
       };
     });

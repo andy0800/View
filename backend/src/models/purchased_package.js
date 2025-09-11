@@ -115,7 +115,23 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   PurchasedPackage.prototype.getRemainingMicro = function() {
-    return this.remaining_budget_micro;
+    return this.remaining_micro || this.remaining_budget_micro || 0;
+  };
+
+  // Add missing instance methods for controller compatibility
+  PurchasedPackage.prototype.getBudgetKWD = function() {
+    return this.purchased_budget || (this.budget_micro / 1_000_000) || 0;
+  };
+
+  PurchasedPackage.prototype.getUsedKWD = function() {
+    return this.used_budget || (this.used_micro / 1_000_000) || 0;
+  };
+
+  PurchasedPackage.prototype.getUtilizationPercentage = function() {
+    const budget = this.budget_micro || 0;
+    if (budget === 0) return 0;
+    const used = budget - (this.remaining_micro || 0);
+    return Math.round((used / budget) * 100);
   };
 
   // Instance methods for budget operations
@@ -204,7 +220,7 @@ module.exports = (sequelize, DataTypes) => {
     return this.findAll({
       where: {
         status: 'active',
-        remaining_budget_micro: {
+        remaining_micro: {
           [sequelize.Sequelize.Op.gt]: 0
         }
       },
@@ -214,6 +230,27 @@ module.exports = (sequelize, DataTypes) => {
           as: 'package',
           where: { is_active: true },
           attributes: ['name', 'duration', 'price_per_view_micro']
+        }
+      ],
+      order: [['purchased_at', 'ASC']]
+    });
+  };
+
+  // Add missing method for advertiser controller
+  PurchasedPackage.getActiveByAdvertiser = function(advertiserId) {
+    return this.findAll({
+      where: {
+        advertiser_id: advertiserId,
+        status: 'active',
+        remaining_micro: {
+          [sequelize.Sequelize.Op.gt]: 0
+        }
+      },
+      include: [
+        {
+          model: sequelize.models.AdvertiserPackage,
+          as: 'package',
+          attributes: ['id', 'name', 'duration', 'price_per_view_micro']
         }
       ],
       order: [['purchased_at', 'ASC']]
