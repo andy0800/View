@@ -18,9 +18,16 @@
     "kill:backend": "netstat -ano | findstr :4001 | findstr LISTENING | for /f \"tokens=5\" %a in ('findstr LISTENING') do taskkill /F /PID %a 2>nul || echo No backend process to kill",
     "kill:frontend": "netstat -ano | findstr :5173 | findstr LISTENING | for /f \"tokens=5\" %a in ('findstr LISTENING') do taskkill /F /PID %a 2>nul || echo No frontend process to kill",
     "clean": "npm run kill:all && npm run kill:backend && npm run kill:frontend",
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "echo \"No tests specified\" && exit 0",
+    "cap:build": "npm run build && npx cap sync",
+    "cap:android": "npx cap add android",
+    "cap:ios": "npx cap add ios",
+    "cap:open:android": "npx cap open android",
+    "cap:open:ios": "npx cap open ios"
   },
   "dependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "helmet": "^8.1.0",
