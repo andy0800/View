@@ -14,8 +14,8 @@
 
 ### **Environment Variables:**
 ```
-VITE_API_BASE_URL=https://viewonline.me/api
-VITE_SOCKET_URL=https://viewonline.me
+VITE_API_BASE_URL=https://viewapp-backend.onrender.com
+VITE_SOCKET_URL=https://viewapp-backend.onrender.com
 VITE_APP_NAME=ViewApp
 VITE_NODE_ENV=production
 VITE_STRIPE_PUBLISHABLE_KEY=pk_live_YOUR_STRIPE_KEY

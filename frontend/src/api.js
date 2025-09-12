@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://viewonline.me/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://viewapp-backend.onrender.com',
   withCredentials: true // ✅ rely on httpOnly cookie
 });
 

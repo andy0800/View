@@ -9,7 +9,7 @@ export const getVideoUrl = (mediaUrl) => {
   if (!mediaUrl) return '';
   
   // Use the backend URL from the API configuration
-  const backendUrl = import.meta.env.VITE_API_BASE_URL || 'https://viewonline.me/api';
+  const backendUrl = import.meta.env.VITE_API_BASE_URL || 'https://viewapp-backend.onrender.com';
   
   if (mediaUrl.startsWith('http')) {
     // If it's already a full URL, check if it needs the /uploads/ads/ path

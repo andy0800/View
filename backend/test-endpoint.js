@@ -6,7 +6,7 @@ const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEyOWI4NjM2LWQwMGYt
 console.log('🔍 Testing the endpoint directly...');
 
 const options = {
-  hostname: 'viewonline.me',
+  hostname: 'viewapp-backend.onrender.com',
   port: 443,
   path: '/api/advertiser/packages/purchased',
   method: 'GET',
