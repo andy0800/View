@@ -510,17 +510,7 @@
   }
 }
 
-/* RTL dark mode support */
-@media (prefers-color-scheme: dark) {
-  [dir="rtl"] {
-    color: #e0e0e0;
-  }
-  
-  [dir="rtl"] .MuiCard-root {
-    background-color: #2d2d2d;
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-}
+/* RTL dark mode support removed - enforcing light theme only */
 
 /* RTL focus styles */
 [dir="rtl"] *:focus {

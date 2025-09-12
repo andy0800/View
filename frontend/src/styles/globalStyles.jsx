@@ -382,9 +382,86 @@ const globalStyles = css`
     }
   }
   
-  /* Dark mode support (if needed in future) */
+  /* Light theme enforcement - override any dark mode inheritance */
   @media (prefers-color-scheme: dark) {
-    /* Dark mode styles can be added here */
+    /* Force light theme regardless of system preference */
+    body {
+      background-color: #f8f9fa !important;
+      color: #1a1a1a !important;
+    }
+    
+    .MuiPaper-root {
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+    }
+    
+    .MuiCard-root {
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+    }
+    
+    .MuiAppBar-root {
+      background-color: #1a237e !important;
+      color: #ffffff !important;
+    }
+    
+    .MuiDrawer-root {
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+    }
+    
+    .MuiTable-root {
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+    }
+    
+    .MuiTableHead-root {
+      background-color: #f5f5f5 !important;
+      color: #1a1a1a !important;
+    }
+    
+    .MuiTableCell-head {
+      color: #1a1a1a !important;
+      border-bottom-color: #e0e0e0 !important;
+    }
+    
+    .MuiTableCell-body {
+      color: #1a1a1a !important;
+      border-bottom-color: #e0e0e0 !important;
+    }
+    
+    .MuiList-root {
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+    }
+    
+    .MuiListItem-root {
+      color: #1a1a1a !important;
+      border-bottom-color: #e0e0e0 !important;
+    }
+    
+    .MuiListItemText-primary {
+      color: #1a1a1a !important;
+    }
+    
+    .MuiListItemText-secondary {
+      color: #666666 !important;
+    }
+    
+    .MuiButton-root {
+      background-color: #1a237e !important;
+      color: #ffffff !important;
+    }
+    
+    .MuiTextField-root {
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+    }
+    
+    .MuiInputBase-root {
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+    }
   }
 
   /* Arabic-specific enhancements */

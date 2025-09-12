@@ -157,18 +157,7 @@ html {
   }
 }
 
-/* Dark mode support for mobile */
-@media (prefers-color-scheme: dark) {
-  .MuiPaper-root {
-    background-color: #121212 !important;
-    color: #ffffff !important;
-  }
-  
-  .MuiCard-root {
-    background-color: #1e1e1e !important;
-    color: #ffffff !important;
-  }
-}
+/* Dark mode support removed - enforcing light theme only */
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {

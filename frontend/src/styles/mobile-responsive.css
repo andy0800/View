@@ -1081,16 +1081,4 @@ body {
   }
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --mobile-bg-primary: #1a1a1a;
-    --mobile-bg-secondary: #2d2d2d;
-    --mobile-bg-tertiary: #404040;
-    --mobile-text-primary: #ffffff;
-    --mobile-text-secondary: #b3b3b3;
-    --mobile-text-muted: #808080;
-    --mobile-border-light: #404040;
-    --mobile-border-medium: #555555;
-  }
-}
+/* Dark mode support removed - enforcing light theme only */

@@ -397,51 +397,7 @@
   }
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) and (max-width: 1023px) {
-  .MuiCard-root {
-    background: #2d2d2d !important;
-    border-color: #404040 !important;
-    color: #ffffff !important;
-  }
-  
-  .MuiTable-root .MuiTableHead-root {
-    background: #404040 !important;
-  }
-  
-  .MuiTable-root .MuiTableCell-head {
-    color: #ffffff !important;
-    border-bottom-color: #555555 !important;
-  }
-  
-  .MuiTable-root .MuiTableCell-body {
-    color: #ffffff !important;
-    border-bottom-color: #404040 !important;
-  }
-  
-  .MuiTable-root .MuiTableRow-root:hover {
-    background: #404040 !important;
-  }
-  
-  .MuiList-root {
-    background: #2d2d2d !important;
-    border-color: #404040 !important;
-  }
-  
-  .MuiList-root .MuiListItem-root {
-    border-bottom-color: #404040 !important;
-  }
-  
-  .MuiList-root .MuiListItem-root:hover {
-    background: #404040 !important;
-  }
-  
-  .MuiPaper-root {
-    background: #2d2d2d !important;
-    border-color: #404040 !important;
-    color: #ffffff !important;
-  }
-}
+/* Dark mode support removed - enforcing light theme only */
 
 /* ========================================
    MOBILE PERFORMANCE OPTIMIZATIONS
