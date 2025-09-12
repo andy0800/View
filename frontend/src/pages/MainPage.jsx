@@ -74,7 +74,7 @@ export default function MainPage() {
       setError(null);
       
       // Fetch sections from API (axios, cookies included)
-      const { data: sectionsData } = await api.get('/api/viewer/sections');
+      const { data: sectionsData } = await api.get('/api/sections');
       setSections(sectionsData || []);
       
       // Use ad_count from backend instead of making multiple API calls

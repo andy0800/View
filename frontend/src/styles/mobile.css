@@ -1,0 +1,607 @@
+/* ========================================
+   MOBILE RESPONSIVE CSS MAIN FILE
+   ======================================== */
+
+/* This is the main mobile CSS file that imports all mobile-specific styles
+   and provides a comprehensive mobile-first responsive solution */
+
+/* Import all mobile CSS modules */
+@import './mobile-responsive.css';
+@import './mobile-components.css';
+@import './mobile-pages.css';
+
+/* ========================================
+   MOBILE GLOBAL OVERRIDES
+   ======================================== */
+
+/* Override Material-UI global styles for mobile optimization */
+@media (max-width: 1023px) {
+  /* Ensure proper mobile viewport */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Mobile-specific root container */
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Mobile AppBar positioning */
+  .MuiAppBar-root {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+  }
+  
+  /* Mobile Drawer positioning */
+  .MuiDrawer-root {
+    z-index: 1200;
+  }
+  
+  /* Mobile Dialog positioning */
+  .MuiDialog-root {
+    z-index: 1300;
+  }
+  
+  /* Mobile Snackbar positioning */
+  .MuiSnackbar-root {
+    z-index: 1400;
+  }
+  
+  /* Mobile Tooltip positioning */
+  .MuiTooltip-popper {
+    z-index: 1500;
+  }
+  
+  /* Mobile Table responsive behavior */
+  .MuiTableContainer-root {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Mobile Button touch targets */
+  .MuiButton-root {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .MuiIconButton-root {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Mobile Form field spacing */
+  .MuiTextField-root {
+    margin-bottom: 16px;
+  }
+  
+  .MuiFormControl-root {
+    margin-bottom: 16px;
+  }
+  
+  /* Mobile Card spacing */
+  .MuiCard-root {
+    margin-bottom: 16px;
+  }
+  
+  /* Mobile Paper spacing */
+  .MuiPaper-root {
+    margin-bottom: 16px;
+  }
+  
+  /* Mobile Grid spacing */
+  .MuiGrid-container {
+    margin: 0;
+  }
+  
+  .MuiGrid-item {
+    padding: 8px;
+  }
+  
+  /* Mobile List spacing */
+  .MuiList-root {
+    padding: 0;
+  }
+  
+  .MuiListItem-root {
+    padding: 16px;
+  }
+  
+  /* Mobile Typography responsive sizing */
+  .MuiTypography-h1 {
+    font-size: 1.875rem !important;
+  }
+  
+  .MuiTypography-h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  .MuiTypography-h3 {
+    font-size: 1.25rem !important;
+  }
+  
+  .MuiTypography-h4 {
+    font-size: 1.125rem !important;
+  }
+  
+  .MuiTypography-h5 {
+    font-size: 1rem !important;
+  }
+  
+  .MuiTypography-h6 {
+    font-size: 0.875rem !important;
+  }
+  
+  .MuiTypography-body1 {
+    font-size: 0.875rem !important;
+  }
+  
+  .MuiTypography-body2 {
+    font-size: 0.75rem !important;
+  }
+  
+  .MuiTypography-caption {
+    font-size: 0.625rem !important;
+  }
+  
+  .MuiTypography-overline {
+    font-size: 0.625rem !important;
+  }
+}
+
+/* ========================================
+   MOBILE BREAKPOINT SPECIFIC OVERRIDES
+   ======================================== */
+
+/* Extra Small Mobile (320px - 374px) */
+@media (min-width: 320px) and (max-width: 374px) {
+  .MuiContainer-root {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  
+  .MuiCard-root .MuiCardContent-root {
+    padding: 12px !important;
+  }
+  
+  .MuiCard-root .MuiCardHeader-root {
+    padding: 12px 16px !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-head,
+  .MuiTable-root .MuiTableCell-body {
+    padding: 8px 12px !important;
+  }
+  
+  .MuiButton-root {
+    padding: 6px 12px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .MuiTextField-root .MuiOutlinedInput-input {
+    padding: 10px 12px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .MuiTypography-h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  .MuiTypography-h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  .MuiTypography-h3 {
+    font-size: 1.125rem !important;
+  }
+}
+
+/* Small Mobile (375px - 413px) */
+@media (min-width: 375px) and (max-width: 413px) {
+  .MuiContainer-root {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  .MuiCard-root .MuiCardContent-root {
+    padding: 16px !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-head,
+  .MuiTable-root .MuiTableCell-body {
+    padding: 10px 14px !important;
+  }
+  
+  .MuiButton-root {
+    padding: 8px 14px !important;
+    font-size: 0.8125rem !important;
+  }
+  
+  .MuiTypography-h1 {
+    font-size: 1.75rem !important;
+  }
+  
+  .MuiTypography-h2 {
+    font-size: 1.375rem !important;
+  }
+}
+
+/* Medium Mobile (414px - 767px) */
+@media (min-width: 414px) and (max-width: 767px) {
+  .MuiContainer-root {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  
+  .MuiCard-root .MuiCardContent-root {
+    padding: 20px !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-head,
+  .MuiTable-root .MuiTableCell-body {
+    padding: 12px 16px !important;
+  }
+  
+  .MuiButton-root {
+    padding: 8px 16px !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .MuiTypography-h1 {
+    font-size: 1.875rem !important;
+  }
+  
+  .MuiTypography-h2 {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* Large Mobile / Small Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .MuiContainer-root {
+    max-width: 750px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  
+  .MuiCard-root .MuiCardContent-root {
+    padding: 24px !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-head,
+  .MuiTable-root .MuiTableCell-body {
+    padding: 14px 18px !important;
+  }
+  
+  .MuiButton-root {
+    padding: 10px 18px !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .MuiTypography-h1 {
+    font-size: 2rem !important;
+  }
+  
+  .MuiTypography-h2 {
+    font-size: 1.625rem !important;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .MuiContainer-root {
+    max-width: 1200px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  
+  .MuiCard-root .MuiCardContent-root {
+    padding: 24px !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-head,
+  .MuiTable-root .MuiTableCell-body {
+    padding: 16px 20px !important;
+  }
+  
+  .MuiButton-root {
+    padding: 12px 20px !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .MuiTypography-h1 {
+    font-size: 2.25rem !important;
+  }
+  
+  .MuiTypography-h2 {
+    font-size: 1.875rem !important;
+  }
+}
+
+/* ========================================
+   MOBILE ACCESSIBILITY ENHANCEMENTS
+   ======================================== */
+
+/* Focus indicators for better accessibility */
+@media (max-width: 1023px) {
+  .MuiButton-root:focus-visible,
+  .MuiIconButton-root:focus-visible,
+  .MuiTextField-root .MuiOutlinedInput-root:focus-within,
+  .MuiFormControl-root .MuiOutlinedInput-root:focus-within {
+    outline: 2px solid #1976d2 !important;
+    outline-offset: 2px !important;
+  }
+  
+  .MuiChip-root:focus-visible {
+    outline: 2px solid #1976d2 !important;
+    outline-offset: 2px !important;
+  }
+  
+  .MuiListItem-root:focus-visible {
+    outline: 2px solid #1976d2 !important;
+    outline-offset: -2px !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) and (max-width: 1023px) {
+  .MuiCard-root {
+    border: 2px solid #000000 !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-head {
+    border-bottom: 3px solid #000000 !important;
+  }
+  
+  .MuiButton-root {
+    border: 2px solid #000000 !important;
+  }
+  
+  .MuiPaper-root {
+    border: 1px solid #000000 !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) and (max-width: 1023px) {
+  .MuiButton-root,
+  .MuiIconButton-root,
+  .MuiChip-root,
+  .MuiListItem-root {
+    transition: none !important;
+  }
+  
+  .MuiCircularProgress-root {
+    animation: none !important;
+  }
+  
+  .MuiLinearProgress-root {
+    animation: none !important;
+  }
+  
+  .MuiSkeleton-root {
+    animation: none !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) and (max-width: 1023px) {
+  .MuiCard-root {
+    background: #2d2d2d !important;
+    border-color: #404040 !important;
+    color: #ffffff !important;
+  }
+  
+  .MuiTable-root .MuiTableHead-root {
+    background: #404040 !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-head {
+    color: #ffffff !important;
+    border-bottom-color: #555555 !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-body {
+    color: #ffffff !important;
+    border-bottom-color: #404040 !important;
+  }
+  
+  .MuiTable-root .MuiTableRow-root:hover {
+    background: #404040 !important;
+  }
+  
+  .MuiList-root {
+    background: #2d2d2d !important;
+    border-color: #404040 !important;
+  }
+  
+  .MuiList-root .MuiListItem-root {
+    border-bottom-color: #404040 !important;
+  }
+  
+  .MuiList-root .MuiListItem-root:hover {
+    background: #404040 !important;
+  }
+  
+  .MuiPaper-root {
+    background: #2d2d2d !important;
+    border-color: #404040 !important;
+    color: #ffffff !important;
+  }
+}
+
+/* ========================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+/* Optimize rendering performance on mobile */
+@media (max-width: 1023px) {
+  /* Enable hardware acceleration for smooth scrolling */
+  .MuiTableContainer-root {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Optimize drawer animations */
+  .MuiDrawer-root .MuiDrawer-paper {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Optimize dialog animations */
+  .MuiDialog-root .MuiDialog-paper {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Optimize button interactions */
+  .MuiButton-root:active {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+  }
+  
+  .MuiIconButton-root:active {
+    -webkit-transform: scale(0.95);
+    transform: scale(0.95);
+  }
+  
+  /* Optimize list scrolling */
+  .MuiList-root {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Optimize card interactions */
+  .MuiCard-root {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+/* ========================================
+   MOBILE PRINT STYLES
+   ======================================== */
+
+@media print and (max-width: 1023px) {
+  .MuiAppBar-root,
+  .MuiDrawer-root,
+  .MuiDialog-root,
+  .MuiSnackbar-root,
+  .MuiTooltip-root {
+    display: none !important;
+  }
+  
+  .MuiCard-root {
+    box-shadow: none !important;
+    border: 1px solid #000000 !important;
+    break-inside: avoid;
+  }
+  
+  .MuiButton-root {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    color: #000000 !important;
+  }
+  
+  .MuiTable-root {
+    border-collapse: collapse !important;
+  }
+  
+  .MuiTable-root .MuiTableCell-head,
+  .MuiTable-root .MuiTableCell-body {
+    border: 1px solid #000000 !important;
+  }
+  
+  .MuiPaper-root {
+    box-shadow: none !important;
+    border: 1px solid #000000 !important;
+  }
+}
+
+/* ========================================
+   MOBILE UTILITY CLASSES
+   ======================================== */
+
+/* Mobile-specific utility classes that work with Material-UI */
+.mobile-only {
+  display: block;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .desktop-only {
+    display: block;
+  }
+}
+
+/* Mobile touch-friendly spacing */
+.mobile-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Mobile scroll behavior */
+.mobile-scroll-smooth {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile text selection */
+.mobile-select-none {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.mobile-select-text {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Mobile image optimization */
+.mobile-img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Mobile container queries (when supported) */
+@supports (container-type: inline-size) {
+  .mobile-container {
+    container-type: inline-size;
+  }
+  
+  @container (max-width: 400px) {
+    .mobile-responsive-text {
+      font-size: 0.875rem;
+    }
+  }
+  
+  @container (min-width: 401px) {
+    .mobile-responsive-text {
+      font-size: 1rem;
+    }
+  }
+}

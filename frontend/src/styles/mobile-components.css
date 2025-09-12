@@ -1,0 +1,694 @@
+/* ========================================
+   MOBILE-SPECIFIC COMPONENT ENHANCEMENTS
+   ======================================== */
+
+/* This file enhances existing Material-UI components with mobile-specific styles
+   without breaking their functionality or changing their behavior */
+
+/* ========================================
+   MOBILE MATERIAL-UI ENHANCEMENTS
+   ======================================== */
+
+/* Mobile AppBar Enhancements */
+.MuiAppBar-root.mobile-appbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.MuiAppBar-root.mobile-appbar .MuiToolbar-root {
+  min-height: 56px;
+  padding: 0 16px;
+}
+
+.MuiAppBar-root.mobile-appbar .MuiTypography-h6 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* Mobile Drawer Enhancements */
+.MuiDrawer-root.mobile-drawer .MuiDrawer-paper {
+  width: 280px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.MuiDrawer-root.mobile-drawer-temporary .MuiDrawer-paper {
+  width: 280px;
+}
+
+.MuiDrawer-root.mobile-drawer-persistent .MuiDrawer-paper {
+  width: 280px;
+  position: relative;
+  height: 100vh;
+}
+
+/* Mobile Dialog Enhancements */
+.MuiDialog-root.mobile-dialog .MuiDialog-paper {
+  margin: 16px;
+  max-height: calc(100vh - 32px);
+  max-width: 500px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.MuiDialog-root.mobile-dialog .MuiDialogTitle-root {
+  padding: 20px 24px 16px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.MuiDialog-root.mobile-dialog .MuiDialogContent-root {
+  padding: 24px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.MuiDialog-root.mobile-dialog .MuiDialogActions-root {
+  padding: 16px 24px 20px;
+  border-top: 1px solid #e0e0e0;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Mobile Table Enhancements */
+.MuiTableContainer-root.mobile-table-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.MuiTable-root.mobile-table {
+  min-width: 600px;
+}
+
+.MuiTable-root.mobile-table .MuiTableHead-root {
+  background: #f8f9fa;
+}
+
+.MuiTable-root.mobile-table .MuiTableCell-head {
+  font-weight: 600;
+  color: #212529;
+  border-bottom: 2px solid #dee2e6;
+  white-space: nowrap;
+  padding: 12px 16px;
+}
+
+.MuiTable-root.mobile-table .MuiTableCell-body {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: top;
+}
+
+.MuiTable-root.mobile-table .MuiTableRow-root:hover {
+  background: #f8f9fa;
+}
+
+/* Mobile Card Enhancements */
+.MuiCard-root.mobile-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.MuiCard-root.mobile-card .MuiCardHeader-root {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px 20px;
+}
+
+.MuiCard-root.mobile-card .MuiCardHeader-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.MuiCard-root.mobile-card .MuiCardHeader-subheader {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-top: 4px;
+}
+
+.MuiCard-root.mobile-card .MuiCardContent-root {
+  padding: 20px;
+}
+
+.MuiCard-root.mobile-card .MuiCardActions-root {
+  padding: 16px 20px;
+  border-top: 1px solid #e0e0e0;
+  background: #f8f9fa;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Mobile Button Enhancements */
+.MuiButton-root.mobile-button {
+  min-height: 44px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 6px;
+  text-transform: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.MuiButton-root.mobile-button.mobile-button-sm {
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+}
+
+.MuiButton-root.mobile-button.mobile-button-lg {
+  min-height: 52px;
+  padding: 12px 24px;
+  font-size: 1rem;
+}
+
+.MuiButton-root.mobile-button.mobile-button-full {
+  width: 100%;
+}
+
+/* Mobile TextField Enhancements */
+.MuiTextField-root.mobile-textfield {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.MuiTextField-root.mobile-textfield .MuiInputLabel-root {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.MuiTextField-root.mobile-textfield .MuiOutlinedInput-root {
+  border-radius: 6px;
+}
+
+.MuiTextField-root.mobile-textfield .MuiOutlinedInput-input {
+  padding: 12px 16px;
+  font-size: 0.875rem;
+}
+
+.MuiTextField-root.mobile-textfield .MuiFormHelperText-root {
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+/* Mobile Select Enhancements */
+.MuiFormControl-root.mobile-select {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.MuiFormControl-root.mobile-select .MuiInputLabel-root {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.MuiFormControl-root.mobile-select .MuiOutlinedInput-root {
+  border-radius: 6px;
+}
+
+.MuiFormControl-root.mobile-select .MuiSelect-select {
+  padding: 12px 16px;
+  font-size: 0.875rem;
+}
+
+/* Mobile Grid Enhancements */
+.MuiGrid-container.mobile-grid {
+  width: 100%;
+  margin: 0;
+}
+
+.MuiGrid-container.mobile-grid .MuiGrid-item {
+  padding: 8px;
+}
+
+.MuiGrid-container.mobile-grid.mobile-grid-no-gap .MuiGrid-item {
+  padding: 0;
+}
+
+.MuiGrid-container.mobile-grid.mobile-grid-sm-gap .MuiGrid-item {
+  padding: 4px;
+}
+
+.MuiGrid-container.mobile-grid.mobile-grid-lg-gap .MuiGrid-item {
+  padding: 16px;
+}
+
+/* Mobile Paper Enhancements */
+.MuiPaper-root.mobile-paper {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.MuiPaper-root.mobile-paper.mobile-paper-elevated {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.MuiPaper-root.mobile-paper.mobile-paper-outlined {
+  box-shadow: none;
+  border: 1px solid #e0e0e0;
+}
+
+/* Mobile Stepper Enhancements */
+.MuiStepper-root.mobile-stepper {
+  padding: 24px 0;
+}
+
+.MuiStepper-root.mobile-stepper .MuiStepLabel-root {
+  padding: 0 8px;
+}
+
+.MuiStepper-root.mobile-stepper .MuiStepLabel-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.MuiStepper-root.mobile-stepper .MuiStepLabel-label.MuiStepLabel-active {
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.MuiStepper-root.mobile-stepper .MuiStepConnector-line {
+  border-color: #e0e0e0;
+  border-top-width: 2px;
+}
+
+.MuiStepper-root.mobile-stepper .MuiStepConnector-active .MuiStepConnector-line,
+.MuiStepper-root.mobile-stepper .MuiStepConnector-completed .MuiStepConnector-line {
+  border-color: #1976d2;
+}
+
+/* Mobile Chip Enhancements */
+.MuiChip-root.mobile-chip {
+  height: 32px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 16px;
+  margin: 2px;
+}
+
+.MuiChip-root.mobile-chip.mobile-chip-sm {
+  height: 24px;
+  font-size: 0.625rem;
+}
+
+.MuiChip-root.mobile-chip.mobile-chip-lg {
+  height: 40px;
+  font-size: 0.875rem;
+}
+
+/* Mobile Avatar Enhancements */
+.MuiAvatar-root.mobile-avatar {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #e0e0e0;
+}
+
+.MuiAvatar-root.mobile-avatar.mobile-avatar-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.MuiAvatar-root.mobile-avatar.mobile-avatar-lg {
+  width: 56px;
+  height: 56px;
+}
+
+/* Mobile List Enhancements */
+.MuiList-root.mobile-list {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.MuiList-root.mobile-list .MuiListItem-root {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.MuiList-root.mobile-list .MuiListItem-root:last-child {
+  border-bottom: none;
+}
+
+.MuiList-root.mobile-list .MuiListItem-root:hover {
+  background: #f8f9fa;
+}
+
+.MuiList-root.mobile-list .MuiListItemText-primary {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.MuiList-root.mobile-list .MuiListItemText-secondary {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-top: 4px;
+}
+
+/* Mobile Alert Enhancements */
+.MuiAlert-root.mobile-alert {
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+}
+
+.MuiAlert-root.mobile-alert .MuiAlert-message {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.MuiAlert-root.mobile-alert .MuiAlert-action {
+  padding: 0;
+  margin-left: 8px;
+}
+
+/* Mobile CircularProgress Enhancements */
+.MuiCircularProgress-root.mobile-spinner {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.MuiCircularProgress-root.mobile-spinner.mobile-spinner-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.MuiCircularProgress-root.mobile-spinner.mobile-spinner-lg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Mobile Tooltip Enhancements */
+.MuiTooltip-tooltip.mobile-tooltip {
+  font-size: 0.75rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  max-width: 200px;
+}
+
+/* Mobile Switch Enhancements */
+.MuiSwitch-root.mobile-switch {
+  padding: 8px;
+}
+
+.MuiSwitch-root.mobile-switch .MuiSwitch-thumb {
+  width: 20px;
+  height: 20px;
+}
+
+.MuiSwitch-root.mobile-switch .MuiSwitch-track {
+  border-radius: 10px;
+  height: 24px;
+}
+
+/* Mobile Checkbox Enhancements */
+.MuiCheckbox-root.mobile-checkbox {
+  padding: 8px;
+}
+
+.MuiCheckbox-root.mobile-checkbox .MuiSvgIcon-root {
+  font-size: 20px;
+}
+
+/* Mobile IconButton Enhancements */
+.MuiIconButton-root.mobile-icon-button {
+  padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.MuiIconButton-root.mobile-icon-button .MuiSvgIcon-root {
+  font-size: 20px;
+}
+
+/* Mobile Container Enhancements */
+.MuiContainer-root.mobile-container {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.MuiContainer-root.mobile-container.mobile-container-fluid {
+  max-width: none;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* Mobile Box Enhancements */
+.MuiBox-root.mobile-box {
+  width: 100%;
+}
+
+.MuiBox-root.mobile-box.mobile-box-flex {
+  display: flex;
+}
+
+.MuiBox-root.mobile-box.mobile-box-flex-column {
+  flex-direction: column;
+}
+
+.MuiBox-root.mobile-box.mobile-box-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile Typography Enhancements */
+.MuiTypography-root.mobile-typography {
+  line-height: 1.5;
+}
+
+.MuiTypography-root.mobile-typography.mobile-typography-responsive {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE BREAKPOINT OVERRIDES
+   ======================================== */
+
+/* Extra Small Mobile (320px - 374px) */
+@media (min-width: 320px) and (max-width: 374px) {
+  .MuiContainer-root.mobile-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  .MuiCard-root.mobile-card .MuiCardContent-root {
+    padding: 12px;
+  }
+  
+  .MuiCard-root.mobile-card .MuiCardHeader-root {
+    padding: 12px 16px;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableCell-head,
+  .MuiTable-root.mobile-table .MuiTableCell-body {
+    padding: 8px 12px;
+  }
+  
+  .MuiButton-root.mobile-button {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+  
+  .MuiTextField-root.mobile-textfield .MuiOutlinedInput-input {
+    padding: 10px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Small Mobile (375px - 413px) */
+@media (min-width: 375px) and (max-width: 413px) {
+  .MuiContainer-root.mobile-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  .MuiCard-root.mobile-card .MuiCardContent-root {
+    padding: 16px;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableCell-head,
+  .MuiTable-root.mobile-table .MuiTableCell-body {
+    padding: 10px 14px;
+  }
+  
+  .MuiButton-root.mobile-button {
+    padding: 8px 14px;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Medium Mobile (414px - 767px) */
+@media (min-width: 414px) and (max-width: 767px) {
+  .MuiContainer-root.mobile-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .MuiCard-root.mobile-card .MuiCardContent-root {
+    padding: 20px;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableCell-head,
+  .MuiTable-root.mobile-table .MuiTableCell-body {
+    padding: 12px 16px;
+  }
+  
+  .MuiButton-root.mobile-button {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Large Mobile / Small Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .MuiContainer-root.mobile-container {
+    max-width: 750px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  
+  .MuiCard-root.mobile-card .MuiCardContent-root {
+    padding: 24px;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableCell-head,
+  .MuiTable-root.mobile-table .MuiTableCell-body {
+    padding: 14px 18px;
+  }
+  
+  .MuiButton-root.mobile-button {
+    padding: 10px 18px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .MuiContainer-root.mobile-container {
+    max-width: 1200px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  
+  .MuiCard-root.mobile-card .MuiCardContent-root {
+    padding: 24px;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableCell-head,
+  .MuiTable-root.mobile-table .MuiTableCell-body {
+    padding: 16px 20px;
+  }
+  
+  .MuiButton-root.mobile-button {
+    padding: 12px 20px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   MOBILE ACCESSIBILITY ENHANCEMENTS
+   ======================================== */
+
+/* Focus indicators for better accessibility */
+.MuiButton-root.mobile-button:focus-visible,
+.MuiIconButton-root.mobile-icon-button:focus-visible,
+.MuiTextField-root.mobile-textfield .MuiOutlinedInput-root:focus-within {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .MuiCard-root.mobile-card {
+    border: 2px solid #000000;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableCell-head {
+    border-bottom: 3px solid #000000;
+  }
+  
+  .MuiButton-root.mobile-button {
+    border: 2px solid #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .MuiButton-root.mobile-button,
+  .MuiIconButton-root.mobile-icon-button,
+  .MuiChip-root.mobile-chip {
+    transition: none;
+  }
+  
+  .MuiCircularProgress-root.mobile-spinner {
+    animation: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .MuiCard-root.mobile-card {
+    background: #2d2d2d;
+    border-color: #404040;
+    color: #ffffff;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableHead-root {
+    background: #404040;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableCell-head {
+    color: #ffffff;
+    border-bottom-color: #555555;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableCell-body {
+    color: #ffffff;
+    border-bottom-color: #404040;
+  }
+  
+  .MuiTable-root.mobile-table .MuiTableRow-root:hover {
+    background: #404040;
+  }
+  
+  .MuiList-root.mobile-list {
+    background: #2d2d2d;
+    border-color: #404040;
+  }
+  
+  .MuiList-root.mobile-list .MuiListItem-root {
+    border-bottom-color: #404040;
+  }
+  
+  .MuiList-root.mobile-list .MuiListItem-root:hover {
+    background: #404040;
+  }
+  
+  .MuiList-root.mobile-list .MuiListItemText-primary {
+    color: #ffffff;
+  }
+  
+  .MuiList-root.mobile-list .MuiListItemText-secondary {
+    color: #b3b3b3;
+  }
+}

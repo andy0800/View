@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './styles/browserCompatibility.css';
+import './styles/mobile.css';
 import { initConsoleErrorSuppression } from './utils/consoleUtils';
 import CreativeMainPage from './components/CreativeMainPage.jsx';
 import AuthForms from './components/AuthForms.jsx';

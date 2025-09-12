@@ -71,9 +71,9 @@ export default function CreditPage() {
       
       // Use appropriate endpoints based on user role
       if (user && user.role === 'advertiser') {
-        // For advertisers, reuse standard wallet endpoints (scoped by auth)
-        creditRes = await api.get('/api/wallet');
-        transactionsRes = await api.get('/api/wallet/transactions');
+        // For advertisers, use advertiser credit endpoints
+        creditRes = await api.get('/api/advertiser/credit');
+        transactionsRes = await api.get('/api/advertiser/credit/transactions');
       } else {
         // For viewers, use viewer wallet endpoints
         creditRes = await api.get('/api/wallet');
