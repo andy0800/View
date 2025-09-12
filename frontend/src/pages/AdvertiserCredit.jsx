@@ -24,6 +24,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { formatKWD, filsToKwd } from '../utils/currencyUtils';
 import api from '../api'
+import PaymentModal from '../components/PaymentModal'
 
 export default function AdvertiserCredit() {
   const theme = useTheme()
@@ -46,6 +47,7 @@ export default function AdvertiserCredit() {
     creditUtilization: 0
   })
   const [creditAlerts, setCreditAlerts] = useState([])
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false)
 
   // Auto-refresh interval (2 minutes - less aggressive)
   useEffect(() => {
@@ -170,6 +172,16 @@ export default function AdvertiserCredit() {
 
   const toggleAutoRefresh = () => {
     setAutoRefresh(!autoRefresh)
+  }
+
+  const handleAddCredit = () => {
+    setPaymentModalOpen(true)
+  }
+
+  const handlePaymentSuccess = (paymentData) => {
+    setPaymentModalOpen(false)
+    setSuccess('Credit added successfully!')
+    fetchCreditData() // Refresh credit data
   }
 
   const getTransactionIcon = (type) => {
@@ -363,6 +375,7 @@ export default function AdvertiserCredit() {
                     color="inherit"
                     sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
                     startIcon={<Add />}
+                    onClick={handleAddCredit}
                   >
                                          {t('credit.addCredit')}
                    </Button>
@@ -390,6 +403,7 @@ export default function AdvertiserCredit() {
             variant="contained"
                      fullWidth
                      startIcon={<Add />}
+                     onClick={handleAddCredit}
                    >
                      {t('credit.addFunds')}
                    </Button>
@@ -654,6 +668,13 @@ export default function AdvertiserCredit() {
           </CardContent>
         </Card>
       </Fade>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        open={paymentModalOpen}
+        onClose={() => setPaymentModalOpen(false)}
+        onSuccess={handlePaymentSuccess}
+      />
     </Box>
   )
   } catch (error) {

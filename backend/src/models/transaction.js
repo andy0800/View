@@ -56,6 +56,32 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       comment: 'Human-readable reference for the transaction'
     },
+    reference_id: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      comment: 'External reference ID (e.g., MyFatoorah session ID, Stripe payment intent ID)'
+    },
+    payment_gateway: {
+      type: DataTypes.ENUM('stripe', 'myfatoorah', 'manual', 'internal'),
+      allowNull: true,
+      defaultValue: 'internal',
+      comment: 'Payment gateway used for the transaction'
+    },
+    payment_method: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      comment: 'Payment method used (card, bank_transfer, etc.)'
+    },
+    gateway_transaction_id: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      comment: 'Transaction ID from payment gateway'
+    },
+    gateway_response: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+      comment: 'Full response from payment gateway'
+    },
     transaction_category: {
       type: DataTypes.ENUM(
         'package_purchase',   // Advertiser package purchase
@@ -110,6 +136,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         fields: ['created_at']
+      },
+      {
+        fields: ['reference_id']
+      },
+      {
+        fields: ['payment_gateway']
+      },
+      {
+        fields: ['gateway_transaction_id']
       }
     ]
   });

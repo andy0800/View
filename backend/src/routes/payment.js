@@ -3,7 +3,11 @@ const { authenticate, authorizeRoles } = require('../middleware/authMiddleware')
 const router = express.Router();
 const {
   createDepositIntent,
-  handleWebhook
+  handleWebhook,
+  createMyFatoorahSession,
+  handleMyFatoorahWebhook,
+  verifyPaymentStatus,
+  simulatePayment
 } = require('../controllers/paymentController');
 
 // Advertiser deposit
@@ -66,6 +70,36 @@ router.post(
   '/webhook',
   express.raw({ type: 'application/json' }),
   handleWebhook
+);
+
+// MYFATOORH Payment Routes
+// Create MYFATOORH payment session
+router.post(
+  '/myfatoorah/create-session',
+  authenticate,
+  authorizeRoles('advertiser'),
+  createMyFatoorahSession
+);
+
+// MYFATOORH webhook (no auth required)
+router.post(
+  '/myfatoorah/webhook',
+  express.json(),
+  handleMyFatoorahWebhook
+);
+
+// Verify payment status
+router.get(
+  '/myfatoorah/verify/:sessionId',
+  authenticate,
+  verifyPaymentStatus
+);
+
+// Simulate payment for testing
+router.post(
+  '/myfatoorah/simulate',
+  authenticate,
+  simulatePayment
 );
 
 module.exports = router;
