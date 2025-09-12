@@ -33,9 +33,19 @@ const kwdToMicro = (kwd) => {
  * @returns {Object} Unified package with both formats
  */
 const unifyPackageData = (pkg) => {
-  if (!pkg) return null;
+  if (!pkg) {
+    console.log('⚠️ unifyPackageData: Package is null/undefined');
+    return null;
+  }
   
-  return {
+  console.log('🔄 unifyPackageData: Processing package:', {
+    id: pkg.id,
+    name: pkg.name,
+    price_per_view_micro: pkg.price_per_view_micro,
+    is_active: pkg.is_active
+  });
+  
+  const result = {
     ...pkg.toJSON ? pkg.toJSON() : pkg,
     // Ensure both micro and KWD values are available
     pricePerView: pkg.price_per_view_micro ? microToKwd(pkg.price_per_view_micro) : pkg.price_per_view,
@@ -46,6 +56,15 @@ const unifyPackageData = (pkg) => {
     minBudget: pkg.min_budget || 300,
     budgetIncrement: pkg.budget_increment || 100
   };
+  
+  console.log('✅ unifyPackageData: Result:', {
+    id: result.id,
+    name: result.name,
+    pricePerView: result.pricePerView,
+    pricePerViewMicro: result.pricePerViewMicro
+  });
+  
+  return result;
 };
 
 /**

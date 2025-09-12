@@ -26,23 +26,51 @@ const { ViewEvent } = require('../models');
 // Get available packages
 async function getPackages(req, res) {
   try {
+    console.log('🔄 Fetching packages from database...');
+    console.log('👤 User making request:', req.user ? {
+      id: req.user.id,
+      role: req.user.role,
+      kyc_status: req.user.kyc_status
+    } : 'No user found');
+    
     const packages = await AdvertiserPackage.getActivePackages();
+    console.log('📦 Raw packages from DB:', packages.length, 'packages found');
+    console.log('📦 Raw packages data:', packages.map(p => ({
+      id: p.id,
+      name: p.name,
+      is_active: p.is_active,
+      price_per_view_micro: p.price_per_view_micro
+    })));
     
     // Transform packages using currency unification utility
     const transformedPackages = packages.map(pkg => unifyPackageData(pkg));
+    console.log('📦 Transformed packages:', transformedPackages.length, 'packages after transformation');
+    console.log('📦 Transformed packages data:', transformedPackages.map(p => ({
+      id: p.id,
+      name: p.name,
+      pricePerView: p.pricePerView,
+      pricePerViewMicro: p.pricePerViewMicro
+    })));
     
     // Debug log to see what we're sending
-    console.log('📦 Sending packages:', transformedPackages.map(p => ({
+    console.log('📦 Sending packages to frontend:', transformedPackages.map(p => ({
       name: p.name,
       pricePerView: p.pricePerView,
       price_per_view: p.price_per_view,
       pricePerViewMicro: p.pricePerViewMicro,
       price_per_view_micro: p.price_per_view_micro
     })));
+    
+    console.log('📦 Final response structure:', {
+      isArray: Array.isArray(transformedPackages),
+      length: transformedPackages.length,
+      type: typeof transformedPackages,
+      firstItem: transformedPackages[0]
+    });
 
     res.json(transformedPackages);
   } catch (error) {
-    console.error('Error fetching packages:', error);
+    console.error('❌ Error fetching packages:', error);
     res.status(500).json({ message: 'Failed to fetch packages' });
   }
 }

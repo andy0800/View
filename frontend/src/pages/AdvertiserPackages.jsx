@@ -155,22 +155,51 @@ export default function AdvertiserPackages() {
       setError('');
       setSuccess('');
       
+      console.log('🔄 Fetching packages...');
+      console.log('🔐 Current user:', JSON.parse(localStorage.getItem('user') || 'null'));
+      
       const [packagesRes, purchasedRes] = await Promise.all([
         api.get('/api/advertiser/packages'),
         api.get('/api/advertiser/packages/purchased')
       ]);
       
+      console.log('📦 Packages API Response:', packagesRes);
+      console.log('📦 Packages Data:', packagesRes.data);
+      console.log('📦 Purchased API Response:', purchasedRes);
+      console.log('📦 Purchased Data:', purchasedRes.data);
+      
       const packagesData = packagesRes.data || [];
       const purchasedData = purchasedRes.data.purchasedPackages || [];
       
+      console.log('📦 Processed Packages Data:', packagesData);
+      console.log('📦 Processed Purchased Data:', purchasedData);
+      console.log('📦 Packages Length:', packagesData.length);
+      console.log('📦 Packages Data Type:', typeof packagesData);
+      console.log('📦 Is Array:', Array.isArray(packagesData));
+      console.log('📦 First Package:', packagesData[0]);
+      console.log('📦 Packages Keys:', packagesData.length > 0 ? Object.keys(packagesData[0]) : 'No packages');
+      
       setPackages(packagesData);
       setPurchasedPackages(purchasedData);
+      
+      // Additional debugging after state update
+      setTimeout(() => {
+        console.log('📦 State after update - packages:', packages);
+        console.log('📦 State after update - packages.length:', packages.length);
+      }, 100);
       
       // Set initial budget to 300 KWD as per original VIEW APP
       if (packagesData.length > 0) {
         setBudget(300);
       }
     } catch (err) {
+      console.error('❌ Error fetching packages:', err);
+      console.error('❌ Error details:', {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status,
+        statusText: err.response?.statusText
+      });
       setError(t('errors.failedToLoadPackages'));
     } finally {
       setLoading(false);
@@ -297,7 +326,17 @@ export default function AdvertiserPackages() {
     );
   }
 
+  console.log('🎯 Render - packages state:', packages);
+  console.log('🎯 Render - packages.length:', packages.length);
+  console.log('🎯 Render - loading:', loading);
+  console.log('🎯 Render - packages type:', typeof packages);
+  console.log('🎯 Render - is packages array:', Array.isArray(packages));
+  console.log('🎯 Render - packages content:', packages);
+
   if (packages.length === 0) {
+    console.log('🚫 No packages found, showing empty state');
+    console.log('🚫 Packages value:', packages);
+    console.log('🚫 Packages length check:', packages.length === 0);
     return (
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="400px">

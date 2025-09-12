@@ -18,6 +18,17 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
+    advertiser_id: {
+      type: DataTypes.UUID,
+      allowNull: true, // Will be populated from user_id
+      references: {
+        model: 'users',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      comment: 'Advertiser ID (same as user_id for purchased packages)'
+    },
     package_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -28,12 +39,12 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'RESTRICT'
     },
-    total_budget_micro: {
+    budget_micro: {
       type: DataTypes.BIGINT,
       allowNull: false,
       comment: 'Total budget in micro units (1,000,000 = 1 KWD)'
     },
-    remaining_budget_micro: {
+    remaining_micro: {
       type: DataTypes.BIGINT,
       allowNull: false,
       comment: 'Remaining budget in micro units'
@@ -86,23 +97,23 @@ module.exports = (sequelize, DataTypes) => {
 
   // Instance methods for budget calculations
   PurchasedPackage.prototype.getTotalBudgetKWD = function() {
-    return this.total_budget_micro / 1_000_000;
+    return this.budget_micro / 1_000_000;
   };
 
   PurchasedPackage.prototype.getRemainingBudgetKWD = function() {
-    return this.remaining_budget_micro / 1_000_000;
+    return this.remaining_micro / 1_000_000;
   };
 
   PurchasedPackage.prototype.getSpentBudgetKWD = function() {
-    return (this.total_budget_micro - this.remaining_budget_micro) / 1_000_000;
+    return (this.budget_micro - this.remaining_micro) / 1_000_000;
   };
 
   PurchasedPackage.prototype.getSpentBudgetMicro = function() {
-    return this.total_budget_micro - this.remaining_budget_micro;
+    return this.budget_micro - this.remaining_micro;
   };
 
   PurchasedPackage.prototype.canAffordView = function() {
-    return this.remaining_budget_micro > 0 && this.status === 'active';
+    return this.remaining_micro > 0 && this.status === 'active';
   };
 
   PurchasedPackage.prototype.isExpired = function() {
@@ -111,11 +122,11 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   PurchasedPackage.prototype.getRemainingKWD = function() {
-    return this.remaining_budget_micro / 1_000_000;
+    return this.remaining_micro / 1_000_000;
   };
 
   PurchasedPackage.prototype.getRemainingMicro = function() {
-    return this.remaining_micro || this.remaining_budget_micro || 0;
+    return this.remaining_micro || 0;
   };
 
   // Add missing instance methods for controller compatibility
@@ -140,7 +151,7 @@ module.exports = (sequelize, DataTypes) => {
       throw new Error('View cost must be positive');
     }
 
-    if (this.remaining_budget_micro < viewCostMicro) {
+    if (this.remaining_micro < viewCostMicro) {
       throw new Error('Insufficient remaining budget');
     }
 
@@ -148,16 +159,16 @@ module.exports = (sequelize, DataTypes) => {
       throw new Error('Package is not active');
     }
 
-    this.remaining_budget_micro -= viewCostMicro;
-    this.actual_views += 1;
+    this.remaining_micro -= viewCostMicro;
+    this.views_completed += 1;
 
     // Mark as used if budget is exhausted
-    if (this.remaining_budget_micro <= 0) {
+    if (this.remaining_micro <= 0) {
       this.status = 'used';
     }
 
     await this.save({ transaction });
-    return this.remaining_budget_micro;
+    return this.remaining_micro;
   };
 
   PurchasedPackage.prototype.markAsUsed = async function(transaction) {
@@ -186,11 +197,12 @@ module.exports = (sequelize, DataTypes) => {
 
     return this.create({
       user_id: userId,
+      advertiser_id: userId, // Set advertiser_id same as user_id
       package_id: packageId,
-      total_budget_micro: totalBudgetMicro,
-      remaining_budget_micro: totalBudgetMicro,
+      budget_micro: totalBudgetMicro,
+      remaining_micro: totalBudgetMicro,
       estimated_views: estimatedViews,
-      actual_views: 0,
+      views_completed: 0,
       status: 'active',
       purchased_at: new Date()
     }, { transaction });
@@ -201,7 +213,7 @@ module.exports = (sequelize, DataTypes) => {
       where: {
         user_id: userId,
         status: 'active',
-        remaining_budget_micro: {
+        remaining_micro: {
           [sequelize.Sequelize.Op.gt]: 0
         }
       },
