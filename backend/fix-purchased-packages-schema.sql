@@ -47,7 +47,7 @@ DECLARE
     required_columns text[] := ARRAY[
         'id', 'user_id', 'advertiser_id', 'package_id', 
         'total_budget_micro', 'remaining_budget_micro', 
-        'estimated_views', 'actual_views', 'status', 
+        'estimated_views', 'views_completed', 'status', 
         'purchased_at', 'expires_at', 'created_at', 'updated_at'
     ];
 BEGIN
@@ -89,7 +89,7 @@ SELECT
     pp.total_budget_micro, 
     pp.remaining_budget_micro, 
     pp.estimated_views, 
-    pp.actual_views, 
+    pp.views_completed, 
     pp.status, 
     pp.purchased_at, 
     pp.expires_at,

@@ -82,7 +82,7 @@ async function quickDatabaseFix() {
             remaining_budget_micro BIGINT NOT NULL DEFAULT 0,
             remaining_budget DECIMAL(10,2) NOT NULL DEFAULT 0.00,
             estimated_views INTEGER NOT NULL DEFAULT 0,
-            actual_views INTEGER NOT NULL DEFAULT 0,
+            views_completed INTEGER NOT NULL DEFAULT 0,
             status VARCHAR(20) NOT NULL DEFAULT 'active',
             purchased_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
             expires_at TIMESTAMP WITH TIME ZONE NOT NULL,

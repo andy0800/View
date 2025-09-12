@@ -93,7 +93,7 @@ async function createPurchasedPackagesTable() {
       total_budget_micro BIGINT NOT NULL,
       remaining_budget_micro BIGINT NOT NULL,
       estimated_views INTEGER NOT NULL,
-      actual_views INTEGER NOT NULL DEFAULT 0,
+      views_completed INTEGER NOT NULL DEFAULT 0,
       status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'used', 'expired', 'cancelled')),
       purchased_at TIMESTAMPTZ DEFAULT NOW(),
       expires_at TIMESTAMPTZ,

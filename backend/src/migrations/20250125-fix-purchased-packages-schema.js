@@ -88,7 +88,7 @@ module.exports = {
           pp.total_budget_micro, 
           pp.remaining_budget_micro, 
           pp.estimated_views, 
-          pp.actual_views, 
+          pp.views_completed, 
           pp.status, 
           pp.purchased_at, 
           pp.expires_at,

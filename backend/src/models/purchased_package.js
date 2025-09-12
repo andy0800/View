@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       comment: 'Estimated number of views based on budget'
     },
-    actual_views: {
+    views_completed: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,

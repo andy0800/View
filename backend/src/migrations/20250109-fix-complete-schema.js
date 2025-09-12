@@ -217,7 +217,7 @@ module.exports = {
         allowNull: false,
         comment: 'Estimated number of views based on budget'
       },
-      actual_views: {
+      views_completed: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
