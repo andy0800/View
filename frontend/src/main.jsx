@@ -28,7 +28,7 @@ if ('serviceWorker' in navigator) {
 ReactDOM.createRoot(document.getElementById('root')).render(
   // Removed React.StrictMode to prevent double mounting
   <>
-    <CssBaseline />
+    <CssBaseline enableColorScheme={false} />
     <GlobalStyles />
     <HashRouter>
       <AppProvider>

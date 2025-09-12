@@ -382,85 +382,133 @@ const globalStyles = css`
     }
   }
   
-  /* Light theme enforcement - override any dark mode inheritance */
+  /* AGGRESSIVE LIGHT THEME ENFORCEMENT - Override ALL dark mode sources */
+  
+  /* Force light theme on ALL elements regardless of system preference */
+  * {
+    color-scheme: light !important;
+  }
+  
+  html {
+    color-scheme: light !important;
+  }
+  
+  body {
+    background-color: #f8f9fa !important;
+    color: #1a1a1a !important;
+    color-scheme: light !important;
+  }
+  
+  /* Override Material-UI CssBaseline dark mode */
+  .MuiCssBaseline-root {
+    background-color: #f8f9fa !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiPaper-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiCard-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    border-color: #e0e0e0 !important;
+  }
+  
+  .MuiAppBar-root {
+    background-color: #1a237e !important;
+    color: #ffffff !important;
+  }
+  
+  .MuiDrawer-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiTable-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiTableHead-root {
+    background-color: #f5f5f5 !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiTableCell-head {
+    color: #1a1a1a !important;
+    border-bottom-color: #e0e0e0 !important;
+  }
+  
+  .MuiTableCell-body {
+    color: #1a1a1a !important;
+    border-bottom-color: #e0e0e0 !important;
+  }
+  
+  .MuiList-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiListItem-root {
+    color: #1a1a1a !important;
+    border-bottom-color: #e0e0e0 !important;
+  }
+  
+  .MuiListItemText-primary {
+    color: #1a1a1a !important;
+  }
+  
+  .MuiListItemText-secondary {
+    color: #666666 !important;
+  }
+  
+  .MuiButton-root {
+    background-color: #1a237e !important;
+    color: #ffffff !important;
+  }
+  
+  .MuiTextField-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiInputBase-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiOutlinedInput-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiDialog-root .MuiDialog-paper {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiSnackbar-root .MuiAlert-root {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+  }
+  
+  .MuiTooltip-tooltip {
+    background-color: #333333 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Override any remaining dark mode inheritance */
   @media (prefers-color-scheme: dark) {
-    /* Force light theme regardless of system preference */
-    body {
+    * {
+      color-scheme: light !important;
+    }
+    
+    html, body {
       background-color: #f8f9fa !important;
       color: #1a1a1a !important;
-    }
-    
-    .MuiPaper-root {
-      background-color: #ffffff !important;
-      color: #1a1a1a !important;
-    }
-    
-    .MuiCard-root {
-      background-color: #ffffff !important;
-      color: #1a1a1a !important;
-    }
-    
-    .MuiAppBar-root {
-      background-color: #1a237e !important;
-      color: #ffffff !important;
-    }
-    
-    .MuiDrawer-root {
-      background-color: #ffffff !important;
-      color: #1a1a1a !important;
-    }
-    
-    .MuiTable-root {
-      background-color: #ffffff !important;
-      color: #1a1a1a !important;
-    }
-    
-    .MuiTableHead-root {
-      background-color: #f5f5f5 !important;
-      color: #1a1a1a !important;
-    }
-    
-    .MuiTableCell-head {
-      color: #1a1a1a !important;
-      border-bottom-color: #e0e0e0 !important;
-    }
-    
-    .MuiTableCell-body {
-      color: #1a1a1a !important;
-      border-bottom-color: #e0e0e0 !important;
-    }
-    
-    .MuiList-root {
-      background-color: #ffffff !important;
-      color: #1a1a1a !important;
-    }
-    
-    .MuiListItem-root {
-      color: #1a1a1a !important;
-      border-bottom-color: #e0e0e0 !important;
-    }
-    
-    .MuiListItemText-primary {
-      color: #1a1a1a !important;
-    }
-    
-    .MuiListItemText-secondary {
-      color: #666666 !important;
-    }
-    
-    .MuiButton-root {
-      background-color: #1a237e !important;
-      color: #ffffff !important;
-    }
-    
-    .MuiTextField-root {
-      background-color: #ffffff !important;
-      color: #1a1a1a !important;
-    }
-    
-    .MuiInputBase-root {
-      background-color: #ffffff !important;
-      color: #1a1a1a !important;
+      color-scheme: light !important;
     }
   }
 
