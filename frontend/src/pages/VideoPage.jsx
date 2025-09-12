@@ -404,7 +404,7 @@ export default function VideoPage() {
                     const mediaUrl = currentVideo.mediaUrl;
                     let videoUrl;
                     
-                    const backendUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001';
+                    const backendUrl = import.meta.env.VITE_API_BASE_URL || 'https://viewonline.me/api';
                     if (mediaUrl.startsWith('http')) {
                       // If it's already a full URL, check if it needs the /uploads/ads/ path
                       if (mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
@@ -443,7 +443,7 @@ export default function VideoPage() {
                       const mediaUrl = currentVideo.mediaUrl;
                       if (mediaUrl.startsWith('http') && mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
                         const filename = mediaUrl.split('/').pop();
-                        return `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001'}/uploads/ads/${filename}`;
+                        return `${import.meta.env.VITE_API_BASE_URL || 'https://viewonline.me/api'}/uploads/ads/${filename}`;
                       }
                       return mediaUrl;
                     })();
@@ -454,7 +454,7 @@ export default function VideoPage() {
                       const mediaUrl = currentVideo.mediaUrl;
                       if (mediaUrl.startsWith('http') && mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
                         const filename = mediaUrl.split('/').pop();
-                        return `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001'}/uploads/ads/${filename}`;
+                        return `${import.meta.env.VITE_API_BASE_URL || 'https://viewonline.me/api'}/uploads/ads/${filename}`;
                       }
                       return mediaUrl;
                     })();
@@ -465,7 +465,7 @@ export default function VideoPage() {
                       const mediaUrl = currentVideo.mediaUrl;
                       if (mediaUrl.startsWith('http') && mediaUrl.includes('localhost:4001/') && !mediaUrl.includes('/uploads/ads/')) {
                         const filename = mediaUrl.split('/').pop();
-                        return `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001'}/uploads/ads/${filename}`;
+                        return `${import.meta.env.VITE_API_BASE_URL || 'https://viewonline.me/api'}/uploads/ads/${filename}`;
                       }
                       return mediaUrl;
                     })();

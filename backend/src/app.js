@@ -79,7 +79,7 @@ app.options('/uploads/*', (req, res) => {
 // ✅ CORS + cookies
 app.use(cookieParser());
 app.use(cors({
-  origin: [FRONT, 'https://viewapp-frontend.onrender.com', 'http://localhost:5173', 'http://127.0.0.1:5173'],
+  origin: [FRONT, 'https://viewonline.me', 'http://localhost:5173', 'http://127.0.0.1:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],

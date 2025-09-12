@@ -10,7 +10,7 @@
 const axios = require('axios');
 
 async function testPackagesEndpoint() {
-  const baseURL = process.env.API_BASE_URL || 'https://viewapp-backend.onrender.com';
+  const baseURL = process.env.API_BASE_URL || 'https://viewonline.me/api';
   
   console.log('🧪 Testing advertiser packages endpoint...');
   console.log(`📍 Testing: ${baseURL}/test/packages`);

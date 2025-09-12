@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Base API URL (from .env or fallback to localhost)
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://viewapp-backend.onrender.com';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://viewonline.me/api';
 
 /** Optional fallback for fetch requests (if needed) */
 function authHeaders() {
