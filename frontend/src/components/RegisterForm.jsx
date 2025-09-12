@@ -161,7 +161,9 @@ export default function RegisterForm() {
 
     try {
       const formData = new FormData();
-      formData.append('phone', phone);
+      // Automatically prepend +965 to the phone number
+      const fullPhoneNumber = phone.startsWith('+965') ? phone : `+965${phone}`;
+      formData.append('phone', fullPhoneNumber);
       formData.append('fullName', regData.fullName);
       formData.append('userType', userType);
       
@@ -336,11 +338,14 @@ export default function RegisterForm() {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Phone sx={{ color: 'primary.main' }} />
+              <Phone sx={{ color: 'primary.main', mr: 1 }} />
+              <Typography sx={{ color: 'text.secondary', fontWeight: 600, userSelect: 'none' }}>
+                +965
+              </Typography>
             </InputAdornment>
           ),
         }}
-        helperText="Format: +965XXXXXXXX"
+        helperText="Enter your phone number (without +965 prefix)"
         sx={{
           '& .MuiOutlinedInput-root': {
             borderRadius: 3,

@@ -37,7 +37,9 @@ export default function LoginForm() {
     setMessage('');
 
     try {
-      const response = await api.post('/auth/request-otp', { phone });
+      // Automatically prepend +965 to the phone number
+      const fullPhoneNumber = phone.startsWith('+965') ? phone : `+965${phone}`;
+      const response = await api.post('/auth/request-otp', { phone: fullPhoneNumber });
       setMessage('OTP sent successfully!');
       setMessageType('success');
       setOtpSent(true);
@@ -60,7 +62,9 @@ export default function LoginForm() {
     setMessage('');
 
     try {
-      const response = await api.post('/auth/verify-otp', { phone, otp });
+      // Automatically prepend +965 to the phone number
+      const fullPhoneNumber = phone.startsWith('+965') ? phone : `+965${phone}`;
+      const response = await api.post('/auth/verify-otp', { phone: fullPhoneNumber, otp });
       console.log('🔐 OTP verification response:', response.data);
       
       if (response.data.user.role === 'advertiser' && response.data.user.kyc_status !== 'verified') {
@@ -129,11 +133,14 @@ export default function LoginForm() {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Phone sx={{ color: 'primary.main' }} />
+              <Phone sx={{ color: 'primary.main', mr: 1 }} />
+              <Typography sx={{ color: 'text.secondary', fontWeight: 600, userSelect: 'none' }}>
+                +965
+              </Typography>
             </InputAdornment>
           ),
         }}
-        helperText="Format: +965XXXXXXXX"
+        helperText="Enter your phone number (without +965 prefix)"
         sx={{
           '& .MuiOutlinedInput-root': {
             borderRadius: 3,
