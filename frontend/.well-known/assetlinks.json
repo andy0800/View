@@ -1,0 +1,12 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.viewonline.app",
+        "sha256_cert_fingerprints": [
+          "61:15:7C:9C:D5:FA:80:EC:8B:DE:28:45:CB:85:BF:25:BC:86:6D:06:A4:96:BE:E9:7E:00:2A:34:AB:23:9D:07"
+        ]
+      }
+    }
+  ]
