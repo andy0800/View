@@ -123,20 +123,6 @@ export default function LoginForm() {
         </Alert>
       )}
 
-      {/* TEST MESSAGE - TO BE REMOVED */}
-      <Typography 
-        variant="h6" 
-        sx={{ 
-          color: '#e91e63', 
-          textAlign: 'center', 
-          mb: 2, 
-          fontWeight: 'bold',
-          fontFamily: 'Arial, sans-serif'
-        }}
-      >
-        Welcome homeee
-      </Typography>
-
       <TextField
         fullWidth
         label={t('auth.phone')}
