@@ -7,7 +7,8 @@ const {
   createMyFatoorahSession,
   handleMyFatoorahWebhook,
   verifyPaymentStatus,
-  simulatePayment
+  simulatePayment,
+  createPackagePaymentSession
 } = require('../controllers/paymentController');
 
 // Advertiser deposit
@@ -79,6 +80,14 @@ router.post(
   authenticate,
   authorizeRoles('advertiser'),
   createMyFatoorahSession
+);
+
+// Create package payment session
+router.post(
+  '/myfatoorah/create-package-session',
+  authenticate,
+  authorizeRoles('advertiser'),
+  createPackagePaymentSession
 );
 
 // MYFATOORH webhook (no auth required)

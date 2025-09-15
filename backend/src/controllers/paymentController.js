@@ -217,6 +217,94 @@ async function verifyPaymentStatus(req, res) {
   }
 }
 
+// Create package payment session
+async function createPackagePaymentSession(req, res) {
+  try {
+    const { packageId, budget, customerName, customerEmail, customerMobile } = req.body;
+    
+    // Validate required fields
+    if (!packageId || !budget || !customerName || !customerEmail || !customerMobile) {
+      return res.status(400).json({ 
+        message: 'Package ID, budget, and customer details are required' 
+      });
+    }
+
+    // Validate budget
+    if (budget < 300 || (budget - 300) % 100 !== 0) {
+      return res.status(400).json({ 
+        message: 'Budget must be at least 300 KWD and increment by 100 KWD' 
+      });
+    }
+
+    // Get package details
+    const { AdvertiserPackage } = require('../models');
+    const packageData = await AdvertiserPackage.findByPk(packageId);
+    
+    if (!packageData) {
+      return res.status(404).json({ message: 'Package not found' });
+    }
+
+    const paymentData = {
+      amount: parseFloat(budget),
+      userId: req.user.id,
+      customerName,
+      customerEmail,
+      customerMobile,
+      packageId,
+      packageName: packageData.name,
+      packageDuration: packageData.duration,
+      pricePerView: packageData.price_per_view || packageData.pricePerView
+    };
+
+    const session = await myfatoorahService.createPaymentSession(paymentData);
+    
+    // Store pending package purchase transaction
+    const amountMicro = Math.round(budget * 1000000);
+    await Transaction.create({
+      user_id: req.user.id,
+      type: 'package_purchase',
+      amount_micro: amountMicro,
+      transaction_category: 'package_purchase',
+      status: 'pending',
+      reference: `Package purchase: ${packageData.name} - ${budget} KWD`,
+      reference_id: session.sessionId,
+      payment_gateway: 'myfatoorah',
+      gateway_transaction_id: session.invoiceId,
+      metadata: {
+        session_id: session.sessionId,
+        invoice_id: session.invoiceId,
+        amount_kwd: budget,
+        package_id: packageId,
+        package_name: packageData.name,
+        package_duration: packageData.duration,
+        price_per_view: packageData.price_per_view || packageData.pricePerView,
+        customer_name: customerName,
+        customer_email: customerEmail,
+        customer_mobile: customerMobile
+      }
+    });
+
+    res.json({
+      success: true,
+      sessionId: session.sessionId,
+      paymentUrl: session.paymentUrl,
+      invoiceId: session.invoiceId,
+      amount: budget,
+      currency: 'KWD',
+      package: {
+        id: packageId,
+        name: packageData.name,
+        duration: packageData.duration,
+        pricePerView: packageData.price_per_view || packageData.pricePerView
+      }
+    });
+
+  } catch (error) {
+    console.error('Error creating package payment session:', error);
+    res.status(500).json({ message: 'Failed to create package payment session' });
+  }
+}
+
 // Simulate payment for testing
 async function simulatePayment(req, res) {
   try {
@@ -288,5 +376,6 @@ module.exports = {
   createMyFatoorahSession,
   handleMyFatoorahWebhook,
   verifyPaymentStatus,
-  simulatePayment
+  simulatePayment,
+  createPackagePaymentSession
 };

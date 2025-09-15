@@ -12,6 +12,17 @@ class PaymentService {
     }
   }
 
+  // Create package payment session
+  async createPackagePaymentSession(paymentData) {
+    try {
+      const response = await api.post('/api/payment/myfatoorah/create-package-session', paymentData);
+      return response.data;
+    } catch (error) {
+      console.error('Package payment session creation failed:', error);
+      throw error;
+    }
+  }
+
   // Verify payment status
   async verifyPaymentStatus(sessionId) {
     try {

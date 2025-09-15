@@ -175,17 +175,100 @@ const handlePurchase = async (pkg) => {
 // </Alert>
 ```
 
+### 5. Backend Package Payment Session Added
+**File:** `backend/src/controllers/paymentController.js`
+**Lines:** 220-306
+
+**What was changed:**
+- Added `createPackagePaymentSession` function for package purchases
+- Added package payment session creation with MyFatoorah integration
+- Added package-specific transaction tracking
+
+**To reverse:**
+```javascript
+// Remove the createPackagePaymentSession function (lines 220-306)
+// Remove from module.exports (line 380)
+```
+
+### 6. Backend Route Added
+**File:** `backend/src/routes/payment.js`
+**Lines:** 11, 85-91
+
+**What was changed:**
+- Added `createPackagePaymentSession` import
+- Added `/myfatoorah/create-package-session` route
+
+**To reverse:**
+```javascript
+// Remove from imports (line 11)
+// Remove the route (lines 85-91)
+```
+
+### 7. Frontend Package Payment Modal Added
+**File:** `frontend/src/components/PackagePaymentModal.jsx`
+**New file**
+
+**What was changed:**
+- Created new modal component for package purchases
+- Integrated with payment gateway service
+- Added package-specific payment flow
+
+**To reverse:**
+```javascript
+// Delete the entire file
+```
+
+### 8. Payment Service Updated
+**File:** `frontend/src/services/paymentService.js`
+**Lines:** 15-24
+
+**What was changed:**
+- Added `createPackagePaymentSession` method
+
+**To reverse:**
+```javascript
+// Remove the createPackagePaymentSession method (lines 15-24)
+```
+
+### 9. AdvertiserPackages Updated for Payment Modal
+**File:** `frontend/src/pages/AdvertiserPackages.jsx`
+**Lines:** 62, 76, 219-227, 287-290, 1096, 1101-1113
+
+**What was changed:**
+- Added PackagePaymentModal import
+- Added paymentModalOpen state
+- Added handlePackagePurchase function
+- Updated handlePurchase to use payment modal
+- Added PackagePaymentModal component
+
+**To reverse:**
+```javascript
+// Remove PackagePaymentModal import (line 62)
+// Remove paymentModalOpen state (line 76)
+// Remove handlePackagePurchase function (lines 219-227)
+// Restore original handlePurchase function (lines 287-290)
+// Change button text back to original (line 1096)
+// Remove PackagePaymentModal component (lines 1101-1113)
+```
+
 ## Summary of Changes
 
 1. **Credit page hidden** from advertiser navigation menu
-2. **Package purchase button** now redirects to payment gateway instead of direct purchase
-3. **Button text** changed to "Proceed to Payment"
-4. **Payment data** stored in localStorage for payment gateway processing
+2. **Package purchase button** now creates payment session through payment gateway
+3. **Button text** changed to "Proceed to Payment Gateway"
+4. **New payment modal** for package purchases with customer details
+5. **Backend payment session** creation for packages
+6. **Payment gateway integration** for package purchases
 
 ## Files Modified
 
 - `frontend/src/components/AdvertiserLayout.jsx` (lines 75-82)
-- `frontend/src/pages/AdvertiserPackages.jsx` (lines 275-326, 1099)
+- `frontend/src/pages/AdvertiserPackages.jsx` (lines 62, 76, 219-227, 287-290, 1096, 1101-1113)
+- `frontend/src/pages/AdvertiserCredit.jsx` (lines 67-87, 292-298)
+- `frontend/src/components/PackagePaymentModal.jsx` (new file)
+- `frontend/src/services/paymentService.js` (lines 15-24)
+- `backend/src/controllers/paymentController.js` (lines 220-306, 380)
+- `backend/src/routes/payment.js` (lines 11, 85-91)
 
 ## Reversal Steps
 

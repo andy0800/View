@@ -59,6 +59,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { formatKWD, isValidBudget, getNextValidBudget, getPreviousValidBudget, calculateEstimatedViews } from '../utils/currencyUtils';
 import api from '../api';
+import PackagePaymentModal from '../components/PackagePaymentModal';
 
 export default function AdvertiserPackages() {
   const navigate = useNavigate();
@@ -72,6 +73,7 @@ export default function AdvertiserPackages() {
   const [purchasedPackages, setPurchasedPackages] = useState([]);
   const [purchaseDialogOpen, setPurchaseDialogOpen] = useState(false);
   const [packageToPurchase, setPackageToPurchase] = useState(null);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const { t } = useTranslation();
 
   const theme = useTheme();
@@ -214,6 +216,16 @@ export default function AdvertiserPackages() {
     setPurchaseDialogOpen(true);
   };
 
+  // TEMPORARY: Handle package purchase through payment gateway - REVERSIBLE
+  const handlePackagePurchase = (pkg) => {
+    setPackageToPurchase(pkg);
+    setBudget(300);
+    setSuccess('');
+    setError('');
+    setPurchaseDialogOpen(false);
+    setPaymentModalOpen(true);
+  };
+
   // ORIGINAL VIEW APP LOGIC: Increment budget by 100 KWD
   const handleIncrementBudget = () => {
     const nextBudget = getNextValidBudget(budget);
@@ -272,25 +284,10 @@ export default function AdvertiserPackages() {
         return;
       }
       
-      // TEMPORARY: Redirect to payment gateway instead of direct purchase - REVERSIBLE
-      // Close dialog first
+      // TEMPORARY: Use payment gateway modal instead of direct purchase - REVERSIBLE
       setPurchaseDialogOpen(false);
-      setPackageToPurchase(null);
-      
-      // Redirect to payment gateway with package and budget data
-      const paymentData = {
-        packageId: pkg.id,
-        packageName: pkg.name,
-        budget: budget,
-        pricePerView: pkg.pricePerView || pkg.price_per_view || 0,
-        estimatedViews: calculateEstimatedViewsForPackage(pkg, budget)
-      };
-      
-      // Store payment data in localStorage for payment gateway
-      localStorage.setItem('pendingPackagePurchase', JSON.stringify(paymentData));
-      
-      // Redirect to payment gateway
-      navigate('/advertiser/credit'); // This will redirect to payment gateway
+      setPackageToPurchase(pkg);
+      setPaymentModalOpen(true);
       
       // ORIGINAL CODE (commented out for reversal):
       // // Call backend to purchase package with chosen budget
@@ -1096,10 +1093,24 @@ export default function AdvertiserPackages() {
               }
             }}
           >
-            {purchasing ? t('advertiser.packages.purchasing') : 'Proceed to Payment'} {/* TEMPORARY: Changed button text - REVERSIBLE */}
+            {purchasing ? t('advertiser.packages.purchasing') : 'Proceed to Payment Gateway'} {/* TEMPORARY: Changed button text - REVERSIBLE */}
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* TEMPORARY: Package Payment Modal - REVERSIBLE */}
+      <PackagePaymentModal
+        open={paymentModalOpen}
+        onClose={() => setPaymentModalOpen(false)}
+        onSuccess={(verification) => {
+          setSuccess('Package purchased successfully!');
+          setPaymentModalOpen(false);
+          fetchPackages(); // Refresh packages list
+          navigate('/advertiser/activate'); // Redirect to activate page
+        }}
+        packageData={packageToPurchase}
+        budget={budget}
+      />
     </Container>
   );
 }
