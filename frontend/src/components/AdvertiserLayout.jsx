@@ -72,13 +72,14 @@ export default function AdvertiserLayout() {
       description: t('advertiser.buyPackages'),
       color: 'info'
     },
-    { 
-      to: '/advertiser/credit', 
-      label: t('navigation.credit'), 
-      icon: <MonetizationOn />,
-      description: t('advertiser.manageCredit'),
-      color: 'secondary'
-    },
+    // TEMPORARY: Credit page hidden - REVERSIBLE
+    // { 
+    //   to: '/advertiser/credit', 
+    //   label: t('navigation.credit'), 
+    //   icon: <MonetizationOn />,
+    //   description: t('advertiser.manageCredit'),
+    //   color: 'secondary'
+    // },
     { 
       to: '/advertiser/profile', 
       label: t('navigation.profile'), 

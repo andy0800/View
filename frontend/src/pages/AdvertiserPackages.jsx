@@ -272,37 +272,58 @@ export default function AdvertiserPackages() {
         return;
       }
       
-      // Call backend to purchase package with chosen budget
-      const response = await api.post('/api/advertiser/packages/purchase', {
-        packageId: pkg.id,
-        budget: budget
-      });
+      // TEMPORARY: Redirect to payment gateway instead of direct purchase - REVERSIBLE
+      // Close dialog first
+      setPurchaseDialogOpen(false);
+      setPackageToPurchase(null);
       
-      if (response.data.success) {
-        setSuccess(t('success.packagePurchased', { 
-          package: pkg.name, 
-          budget: budget,
-          views: response.data.purchasedPackage.estimatedViews
-        }));
-        
-        // Close dialog
-        setPurchaseDialogOpen(false);
-        setPackageToPurchase(null);
-        
-        // Refresh purchased packages list
-        await fetchPackages();
-        
-        // Reset form
-        setSelectedPackage(null);
-        setBudget(300);
-        
-        // Redirect to activate page after successful purchase
-        setTimeout(() => {
-          navigate('/advertiser/activate');
-        }, 1500); // Give user time to see success message
-      } else {
-        setError(response.data.message || t('errors.purchaseFailed'));
-      }
+      // Redirect to payment gateway with package and budget data
+      const paymentData = {
+        packageId: pkg.id,
+        packageName: pkg.name,
+        budget: budget,
+        pricePerView: pkg.pricePerView || pkg.price_per_view || 0,
+        estimatedViews: calculateEstimatedViewsForPackage(pkg, budget)
+      };
+      
+      // Store payment data in localStorage for payment gateway
+      localStorage.setItem('pendingPackagePurchase', JSON.stringify(paymentData));
+      
+      // Redirect to payment gateway
+      navigate('/advertiser/credit'); // This will redirect to payment gateway
+      
+      // ORIGINAL CODE (commented out for reversal):
+      // // Call backend to purchase package with chosen budget
+      // const response = await api.post('/api/advertiser/packages/purchase', {
+      //   packageId: pkg.id,
+      //   budget: budget
+      // });
+      // 
+      // if (response.data.success) {
+      //   setSuccess(t('success.packagePurchased', { 
+      //     package: pkg.name, 
+      //     budget: budget,
+      //     views: response.data.purchasedPackage.estimatedViews
+      //   }));
+      //   
+      //   // Close dialog
+      //   setPurchaseDialogOpen(false);
+      //   setPackageToPurchase(null);
+      //   
+      //   // Refresh purchased packages list
+      //   await fetchPackages();
+      //   
+      //   // Reset form
+      //   setSelectedPackage(null);
+      //   setBudget(300);
+      //   
+      //   // Redirect to activate page after successful purchase
+      //   setTimeout(() => {
+      //     navigate('/advertiser/activate');
+      //   }, 1500); // Give user time to see success message
+      // } else {
+      //   setError(response.data.message || t('errors.purchaseFailed'));
+      // }
     } catch (err) {
       setError(err.response?.data?.message || t('errors.purchaseFailed'));
     } finally {
@@ -1075,7 +1096,7 @@ export default function AdvertiserPackages() {
               }
             }}
           >
-            {purchasing ? t('advertiser.packages.purchasing') : t('advertiser.packages.purchase')}
+            {purchasing ? t('advertiser.packages.purchasing') : 'Proceed to Payment'} {/* TEMPORARY: Changed button text - REVERSIBLE */}
           </Button>
         </DialogActions>
       </Dialog>
