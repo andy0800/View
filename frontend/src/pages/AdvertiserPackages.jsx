@@ -1074,7 +1074,7 @@ export default function AdvertiserPackages() {
             {t('common.cancel')}
           </Button>
           <Button
-            onClick={() => handlePurchase(packageToPurchase)}
+            onClick={() => handlePackagePurchase(packageToPurchase)}
             variant="contained"
             size="large"
             disabled={purchasing || !packageToPurchase}

@@ -21,7 +21,19 @@ const { getCurrentUser } = require('../controllers/authController');
 
 // Package management
 router.get('/packages', authenticate, authorizeRoles('advertiser'), getPackages);
-router.post('/packages/purchase', authenticate, authorizeRoles('advertiser'), purchasePackage);
+// TEMPORARY: Disabled old wallet-based package purchase - REVERSIBLE
+// router.post('/packages/purchase', authenticate, authorizeRoles('advertiser'), purchasePackage);
+
+// TEMPORARY: Redirect old purchase endpoint to payment gateway - REVERSIBLE
+router.post('/packages/purchase', authenticate, authorizeRoles('advertiser'), (req, res) => {
+  res.status(410).json({
+    success: false,
+    message: 'Package purchase now requires payment gateway. Please use the payment modal.',
+    redirectTo: '/advertiser/packages',
+    paymentGateway: true
+  });
+});
+
 router.get('/packages/purchased', authenticate, authorizeRoles('advertiser'), getPurchasedPackages);
 
 // Ad management

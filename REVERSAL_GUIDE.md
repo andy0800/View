@@ -232,13 +232,14 @@ const handlePurchase = async (pkg) => {
 
 ### 9. AdvertiserPackages Updated for Payment Modal
 **File:** `frontend/src/pages/AdvertiserPackages.jsx`
-**Lines:** 62, 76, 219-227, 287-290, 1096, 1101-1113
+**Lines:** 62, 76, 219-227, 287-290, 1077, 1096, 1101-1113
 
 **What was changed:**
 - Added PackagePaymentModal import
 - Added paymentModalOpen state
 - Added handlePackagePurchase function
 - Updated handlePurchase to use payment modal
+- Changed button onClick to use handlePackagePurchase (line 1077)
 - Added PackagePaymentModal component
 
 **To reverse:**
@@ -247,8 +248,23 @@ const handlePurchase = async (pkg) => {
 // Remove paymentModalOpen state (line 76)
 // Remove handlePackagePurchase function (lines 219-227)
 // Restore original handlePurchase function (lines 287-290)
+// Change button onClick back to handlePurchase (line 1077)
 // Change button text back to original (line 1096)
 // Remove PackagePaymentModal component (lines 1101-1113)
+```
+
+### 10. Backend Route Disabled
+**File:** `backend/src/routes/advertiser.js`
+**Lines:** 24-35
+
+**What was changed:**
+- Commented out old wallet-based package purchase route
+- Added redirect route that returns 410 status with payment gateway message
+
+**To reverse:**
+```javascript
+// Uncomment the old route (line 25)
+// Remove the redirect route (lines 28-35)
 ```
 
 ## Summary of Changes
