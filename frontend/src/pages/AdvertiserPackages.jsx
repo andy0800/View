@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Box, 
@@ -137,8 +137,12 @@ export default function AdvertiserPackages() {
       }
     `;
     document.head.appendChild(style);
-    return () => document.head.removeChild(style);
-  }, []);
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []); // TEMPORARY: Fixed missing dependencies - REVERSIBLE
 
   useEffect(() => {
     setError('');
@@ -217,7 +221,7 @@ export default function AdvertiserPackages() {
   };
 
   // TEMPORARY: Handle package purchase through payment gateway - REVERSIBLE
-  const handlePackagePurchase = (pkg) => {
+  const handlePackagePurchase = useCallback((pkg) => {
     // TEMPORARY: Add validation for package data - REVERSIBLE
     if (!pkg || !pkg.id) {
       setError('No package selected. Please select a package first.');
@@ -230,7 +234,7 @@ export default function AdvertiserPackages() {
     setError('');
     setPurchaseDialogOpen(false);
     setPaymentModalOpen(true);
-  };
+  }, []); // TEMPORARY: Added useCallback to prevent re-renders - REVERSIBLE
 
   // ORIGINAL VIEW APP LOGIC: Increment budget by 100 KWD
   const handleIncrementBudget = () => {
@@ -1113,13 +1117,13 @@ export default function AdvertiserPackages() {
       {/* TEMPORARY: Package Payment Modal - REVERSIBLE */}
       <PackagePaymentModal
         open={paymentModalOpen}
-        onClose={() => setPaymentModalOpen(false)}
-        onSuccess={(verification) => {
+        onClose={useCallback(() => setPaymentModalOpen(false), [])} // TEMPORARY: Memoized onClose callback - REVERSIBLE
+        onSuccess={useCallback((verification) => {
           setSuccess('Package purchased successfully!');
           setPaymentModalOpen(false);
           fetchPackages(); // Refresh packages list
           navigate('/advertiser/activate'); // Redirect to activate page
-        }}
+        }, [navigate])} // TEMPORARY: Memoized onSuccess callback - REVERSIBLE
         packageData={packageToPurchase}
         budget={budget}
       />

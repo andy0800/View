@@ -291,23 +291,31 @@ const handlePurchase = async (pkg) => {
 
 ### 12. AdvertiserPackages Defensive Programming Added
 **File:** `frontend/src/pages/AdvertiserPackages.jsx`
-**Lines:** 221-225, 479-482, 598, 614, 636, 681
+**Lines:** 1, 224-237, 479-482, 598, 614, 636, 681, 1120, 1121-1126
 
 **What was changed:**
+- Added useCallback import
 - Added validation in handlePackagePurchase function
 - Added null checks in package mapping
 - Added optional chaining for package properties
 - Added fallback values for missing data
+- Memoized onClose and onSuccess callbacks for PackagePaymentModal
+- Fixed React.useEffect cleanup function
 
 **To reverse:**
 ```javascript
-// Remove validation in handlePackagePurchase (lines 221-225)
+// Remove useCallback import (line 1)
+// Remove useCallback wrapper from handlePackagePurchase (lines 224-237)
+// Remove validation in handlePackagePurchase (lines 226-229)
 // Remove null checks in package mapping (lines 479-482)
 // Remove optional chaining and restore direct access:
 // pkg.name instead of pkg?.name || 'Unknown Package'
 // pkg.duration instead of pkg?.duration || 0
 // pkg.pricePerView instead of pkg?.pricePerView || pkg?.price_per_view || 0
 // pkg.description instead of pkg?.description || 'No description available'
+// Remove useCallback from onClose callback (line 1120)
+// Remove useCallback from onSuccess callback (lines 1121-1126)
+// Restore original React.useEffect cleanup (line 140)
 ```
 
 ### 13. PackagePaymentModal useCallback Optimization Added
