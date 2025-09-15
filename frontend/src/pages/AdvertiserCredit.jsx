@@ -63,6 +63,27 @@ export default function AdvertiserCredit() {
   // Initial data fetch
   useEffect(() => {
     fetchCreditData()
+    
+    // TEMPORARY: Check for pending package purchase - REVERSIBLE
+    const pendingPurchase = localStorage.getItem('pendingPackagePurchase')
+    if (pendingPurchase) {
+      try {
+        const purchaseData = JSON.parse(pendingPurchase)
+        console.log('Package purchase data found:', purchaseData)
+        
+        // Clear the pending purchase data
+        localStorage.removeItem('pendingPackagePurchase')
+        
+        // Redirect to payment gateway instead of wallet
+        // For now, show an alert and redirect back to packages
+        alert(`Package Purchase: ${purchaseData.packageName}\nBudget: ${purchaseData.budget} KWD\nEstimated Views: ${purchaseData.estimatedViews}\n\nRedirecting to payment gateway...`)
+        
+        // Redirect to packages page
+        window.location.href = '/advertiser/packages'
+      } catch (error) {
+        console.error('Error parsing pending purchase data:', error)
+      }
+    }
   }, [])
 
   // Monitor credit alerts
@@ -268,6 +289,14 @@ export default function AdvertiserCredit() {
 
   return (
     <Box p={isMobile ? 1 : 2}>
+      {/* TEMPORARY: Package purchase notice - REVERSIBLE */}
+      <Alert severity="info" sx={{ mb: 3 }}>
+        <Typography variant="body2">
+          <strong>Temporary Notice:</strong> Package purchases are currently redirected to payment gateway. 
+          Use the "Packages" menu to purchase packages.
+        </Typography>
+      </Alert>
+      
       {/* Header with Auto-refresh Controls */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Box>

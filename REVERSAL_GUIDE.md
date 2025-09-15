@@ -132,6 +132,49 @@ const handlePurchase = async (pkg) => {
 {purchasing ? t('advertiser.packages.purchasing') : t('advertiser.packages.purchase')}
 ```
 
+### 4. Credit Page Modified for Package Purchase Handling
+**File:** `frontend/src/pages/AdvertiserCredit.jsx`
+**Lines:** 67-87, 292-298
+
+**What was changed:**
+- Added package purchase detection in useEffect
+- Added notice banner about package purchase redirection
+- Package purchases now show alert and redirect back to packages
+
+**To reverse:**
+```javascript
+// Remove the package purchase handling from useEffect (lines 67-87):
+// TEMPORARY: Check for pending package purchase - REVERSIBLE
+// const pendingPurchase = localStorage.getItem('pendingPackagePurchase')
+// if (pendingPurchase) {
+//   try {
+//     const purchaseData = JSON.parse(pendingPurchase)
+//     console.log('Package purchase data found:', purchaseData)
+//     
+//     // Clear the pending purchase data
+//     localStorage.removeItem('pendingPackagePurchase')
+//     
+//     // Redirect to payment gateway instead of wallet
+//     // For now, show an alert and redirect back to packages
+//     alert(`Package Purchase: ${purchaseData.packageName}\nBudget: ${purchaseData.budget} KWD\nEstimated Views: ${purchaseData.estimatedViews}\n\nRedirecting to payment gateway...`)
+//     
+//     // Redirect to packages page
+//     window.location.href = '/advertiser/packages'
+//   } catch (error) {
+//     console.error('Error parsing pending purchase data:', error)
+//   }
+// }
+
+// Remove the notice banner (lines 292-298):
+// {/* TEMPORARY: Package purchase notice - REVERSIBLE */}
+// <Alert severity="info" sx={{ mb: 3 }}>
+//   <Typography variant="body2">
+//     <strong>Temporary Notice:</strong> Package purchases are currently redirected to payment gateway. 
+//     Use the "Packages" menu to purchase packages.
+//   </Typography>
+// </Alert>
+```
+
 ## Summary of Changes
 
 1. **Credit page hidden** from advertiser navigation menu
