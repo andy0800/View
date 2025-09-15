@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Dialog, DialogTitle, DialogContent, DialogActions,
   TextField, Button, Alert, CircularProgress, Box,
@@ -76,9 +76,9 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
         customerMobile: ''
       });
     }
-  }, [open]);
+  }, [open]); // TEMPORARY: Fixed dependency array - REVERSIBLE
 
-  const handleInputChange = (field) => (event) => {
+  const handleInputChange = useCallback((field) => (event) => {
     const value = event.target.value;
     
     // Format mobile number
@@ -93,18 +93,18 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
     if (formErrors[field]) {
       setFormErrors(prev => ({ ...prev, [field]: '' }));
     }
-  };
+  }, [formErrors]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const validation = paymentService.validatePaymentForm({
       ...formData,
       amount: budget
     });
     setFormErrors(validation.errors);
     return validation.isValid;
-  };
+  }, [formData, budget]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
 
-  const handleCreatePayment = async () => {
+  const handleCreatePayment = useCallback(async () => {
     if (!validateForm()) {
       setError('Please fix the form errors before proceeding');
       return;
@@ -135,9 +135,9 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
     } finally {
       setLoading(false);
     }
-  };
+  }, [validateForm, packageData, budget, formData]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
 
-  const handlePaymentProcessing = async (sessionId) => {
+  const handlePaymentProcessing = useCallback(async (sessionId) => {
     try {
       setLoading(true);
       
@@ -167,14 +167,14 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
     } finally {
       setLoading(false);
     }
-  };
+  }, [budget, onSuccess]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     if (paymentStatus === 'success') {
       onSuccess && onSuccess();
     }
     onClose();
-  };
+  }, [paymentStatus, onSuccess, onClose]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
 
   const renderStepContent = () => {
     switch (activeStep) {
