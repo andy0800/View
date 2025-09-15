@@ -267,6 +267,49 @@ const handlePurchase = async (pkg) => {
 // Remove the redirect route (lines 28-35)
 ```
 
+### 11. PackagePaymentModal Null Safety Added
+**File:** `frontend/src/components/PackagePaymentModal.jsx`
+**Lines:** 36-62, 198, 207, 215, 223, 235, 325, 342
+
+**What was changed:**
+- Added null check for packageData at component start
+- Added optional chaining for all packageData property access
+- Added fallback values for missing data
+- Added error display when no package is selected
+
+**To reverse:**
+```javascript
+// Remove the null check block (lines 36-62)
+// Remove optional chaining and restore direct access:
+// packageData.name instead of packageData?.name || 'Unknown Package'
+// packageData.duration instead of packageData?.duration || 0
+// packageData.pricePerView instead of packageData?.pricePerView || packageData?.price_per_view || 0
+// budget instead of budget || 0
+// paymentSession.package?.name instead of paymentSession?.package?.name || 'Unknown'
+// packageData.name instead of packageData?.name || 'package'
+```
+
+### 12. AdvertiserPackages Defensive Programming Added
+**File:** `frontend/src/pages/AdvertiserPackages.jsx`
+**Lines:** 221-225, 479-482, 598, 614, 636, 681
+
+**What was changed:**
+- Added validation in handlePackagePurchase function
+- Added null checks in package mapping
+- Added optional chaining for package properties
+- Added fallback values for missing data
+
+**To reverse:**
+```javascript
+// Remove validation in handlePackagePurchase (lines 221-225)
+// Remove null checks in package mapping (lines 479-482)
+// Remove optional chaining and restore direct access:
+// pkg.name instead of pkg?.name || 'Unknown Package'
+// pkg.duration instead of pkg?.duration || 0
+// pkg.pricePerView instead of pkg?.pricePerView || pkg?.price_per_view || 0
+// pkg.description instead of pkg?.description || 'No description available'
+```
+
 ## Summary of Changes
 
 1. **Credit page hidden** from advertiser navigation menu

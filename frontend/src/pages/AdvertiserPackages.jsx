@@ -218,6 +218,12 @@ export default function AdvertiserPackages() {
 
   // TEMPORARY: Handle package purchase through payment gateway - REVERSIBLE
   const handlePackagePurchase = (pkg) => {
+    // TEMPORARY: Add validation for package data - REVERSIBLE
+    if (!pkg || !pkg.id) {
+      setError('No package selected. Please select a package first.');
+      return;
+    }
+    
     setPackageToPurchase(pkg);
     setBudget(300);
     setSuccess('');
@@ -469,6 +475,12 @@ export default function AdvertiserPackages() {
 
       <Grid container spacing={3} sx={{ mb: 6, justifyContent: 'center' }}>
         {packages.map((pkg, index) => {
+          // TEMPORARY: Add null checks for package data - REVERSIBLE
+          if (!pkg || !pkg.id) {
+            console.warn('Invalid package data at index:', index, pkg);
+            return null;
+          }
+          
           const colors = colorSchemes[index % colorSchemes.length];
           
           return (
@@ -583,7 +595,7 @@ export default function AdvertiserPackages() {
                     </Box>
                     
                     <Typography variant="h5" gutterBottom sx={{ fontWeight: 800, textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
-                  {pkg.name}
+                  {pkg?.name || 'Unknown Package'}
                 </Typography>
                 
                     <Box sx={{ 
@@ -599,7 +611,7 @@ export default function AdvertiserPackages() {
                     }}>
                       <Timer sx={{ mr: 1, color: 'white', fontSize: '1.2rem' }} />
                       <Typography variant="h6" sx={{ fontWeight: 700, color: 'white' }}>
-                    {pkg.duration}s
+                    {pkg?.duration || 0}s
                   </Typography>
                 </Box>
                   </Box>
@@ -621,7 +633,7 @@ export default function AdvertiserPackages() {
                       WebkitTextFillColor: 'transparent',
                       textShadow: 'none'
                     }}>
-                      {formatKWD(pkg.pricePerView || pkg.price_per_view || 0)}
+                      {formatKWD(pkg?.pricePerView || pkg?.price_per_view || 0)}
                     </Typography>
                     <Typography variant="body1" color="text.secondary" sx={{ 
                       mb: 2,
@@ -666,7 +678,7 @@ export default function AdvertiserPackages() {
                         pl: 2
                       }}
                     >
-                      {pkg.description}
+                      {pkg?.description || 'No description available'}
                     </Typography>
                   </Box>
                 </CardContent>

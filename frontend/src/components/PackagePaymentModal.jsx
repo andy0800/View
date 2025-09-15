@@ -33,6 +33,34 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
   const [paymentSession, setPaymentSession] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('pending');
 
+  // TEMPORARY: Add null checks and validation - REVERSIBLE
+  if (!packageData) {
+    return (
+      <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Box display="flex" alignItems="center" gap={1}>
+            <ShoppingCart color="primary" />
+            <Typography variant="h6">Package Purchase</Typography>
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ textAlign: 'center', py: 4 }}>
+            <Error sx={{ fontSize: 60, color: 'error.main', mb: 2 }} />
+            <Typography variant="h6" gutterBottom>
+              No Package Selected
+            </Typography>
+            <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+              Please select a package before proceeding with payment.
+            </Typography>
+            <Button variant="contained" onClick={onClose}>
+              Close
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   // Reset form when modal opens
   useEffect(() => {
     if (open) {
@@ -167,7 +195,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
                       Package Name:
                     </Typography>
                     <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                      {packageData.name}
+                      {packageData?.name || 'Unknown Package'}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -176,7 +204,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
                     </Typography>
                     <Typography variant="h6" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 0.5 }}>
                       <Timer />
-                      {packageData.duration}s
+                      {packageData?.duration || 0}s
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -184,7 +212,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
                       Price per View:
                     </Typography>
                     <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                      {formatKWD(packageData.pricePerView || packageData.price_per_view || 0)}
+                      {formatKWD(packageData?.pricePerView || packageData?.price_per_view || 0)}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -192,7 +220,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
                       Budget:
                     </Typography>
                     <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                      {formatKWD(budget)}
+                      {formatKWD(budget || 0)}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -204,7 +232,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
                     Total Amount:
                   </Typography>
                   <Typography variant="h4" sx={{ fontWeight: 700 }}>
-                    {formatKWD(budget)}
+                    {formatKWD(budget || 0)}
                   </Typography>
                 </Box>
               </CardContent>
@@ -294,7 +322,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
                   Amount: {paymentSession.amount} KWD
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Package: {paymentSession.package?.name}
+                  Package: {paymentSession?.package?.name || 'Unknown'}
                 </Typography>
               </Box>
             )}
@@ -311,7 +339,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
                   Package Purchase Successful!
                 </Typography>
                 <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-                  Your package has been purchased and is ready to use
+                  Your package {packageData?.name || 'package'} has been purchased and is ready to use
                 </Typography>
                 <Box sx={{ mt: 2 }}>
                   <Chip 
