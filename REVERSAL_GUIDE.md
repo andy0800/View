@@ -312,24 +312,26 @@ const handlePurchase = async (pkg) => {
 
 ### 13. PackagePaymentModal useCallback Optimization Added
 **File:** `frontend/src/components/PackagePaymentModal.jsx`
-**Lines:** 1, 81-96, 98-105, 107-138, 140-170, 172-177
+**Lines:** 1, 81-101, 103-110, 112-150, 152-182, 184-189
 
 **What was changed:**
 - Added useCallback import
-- Wrapped handleInputChange in useCallback with formErrors dependency
+- Fixed handleInputChange circular dependency by removing formErrors from dependencies
+- Fixed handleCreatePayment circular dependency by inlining validation
+- Wrapped handleInputChange in useCallback with empty dependencies
 - Wrapped validateForm in useCallback with formData and budget dependencies
-- Wrapped handleCreatePayment in useCallback with validateForm, packageData, budget, formData dependencies
+- Wrapped handleCreatePayment in useCallback with packageData, budget, formData, handlePaymentProcessing dependencies
 - Wrapped handlePaymentProcessing in useCallback with budget and onSuccess dependencies
 - Wrapped handleClose in useCallback with paymentStatus, onSuccess, onClose dependencies
 
 **To reverse:**
 ```javascript
 // Remove useCallback import (line 1)
-// Remove useCallback wrapper from handleInputChange (lines 81-96)
-// Remove useCallback wrapper from validateForm (lines 98-105)
-// Remove useCallback wrapper from handleCreatePayment (lines 107-138)
-// Remove useCallback wrapper from handlePaymentProcessing (lines 140-170)
-// Remove useCallback wrapper from handleClose (lines 172-177)
+// Restore handleInputChange with formErrors dependency (lines 81-101)
+// Restore handleCreatePayment with validateForm call (lines 112-150)
+// Remove useCallback wrapper from validateForm (lines 103-110)
+// Remove useCallback wrapper from handlePaymentProcessing (lines 152-182)
+// Remove useCallback wrapper from handleClose (lines 184-189)
 // Restore original function declarations without useCallback
 ```
 

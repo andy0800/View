@@ -90,10 +90,15 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
     }
     
     // Clear field error when user starts typing
-    if (formErrors[field]) {
-      setFormErrors(prev => ({ ...prev, [field]: '' }));
-    }
-  }, [formErrors]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
+    setFormErrors(prev => {
+      if (prev[field]) {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      }
+      return prev;
+    });
+  }, []); // TEMPORARY: Removed circular dependency - REVERSIBLE
 
   const validateForm = useCallback(() => {
     const validation = paymentService.validatePaymentForm({
@@ -105,7 +110,14 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
   }, [formData, budget]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
 
   const handleCreatePayment = useCallback(async () => {
-    if (!validateForm()) {
+    // TEMPORARY: Inline validation to avoid circular dependency - REVERSIBLE
+    const validation = paymentService.validatePaymentForm({
+      ...formData,
+      amount: budget
+    });
+    
+    if (!validation.isValid) {
+      setFormErrors(validation.errors);
       setError('Please fix the form errors before proceeding');
       return;
     }
@@ -135,7 +147,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
     } finally {
       setLoading(false);
     }
-  }, [validateForm, packageData, budget, formData]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
+  }, [packageData, budget, formData, handlePaymentProcessing]); // TEMPORARY: Removed circular dependency - REVERSIBLE
 
   const handlePaymentProcessing = useCallback(async (sessionId) => {
     try {
