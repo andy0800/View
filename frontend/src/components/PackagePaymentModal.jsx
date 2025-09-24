@@ -17,6 +17,8 @@ import { formatKWD } from '../utils/currencyUtils';
 const steps = ['Package Details', 'Customer Information', 'Payment Processing', 'Payment Complete'];
 
 export default function PackagePaymentModal({ open, onClose, onSuccess, packageData, budget }) {
+  console.log('🔍 PackagePaymentModal render - open:', open, 'packageData:', packageData, 'budget:', budget);
+  
   const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -33,36 +35,9 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
   const [paymentSession, setPaymentSession] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('pending');
 
-  // TEMPORARY: Add null checks and validation - REVERSIBLE
-  if (!packageData) {
-    return (
-      <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-        <DialogTitle>
-          <Box display="flex" alignItems="center" gap={1}>
-            <ShoppingCart color="primary" />
-            <Typography variant="h6">Package Purchase</Typography>
-          </Box>
-        </DialogTitle>
-        <DialogContent>
-          <Box sx={{ textAlign: 'center', py: 4 }}>
-            <Error sx={{ fontSize: 60, color: 'error.main', mb: 2 }} />
-            <Typography variant="h6" gutterBottom>
-              No Package Selected
-            </Typography>
-            <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-              Please select a package before proceeding with payment.
-            </Typography>
-            <Button variant="contained" onClick={onClose}>
-              Close
-            </Button>
-          </Box>
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
   // Reset form when modal opens
   useEffect(() => {
+    console.log('🔍 PackagePaymentModal useEffect - open changed:', open);
     if (open) {
       setActiveStep(0);
       setError('');
@@ -76,7 +51,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
         customerMobile: ''
       });
     }
-  }, [open]); // TEMPORARY: Fixed dependency array - REVERSIBLE
+  }, [open]);
 
   const handleInputChange = useCallback((field) => (event) => {
     const value = event.target.value;
@@ -98,7 +73,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
       }
       return prev;
     });
-  }, []); // TEMPORARY: Removed circular dependency - REVERSIBLE
+  }, []);
 
   const validateForm = useCallback(() => {
     const validation = paymentService.validatePaymentForm({
@@ -107,47 +82,7 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
     });
     setFormErrors(validation.errors);
     return validation.isValid;
-  }, [formData, budget]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
-
-  const handleCreatePayment = useCallback(async () => {
-    // TEMPORARY: Inline validation to avoid circular dependency - REVERSIBLE
-    const validation = paymentService.validatePaymentForm({
-      ...formData,
-      amount: budget
-    });
-    
-    if (!validation.isValid) {
-      setFormErrors(validation.errors);
-      setError('Please fix the form errors before proceeding');
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError('');
-      
-      const session = await paymentService.createPackagePaymentSession({
-        packageId: packageData.id,
-        budget: budget,
-        customerName: formData.customerName.trim(),
-        customerEmail: formData.customerEmail.trim(),
-        customerMobile: formData.customerMobile.trim()
-      });
-
-      setPaymentSession(session);
-      setActiveStep(2);
-      
-      // Simulate payment processing
-      setTimeout(() => {
-        handlePaymentProcessing(session.sessionId);
-      }, 2000);
-
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to create payment session');
-    } finally {
-      setLoading(false);
-    }
-  }, [packageData, budget, formData, handlePaymentProcessing]); // TEMPORARY: Removed circular dependency - REVERSIBLE
+  }, [formData, budget]);
 
   const handlePaymentProcessing = useCallback(async (sessionId) => {
     try {
@@ -179,14 +114,113 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
     } finally {
       setLoading(false);
     }
-  }, [budget, onSuccess]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
+  }, [budget, onSuccess]);
+
+  const handleCreatePayment = useCallback(async () => {
+    console.log('🔍 handleCreatePayment called');
+    const validation = paymentService.validatePaymentForm({
+      ...formData,
+      amount: budget
+    });
+    
+    if (!validation.isValid) {
+      setFormErrors(validation.errors);
+      setError('Please fix the form errors before proceeding');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError('');
+      
+      const session = await paymentService.createPackagePaymentSession({
+        packageId: packageData.id,
+        budget: budget,
+        customerName: formData.customerName.trim(),
+        customerEmail: formData.customerEmail.trim(),
+        customerMobile: formData.customerMobile.trim()
+      });
+
+      setPaymentSession(session);
+      setActiveStep(2);
+      
+      // Simulate payment processing - use inline function to avoid circular dependency
+      setTimeout(async () => {
+        try {
+          setLoading(true);
+          
+          // Simulate payment for testing
+          if (process.env.NODE_ENV === 'development' || import.meta.env.VITE_PAYMENT_SIMULATION === 'true') {
+            await paymentService.simulatePayment(session.sessionId, budget);
+          }
+          
+          // Verify payment status
+          const verification = await paymentService.verifyPaymentStatus(session.sessionId);
+          
+          if (verification.status === 'completed') {
+            setPaymentStatus('success');
+            setSuccess(`Package purchase of ${budget} KWD completed successfully!`);
+            setActiveStep(3);
+            onSuccess && onSuccess(verification);
+          } else {
+            setPaymentStatus('failed');
+            setError('Payment failed. Please try again.');
+            setActiveStep(0);
+          }
+
+        } catch (err) {
+          setPaymentStatus('failed');
+          setError('Payment verification failed');
+          setActiveStep(0);
+        } finally {
+          setLoading(false);
+        }
+      }, 2000);
+
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to create payment session');
+    } finally {
+      setLoading(false);
+    }
+  }, [packageData, budget, formData, onSuccess]);
 
   const handleClose = useCallback(() => {
     if (paymentStatus === 'success') {
       onSuccess && onSuccess();
     }
     onClose();
-  }, [paymentStatus, onSuccess, onClose]); // TEMPORARY: Added useCallback with dependencies - REVERSIBLE
+  }, [paymentStatus, onSuccess, onClose]);
+
+  // Check for missing packageData after all hooks are defined
+  if (!packageData) {
+    console.log('🔍 PackagePaymentModal - No packageData, showing error state');
+    return (
+      <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Box display="flex" alignItems="center" gap={1}>
+            <ShoppingCart color="primary" />
+            <Typography variant="h6">Package Purchase</Typography>
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ textAlign: 'center', py: 4 }}>
+            <Error sx={{ fontSize: 60, color: 'error.main', mb: 2 }} />
+            <Typography variant="h6" gutterBottom>
+              No Package Selected
+            </Typography>
+            <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+              Please select a package before proceeding with payment.
+            </Typography>
+            <Button variant="contained" onClick={onClose}>
+              Close
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  console.log('🔍 PackagePaymentModal - Rendering main modal content');
 
   const renderStepContent = () => {
     switch (activeStep) {
@@ -380,6 +414,8 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
         return null;
     }
   };
+
+  console.log('🔍 PackagePaymentModal - About to return JSX');
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>

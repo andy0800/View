@@ -48,13 +48,16 @@ const unifyPackageData = (pkg) => {
   const result = {
     ...pkg.toJSON ? pkg.toJSON() : pkg,
     // Ensure both micro and KWD values are available
-    pricePerView: pkg.price_per_view_micro ? microToKwd(pkg.price_per_view_micro) : pkg.price_per_view,
+    pricePerView: pkg.price_per_view_micro ? microToKwd(pkg.price_per_view_micro) : (pkg.price_per_view || 0),
     pricePerViewMicro: pkg.price_per_view_micro || (pkg.price_per_view ? kwdToMicro(pkg.price_per_view) : 0),
-    // ✅ FIXED: Remove hardcoded fallback values - use dynamic calculation
-    viewerReward: pkg.viewer_reward || (pkg.price_per_view_micro ? microToKwd(pkg.price_per_view_micro) / 2 : null),
-    companyFee: pkg.company_fee || (pkg.price_per_view_micro ? microToKwd(pkg.price_per_view_micro) / 2 : null),
-    minBudget: pkg.min_budget || 300,
-    budgetIncrement: pkg.budget_increment || 100
+    // Calculate viewer reward and company fee from price per view
+    viewerReward: pkg.price_per_view_micro ? microToKwd(pkg.price_per_view_micro) / 2 : (pkg.price_per_view ? pkg.price_per_view / 2 : 0),
+    companyFee: pkg.price_per_view_micro ? microToKwd(pkg.price_per_view_micro) / 2 : (pkg.price_per_view ? pkg.price_per_view / 2 : 0),
+    minBudget: pkg.min_budget_micro ? microToKwd(pkg.min_budget_micro) : (pkg.min_budget || 300),
+    budgetIncrement: pkg.budget_increment_micro ? microToKwd(pkg.budget_increment_micro) : (pkg.budget_increment || 100),
+    // Add micro unit versions for consistency
+    minBudgetMicro: pkg.min_budget_micro || (pkg.min_budget ? kwdToMicro(pkg.min_budget) : 300000000),
+    budgetIncrementMicro: pkg.budget_increment_micro || (pkg.budget_increment ? kwdToMicro(pkg.budget_increment) : 100000000)
   };
   
   console.log('✅ unifyPackageData: Result:', {

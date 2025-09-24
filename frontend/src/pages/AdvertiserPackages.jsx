@@ -142,7 +142,7 @@ export default function AdvertiserPackages() {
         document.head.removeChild(style);
       }
     };
-  }, []); // TEMPORARY: Fixed missing dependencies - REVERSIBLE
+  }, []);
 
   useEffect(() => {
     setError('');
@@ -190,8 +190,8 @@ export default function AdvertiserPackages() {
       
       // Additional debugging after state update
       setTimeout(() => {
-        console.log('📦 State after update - packages:', packages);
-        console.log('📦 State after update - packages.length:', packages.length);
+        console.log('📦 State after update - packages:', packagesData);
+        console.log('📦 State after update - packages.length:', packagesData.length);
       }, 100);
       
       // Set initial budget to 300 KWD as per original VIEW APP
@@ -220,9 +220,9 @@ export default function AdvertiserPackages() {
     setPurchaseDialogOpen(true);
   };
 
-  // TEMPORARY: Handle package purchase through payment gateway - REVERSIBLE
+  // Handle package purchase through payment gateway
   const handlePackagePurchase = useCallback((pkg) => {
-    // TEMPORARY: Add validation for package data - REVERSIBLE
+    console.log('🔍 handlePackagePurchase called with package:', pkg);
     if (!pkg || !pkg.id) {
       setError('No package selected. Please select a package first.');
       return;
@@ -234,7 +234,21 @@ export default function AdvertiserPackages() {
     setError('');
     setPurchaseDialogOpen(false);
     setPaymentModalOpen(true);
-  }, []); // TEMPORARY: Added useCallback to prevent re-renders - REVERSIBLE
+    console.log('🔍 Payment modal should be opening now');
+  }, []);
+
+  // Handle payment modal close
+  const handleClosePaymentModal = useCallback(() => {
+    setPaymentModalOpen(false);
+  }, []);
+
+  // Handle payment success
+  const handlePaymentSuccess = useCallback((verification) => {
+    setSuccess('Package purchased successfully!');
+    setPaymentModalOpen(false);
+    fetchPackages(); // Refresh packages list
+    navigate('/advertiser/activate'); // Redirect to activate page
+  }, [navigate]);
 
   // ORIGINAL VIEW APP LOGIC: Increment budget by 100 KWD
   const handleIncrementBudget = () => {
@@ -1114,16 +1128,12 @@ export default function AdvertiserPackages() {
         </DialogActions>
       </Dialog>
 
-      {/* TEMPORARY: Package Payment Modal - REVERSIBLE */}
+      {/* Package Payment Modal */}
+      {console.log('🔍 AdvertiserPackages render - paymentModalOpen:', paymentModalOpen, 'packageToPurchase:', packageToPurchase, 'budget:', budget)}
       <PackagePaymentModal
         open={paymentModalOpen}
-        onClose={useCallback(() => setPaymentModalOpen(false), [])} // TEMPORARY: Memoized onClose callback - REVERSIBLE
-        onSuccess={useCallback((verification) => {
-          setSuccess('Package purchased successfully!');
-          setPaymentModalOpen(false);
-          fetchPackages(); // Refresh packages list
-          navigate('/advertiser/activate'); // Redirect to activate page
-        }, [navigate])} // TEMPORARY: Memoized onSuccess callback - REVERSIBLE
+        onClose={handleClosePaymentModal}
+        onSuccess={handlePaymentSuccess}
         packageData={packageToPurchase}
         budget={budget}
       />

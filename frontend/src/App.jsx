@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import './styles/browserCompatibility.css';
 import './styles/mobile.css';
 import { initConsoleErrorSuppression } from './utils/consoleUtils';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 import CreativeMainPage from './components/CreativeMainPage.jsx';
 import AuthForms from './components/AuthForms.jsx';
 
@@ -45,7 +46,8 @@ export default function App() {
   }, []);
   
   return (
-    <Routes>
+    <ErrorBoundary>
+      <Routes>
              {/* Public routes */}
        <Route path="/" element={<CreativeMainPage />} />
        <Route path="/auth" element={<AuthForms />} />
@@ -115,6 +117,7 @@ export default function App() {
       
       {/* Catch-all route */}
       <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+      </Routes>
+    </ErrorBoundary>
   );
 }

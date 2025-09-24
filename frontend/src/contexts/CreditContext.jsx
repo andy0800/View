@@ -1,5 +1,5 @@
 // src/contexts/CreditContext.jsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 import api from '../api';
 import { microToKwd } from '../utils/currencyUtils';
@@ -26,7 +26,7 @@ export const CreditProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth();
 
   // Fetch credit balance from backend
-  const fetchCredit = async () => {
+  const fetchCredit = useCallback(async () => {
     if (!isAuthenticated || !user) {
       setLoading(false);
       return;
@@ -53,7 +53,7 @@ export const CreditProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isAuthenticated, user]);
 
   // Add credit (for rewards)
   const addCredit = (amount) => {
@@ -166,7 +166,7 @@ export const CreditProvider = ({ children }) => {
       setError(null);
       setLastUpdated(null);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, fetchCredit]);
 
   // Auto-refresh credit every 30 seconds when authenticated
   useEffect(() => {
@@ -177,7 +177,7 @@ export const CreditProvider = ({ children }) => {
     }, 30000); // 30 seconds
 
     return () => clearInterval(interval);
-  }, [isAuthenticated]);
+  }, [isAuthenticated, fetchCredit]);
 
   const value = {
     // State

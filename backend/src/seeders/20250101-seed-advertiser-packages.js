@@ -7,11 +7,10 @@ module.exports = {
       {
         name: 'Basic Package',
         duration: 10, // 10 seconds
-        price_per_view: 0.010, // 10 fils per view
-        viewer_reward: 0.005, // 5 fils to viewer (half of 10 fils)
-        company_fee: 0.005, // 5 fils to company (half of 10 fils)
-        min_budget: 300.00, // Fixed starting budget: 300 KWD
-        budget_increment: 100.00, // Fixed increment: 100 KWD only
+        price_per_view_micro: 10000, // 0.010 KWD in micro units (10 fils)
+        min_budget_micro: 300000000, // 300 KWD in micro units
+        budget_increment_micro: 100000000, // 100 KWD in micro units
+        description: '10-second video ads with maximum engagement',
         is_active: true,
         created_at: new Date(),
         updated_at: new Date()
@@ -19,11 +18,10 @@ module.exports = {
       {
         name: 'Standard Package',
         duration: 15, // 15 seconds
-        price_per_view: 0.014, // 14 fils per view
-        viewer_reward: 0.007, // 7 fils to viewer (half of 14 fils)
-        company_fee: 0.007, // 7 fils to company (half of 14 fils)
-        min_budget: 300.00, // Fixed starting budget: 300 KWD
-        budget_increment: 100.00, // Fixed increment: 100 KWD only
+        price_per_view_micro: 14000, // 0.014 KWD in micro units (14 fils)
+        min_budget_micro: 300000000, // 300 KWD in micro units
+        budget_increment_micro: 100000000, // 100 KWD in micro units
+        description: '15-second video ads with enhanced visibility',
         is_active: true,
         created_at: new Date(),
         updated_at: new Date()
@@ -31,11 +29,10 @@ module.exports = {
       {
         name: 'Premium Package',
         duration: 20, // 20 seconds
-        price_per_view: 0.016, // 16 fils per view
-        viewer_reward: 0.008, // 8 fils to viewer (half of 16 fils)
-        company_fee: 0.008, // 8 fils to company (half of 16 fils)
-        min_budget: 300.00, // Fixed starting budget: 300 KWD
-        budget_increment: 100.00, // Fixed increment: 100 KWD only
+        price_per_view_micro: 16000, // 0.016 KWD in micro units (16 fils)
+        min_budget_micro: 300000000, // 300 KWD in micro units
+        budget_increment_micro: 100000000, // 100 KWD in micro units
+        description: '20-second video ads with premium placement',
         is_active: true,
         created_at: new Date(),
         updated_at: new Date()
@@ -43,11 +40,10 @@ module.exports = {
       {
         name: 'Extended Package',
         duration: 30, // 30 seconds
-        price_per_view: 0.024, // 24 fils per view
-        viewer_reward: 0.012, // 12 fils to viewer (half of 24 fils)
-        company_fee: 0.012, // 12 fils to company (half of 24 fils)
-        min_budget: 300.00, // Fixed starting budget: 300 KWD
-        budget_increment: 100.00, // Fixed increment: 100 KWD only
+        price_per_view_micro: 24000, // 0.024 KWD in micro units (24 fils)
+        min_budget_micro: 300000000, // 300 KWD in micro units
+        budget_increment_micro: 100000000, // 100 KWD in micro units
+        description: '30-second video ads with extended reach',
         is_active: true,
         created_at: new Date(),
         updated_at: new Date()
