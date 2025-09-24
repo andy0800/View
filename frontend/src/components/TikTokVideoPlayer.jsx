@@ -6,6 +6,7 @@ import {
   LinearProgress,
   Button,
   Chip,
+  Tooltip,
   Snackbar,
   Alert
 } from '@mui/material';
@@ -19,7 +20,10 @@ import {
   Business,
   CheckCircle,
   ChatBubbleOutline,
-  OpenInNew
+  OpenInNew,
+  InfoOutlined,
+  Visibility,
+  Lock
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -158,6 +162,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
   
   // ✅ OPTIMIZED: Memoize expensive calculations
   const currentVideo = useMemo(() => videos[currentVideoIndex], [videos, currentVideoIndex]);
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   
   // Debug logging
   console.log('🎬 TikTokVideoPlayer render:', { 
@@ -965,10 +970,22 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               height: '100%',
               backgroundColor: 'transparent',
               '& .MuiLinearProgress-bar': {
-                backgroundColor: isLoading ? '#4CAF50' : (rewardEarned ? '#4CAF50' : '#1a237e')
+                backgroundColor: isLoading ? '#4CAF50' : (currentVideo?.is_watched ? '#2196F3' : (rewardEarned ? '#4CAF50' : '#1a237e'))
               }
             }}
           />
+          {canSkip && (
+            <Box sx={{
+              position: 'absolute',
+              top: '-3px',
+              right: '-3px',
+              width: '10px',
+              height: '10px',
+              borderRadius: '50%',
+              backgroundColor: '#4CAF50',
+              boxShadow: '0 0 8px rgba(76,175,80,0.8)'
+            }} />
+          )}
         </Box>
 
         {/* Video Info Overlay */}
@@ -980,7 +997,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           color: 'white',
           zIndex: 10
         }}>
-          <Typography variant="h6" component="div" sx={{ fontWeight: 700, mb: 1 }}>
+          <Typography variant="h6" component="div" sx={{ fontWeight: 700, mb: 1, textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
             {isLoading ? (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Box sx={{ animation: 'spin 1s linear infinite' }}>
@@ -993,7 +1010,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             )}
           </Typography>
           
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+          <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, mb: 2, background: 'rgba(0,0,0,0.35)', borderRadius: '10px', padding: '6px 10px' }}>
             <Business sx={{ fontSize: 16 }} />
             <Box>
               {isLoading ? (
@@ -1014,15 +1031,17 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                         <Chip
-               icon={isLoading ? <Box sx={{ animation: 'spin 1s linear infinite' }}><CheckCircle /></Box> : <AttachMoney />}
-               label={isLoading ? (t('viewer.loading') || 'Loading...') : `${t('currency.kwd')} ${videoReward}`}
-               sx={{
-                 backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : (rewardEarned ? 'rgba(76, 175, 80, 0.9)' : 'rgba(26, 35, 126, 0.9)'),
-                 color: 'white',
-                 fontWeight: 600
-               }}
-             />
+            <Tooltip title={currentVideo?.is_watched ? (t('viewer.alreadyRewardedTooltip') || 'Already rewarded - rewatching will not earn credits') : ''} disableHoverListener={!currentVideo?.is_watched}>
+              <Chip
+                icon={isLoading ? <Box sx={{ animation: prefersReducedMotion ? 'none' : 'spin 1s linear infinite' }}><CheckCircle /></Box> : (currentVideo?.is_watched ? <InfoOutlined /> : <AttachMoney />)}
+                label={isLoading ? (t('viewer.loading') || 'Loading...') : `${t('currency.kwd')} ${videoReward}`}
+                sx={{
+                  backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : (currentVideo?.is_watched ? 'rgba(96, 125, 139, 0.9)' : (rewardEarned ? 'rgba(76, 175, 80, 0.9)' : 'rgba(26, 35, 126, 0.9)')),
+                  color: 'white',
+                  fontWeight: 600
+                }}
+              />
+            </Tooltip>
             
             <Typography variant="body2" component="div" sx={{ opacity: 0.8 }}>
             {isLoading ? (
@@ -1039,16 +1058,18 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             
           {/* Watched Status Indicator */}
           {!isLoading && currentVideo?.is_watched && (
-            <Chip
-              icon={<CheckCircle />}
-              label={t('viewer.alreadyWatched') || 'WATCHED'}
-              sx={{
-                backgroundColor: 'rgba(33, 150, 243, 0.9)',
-                color: 'white',
-                fontWeight: 600,
-                fontSize: '0.75rem'
-              }}
-            />
+            <Tooltip title={t('viewer.alreadyRewardedTooltip') || 'You have already been rewarded for this ad'}>
+              <Chip
+                icon={<CheckCircle />}
+                label={t('viewer.alreadyWatched') || 'WATCHED · no reward'}
+                sx={{
+                  backgroundColor: 'rgba(33, 150, 243, 0.9)',
+                  color: 'white',
+                  fontWeight: 600,
+                  fontSize: '0.75rem'
+                }}
+              />
+            </Tooltip>
           )}
             
             {/* Loading Status Indicator */}
@@ -1588,6 +1609,25 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                 }} />
               )}
               
+              {/* Watched indicator for queued items */}
+              {video?.is_watched && (
+                <Box sx={{
+                  position: 'absolute',
+                  top: 4,
+                  left: 4,
+                  backgroundColor: 'rgba(33,150,243,0.9)',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: 18,
+                  height: 18,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Visibility sx={{ fontSize: 12 }} />
+                </Box>
+              )}
+
               {/* Blocked indicator */}
               {!canSkip && (
                 <Box sx={{
@@ -1607,6 +1647,25 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                 </Box>
               )}
               
+              {/* Lock glyph when blocked */}
+              {!canSkip && (
+                <Box sx={{
+                  position: 'absolute',
+                  top: 4,
+                  right: 4,
+                  backgroundColor: 'rgba(0,0,0,0.6)',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: 18,
+                  height: 18,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Lock sx={{ fontSize: 12 }} />
+                </Box>
+              )}
+
               {/* Loading indicator */}
               {isLoading && (
                 <Box sx={{
@@ -1716,58 +1775,53 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           right: '10px', '@media (min-width: 600px)': { right: '15px' }, '@media (min-width: 960px)': { right: '20px' },
           zIndex: 15
         }}>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={() => {
-              if (canSkip && !isLoading) {
-                // Only allow CTA click after video completion
-                window.open(currentVideo.cta_data.link, '_blank');
-                // ✅ REMOVED: Auto-advance - user must click NEXT button manually
-                // handleNextVideo();
-              }
-            }}
-            disabled={!canSkip || isLoading}
-            startIcon={isLoading ? (
-              <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                <CheckCircle />
-              </Box>
-            ) : (
-              <OpenInNew />
-            )}
-            sx={{
-              backgroundColor: isLoading ? 'rgba(76, 175, 80, 0.95)' : (canSkip ? 'rgba(255, 64, 129, 0.95)' : 'rgba(128, 128, 128, 0.6)'),
-              color: 'white',
-              fontWeight: 700,
-              fontSize: '0.8rem', '@media (min-width: 600px)': { fontSize: '0.85rem' }, '@media (min-width: 960px)': { fontSize: '0.9rem' },
-              px: 2.5, '@media (min-width: 600px)': { px: 2.75 }, '@media (min-width: 960px)': { px: 3 },
-              py: 1.25, '@media (min-width: 600px)': { py: 1.375 }, '@media (min-width: 960px)': { py: 1.5 },
-              borderRadius: 2.5, '@media (min-width: 600px)': { borderRadius: 2.75 }, '@media (min-width: 960px)': { borderRadius: 3 },
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              boxShadow: isLoading ? '0 8px 32px rgba(76, 175, 80, 0.4)' : (canSkip ? '0 8px 32px rgba(255, 64, 129, 0.4)' : 'none'),
-              transition: 'all 0.3s ease',
-              // ✅ ENHANCED: Instagram-style animation when video completes
-              animation: isLoading ? 'ctaButtonPulse 2s ease-in-out infinite' : (canSkip ? 'ctaButtonPulse 2s ease-in-out infinite' : 'none'),
-              minHeight: '40px', '@media (min-width: 600px)': { minHeight: '44px' }, '@media (min-width: 960px)': { minHeight: '48px' },
-              '&:hover': isLoading ? {
-                backgroundColor: 'rgba(76, 175, 80, 1)',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 12px 40px rgba(76, 175, 80, 0.6)'
-              } : (canSkip ? {
-                backgroundColor: 'rgba(255, 64, 129, 1)',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 12px 40px rgba(255, 64, 129, 0.6)'
-              } : {}),
-              '&:disabled': {
-                backgroundColor: 'rgba(128, 128, 128, 0.6)',
-                color: 'rgba(255, 255, 255, 0.7)',
-                cursor: 'not-allowed'
-              }
-            }}
-          >
-            {currentVideo.cta_data.text || t('viewer.learnMore')}
-          </Button>
+          <Tooltip title={!canSkip ? (t('viewer.waitForCompletion') || 'Completes after watching') : ''} disableHoverListener={canSkip}>
+            <span>
+              <Button
+                variant="contained"
+                size="large"
+                onClick={() => {
+                  if (canSkip && !isLoading) {
+                    window.open(currentVideo.cta_data.link, '_blank');
+                  }
+                }}
+                disabled={!canSkip || isLoading}
+                startIcon={isLoading ? (
+                  <Box sx={{ animation: prefersReducedMotion ? 'none' : 'spin 1s linear infinite' }}>
+                    <CheckCircle />
+                  </Box>
+                ) : (
+                  <OpenInNew />
+                )}
+                sx={{
+                  background: canSkip && !isLoading ? 'linear-gradient(135deg, #FF4081, #F50057)' : (isLoading ? 'rgba(76, 175, 80, 0.95)' : 'rgba(128, 128, 128, 0.6)'),
+                  color: 'white',
+                  fontWeight: 700,
+                  fontSize: '0.8rem', '@media (min-width: 600px)': { fontSize: '0.85rem' }, '@media (min-width: 960px)': { fontSize: '0.9rem' },
+                  px: 2.5, '@media (min-width: 600px)': { px: 2.75 }, '@media (min-width: 960px)': { px: 3 },
+                  py: 1.25, '@media (min-width: 600px)': { py: 1.375 }, '@media (min-width: 960px)': { py: 1.5 },
+                  borderRadius: 2.5, '@media (min-width: 600px)': { borderRadius: 2.75 }, '@media (min-width: 960px)': { borderRadius: 3 },
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  boxShadow: canSkip && !isLoading ? '0 8px 32px rgba(255, 64, 129, 0.4)' : (isLoading ? '0 8px 32px rgba(76, 175, 80, 0.4)' : 'none'),
+                  transition: 'all 0.3s ease',
+                  animation: prefersReducedMotion ? 'none' : (canSkip ? 'ctaButtonPulse 2s ease-in-out infinite' : 'none'),
+                  minHeight: '40px', '@media (min-width: 600px)': { minHeight: '44px' }, '@media (min-width: 960px)': { minHeight: '48px' },
+                  '&:hover': canSkip && !isLoading ? {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 12px 40px rgba(255, 64, 129, 0.6)'
+                  } : {},
+                  '&:disabled': {
+                    backgroundColor: 'rgba(128, 128, 128, 0.6)',
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    cursor: 'not-allowed'
+                  }
+                }}
+              >
+                {currentVideo.cta_data.text || t('viewer.learnMore')}
+              </Button>
+            </span>
+          </Tooltip>
           
           {/* CTA Status Indicator */}
           {!canSkip && (
@@ -1863,7 +1917,8 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '0.625rem', '@media (min-width: 600px)': { fontSize: '0.6875rem' }, '@media (min-width: 960px)': { fontSize: '0.75rem' },
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              boxShadow: '0 0 10px rgba(244,67,54,0.7)'
             }}
           >
             {commentCount > 99 ? '99+' : commentCount}
