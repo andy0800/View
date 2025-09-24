@@ -11,8 +11,7 @@ const jwt           = require('jsonwebtoken');
 const cookieParser  = require('cookie-parser');
 const { sequelize } = require('./models');
 
-// Import startup database initialization
-const { initializeDatabase } = require('./startup/databaseInit');
+// Database initialization removed - no auto-activation
 
 // Middleware
 const { handleWebhook } = require('./controllers/paymentController');
@@ -201,34 +200,15 @@ app.use(errorHandler);
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
     
-  // SIMPLE DATABASE INITIALIZATION
-  console.log('⚡ RUNNING DATABASE INITIALIZATION...');
-  try {
-    const initSuccess = await initializeDatabase();
-    if (initSuccess) {
-      console.log('✅ Database initialization completed successfully');
-    } else {
-      console.log('⚠️ Database initialization failed, but continuing app startup');
-    }
-  } catch (error) {
-    console.error('❌ Database initialization error:', error.message);
-    console.log('⚠️ Continuing app startup despite database initialization failure');
-  }
+  // Database initialization removed - no auto-activation
+  console.log('✅ Database connection established - no auto-initialization');
     
     if (NODE_ENV === 'development') {
       await sequelize.sync(); // ⚠️ Sync only in dev
       console.log('✅ Database synced successfully.');
     } else {
-      // In production, use smart initialization utility
-      console.log('🔄 Initializing production database...');
-      const { initializeDatabase } = require('./utils/dbInit');
-      const success = await initializeDatabase(sequelize);
-      
-      if (success) {
-        console.log('✅ Production database initialized successfully.');
-      } else {
-        console.log('⚠️ Database initialization failed, but continuing...');
-      }
+      // Production mode - no auto-initialization
+      console.log('✅ Production mode - no auto-initialization');
     }
   } catch (error) {
     console.warn('⚠️ Database connection failed:', error.message);

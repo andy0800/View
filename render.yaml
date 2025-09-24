@@ -8,3 +8,11 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
+  - type: web
+    name: viewapp-backend
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
