@@ -168,8 +168,10 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
   });
   
   const videoReward = useMemo(() => {
-    return currentVideo?.package?.viewer_reward || 
+    const base = currentVideo?.package?.viewer_reward || 
            (currentVideo?.package?.pricePerView ? (currentVideo.package.pricePerView / 2).toFixed(6) : '0.005');
+    // If this ad was already watched, show 0 reward to indicate rewatching has no reward
+    return currentVideo?.is_watched ? '0.000' : base;
   }, [currentVideo]);
   
   // Function to fetch comment count for current video with enhanced error handling
@@ -268,6 +270,15 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
     try {
       setIsLoading(true);
       devLog('🎬 Starting to watch video:', video.id);
+      // If already watched, skip creating a new rewarded view event
+      if (video?.is_watched) {
+        devLog('🔁 Re-watching already rewarded ad - no new reward event will be created');
+        setIsWatching(true);
+        setCanSkip(false);
+        currentProofTokenRef.current = null;
+        viewStartTimeRef.current = Date.now();
+        return;
+      }
       const response = await startWatchingAd(video.id);
       
       if (response.success) {
@@ -386,6 +397,23 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
       }
       
       // Check if we have a valid proof token (use ref as fallback)
+      // If re-watching, do not call backend completion or show reward
+      if (currentVideo?.is_watched) {
+        devLog('🔁 Completing re-watch without reward');
+        if (onVideoComplete) {
+          try {
+            await onVideoComplete(currentVideo);
+          } catch (e) {}
+        }
+        // Advance to next video
+        setProcessedVideos(prev => new Set([...prev, currentVideo.id]));
+        if (currentVideoIndex < videos.length - 1) {
+          advanceToNextVideo();
+        } else {
+          setShowCompletionMessage(true);
+        }
+        return;
+      }
       const proofToken = currentProofTokenRef.current;
       const startTime = viewStartTimeRef.current;
       
@@ -997,31 +1025,31 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
              />
             
             <Typography variant="body2" component="div" sx={{ opacity: 0.8 }}>
-              {isLoading ? (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                    <CheckCircle sx={{ fontSize: 12 }} />
-                  </Box>
-                  {t('viewer.loading') || 'Loading...'}
+            {isLoading ? (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ animation: 'spin 1s linear infinite' }}>
+                  <CheckCircle sx={{ fontSize: 12 }} />
                 </Box>
-              ) : (
-                formatDuration(currentVideo.package?.duration || currentVideo.duration || 10)
-              )}
+                {t('viewer.loading') || 'Loading...'}
+              </Box>
+            ) : (
+              formatDuration(currentVideo.package?.duration || currentVideo.duration || 10)
+            )}
             </Typography>
             
-            {/* Watched Status Indicator */}
-            {rewardEarned && !isLoading && (
-              <Chip
-                icon={<CheckCircle />}
-                label={t('viewer.watched')}
-                sx={{
-                  backgroundColor: 'rgba(76, 175, 80, 0.9)',
-                  color: 'white',
-                  fontWeight: 600,
-                  fontSize: '0.75rem'
-                }}
-              />
-            )}
+          {/* Watched Status Indicator */}
+          {!isLoading && currentVideo?.is_watched && (
+            <Chip
+              icon={<CheckCircle />}
+              label={t('viewer.alreadyWatched') || 'WATCHED'}
+              sx={{
+                backgroundColor: 'rgba(33, 150, 243, 0.9)',
+                color: 'white',
+                fontWeight: 600,
+                fontSize: '0.75rem'
+              }}
+            />
+          )}
             
             {/* Loading Status Indicator */}
             {isLoading && (
