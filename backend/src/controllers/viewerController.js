@@ -112,11 +112,15 @@ exports.getSectionVideos = async (req, res) => {
     console.log('✅ Section found:', section.title);
 
     const ads = await Ad.getActiveAdsBySection(key, { limit: 50 });
-    console.log(`🔍 Found ${ads.length} ads in section ${key} before filtering`);
+    console.log(`🔍 Found ${ads.length} ads in section ${key} before watched flagging`);
 
-    // Filter out already watched videos for this user
-    const unwatchedAds = await filterAlreadyWatchedVideos(ads, req.user.id);
-    console.log(`🔍 Found ${unwatchedAds.length} unwatched ads in section ${key} after filtering`);
+    // Compute watched ad IDs for this user (we will not filter them out anymore)
+    const watchedRows = await ViewEvent.findAll({
+      where: { user_id: req.user.id, is_completed: true },
+      attributes: ['ad_id'],
+      raw: true
+    });
+    const watchedIds = new Set(watchedRows.map(r => r.ad_id));
 
     // Normalize and validate media URLs; skip any ad without a valid file
     const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${req.protocol}://${req.get('host')}`;
@@ -163,7 +167,7 @@ exports.getSectionVideos = async (req, res) => {
     });
 
     const videos = [];
-    for (const ad of unwatchedAds) {
+    for (const ad of ads) {
       const normalized = normalize(ad.mediaUrl);
       if (!normalized) continue; // skip missing media
       if (!fileExists(normalized)) continue; // skip non-existent file
@@ -189,7 +193,9 @@ exports.getSectionVideos = async (req, res) => {
           enabled: ad.cta_enabled,
           link: ad.cta_link,
           text: ad.cta_text
-        }
+        },
+        // New flag to indicate if this ad was already watched/rewarded by the viewer
+        is_watched: watchedIds.has(ad.id)
       });
     }
 
@@ -201,7 +207,7 @@ exports.getSectionVideos = async (req, res) => {
         title: section.title,
         description: section.description
       },
-      totalUnwatched: videos.length,
+      totalUnwatched: videos.filter(v => !v.is_watched).length,
       totalAvailable: ads.length,
       pagination: {
         total,
@@ -541,10 +547,14 @@ exports.getAllAds = async (req, res) => {
 
     console.log(`🔍 getAllAds: Found ${ads.length} total ads before filtering`);
     
-    // Filter out already watched videos for this user
-    const unwatchedAds = await filterAlreadyWatchedVideos(ads, req.user.id);
-    
-    console.log(`🔍 getAllAds: Found ${unwatchedAds.length} unwatched ads after filtering`);
+    // Compute watched ad IDs for this user (we will not filter them out anymore)
+    const watchedRows = await ViewEvent.findAll({
+      where: { user_id: req.user.id, is_completed: true },
+      attributes: ['ad_id'],
+      raw: true
+    });
+    const watchedIds = new Set(watchedRows.map(r => r.ad_id));
+    console.log(`🔍 getAllAds: Computed watched set size: ${watchedIds.size}`);
 
     // Transform ads for frontend with media URL validation
     const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${req.protocol}://${req.get('host')}`;
@@ -552,7 +562,7 @@ exports.getAllAds = async (req, res) => {
     const fs = require('fs');
     
     const validAds = [];
-    for (const ad of unwatchedAds) {
+    for (const ad of ads) {
       let mediaUrl = ad.mediaUrl;
       if (mediaUrl && !mediaUrl.startsWith('http')) {
         mediaUrl = `${origin}${mediaUrl.startsWith('/') ? '' : '/'}${mediaUrl}`;
@@ -587,7 +597,9 @@ exports.getAllAds = async (req, res) => {
           enabled: ad.cta_enabled,
           link: ad.cta_link,
           text: ad.cta_text
-        }
+        },
+        // New flag to indicate if this ad was already watched/rewarded by the viewer
+        is_watched: watchedIds.has(ad.id)
       });
     }
 
