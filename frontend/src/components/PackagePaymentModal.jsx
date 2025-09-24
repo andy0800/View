@@ -117,7 +117,15 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
   }, [budget, onSuccess]);
 
   const handleCreatePayment = useCallback(async () => {
-    console.log('🔍 handleCreatePayment called');
+    console.log('🔍 handleCreatePayment called with budget:', budget);
+    console.log('🔍 Package data:', packageData);
+    
+    // Validate budget
+    if (!budget || budget < 300) {
+      setError('Budget must be at least 300 KWD');
+      return;
+    }
+    
     const validation = paymentService.validatePaymentForm({
       ...formData,
       amount: budget
@@ -234,6 +242,16 @@ export default function PackagePaymentModal({ open, onClose, onSuccess, packageD
                   <ShoppingCart />
                   Package Purchase Summary
                 </Typography>
+                
+                {/* Budget Display */}
+                <Box sx={{ mb: 2, p: 2, bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 1 }}>
+                  <Typography variant="h5" sx={{ fontWeight: 700, textAlign: 'center' }}>
+                    Budget: {formatKWD(budget || 0)}
+                  </Typography>
+                  <Typography variant="body2" sx={{ textAlign: 'center', opacity: 0.8 }}>
+                    Total amount to be charged
+                  </Typography>
+                </Box>
                 
                 <Grid container spacing={2}>
                   <Grid item xs={6}>

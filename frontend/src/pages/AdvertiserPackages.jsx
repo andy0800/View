@@ -69,7 +69,11 @@ export default function AdvertiserPackages() {
   const [success, setSuccess] = useState('');
   const [purchasing, setPurchasing] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState(null);
-  const [budget, setBudget] = useState(300); // Start at 300 KWD as per original VIEW APP
+  const [budget, setBudget] = useState(() => {
+    // Try to get budget from localStorage, fallback to 300
+    const savedBudget = localStorage.getItem('advertiser_budget');
+    return savedBudget ? parseInt(savedBudget) : 300;
+  }); // Start at 300 KWD as per original VIEW APP
   const [purchasedPackages, setPurchasedPackages] = useState([]);
   const [purchaseDialogOpen, setPurchaseDialogOpen] = useState(false);
   const [packageToPurchase, setPackageToPurchase] = useState(null);
@@ -228,14 +232,27 @@ export default function AdvertiserPackages() {
       return;
     }
     
+    // ✅ Validate budget before proceeding
+    if (!budget || budget < 300) {
+      setError('Please set a budget of at least 300 KWD before proceeding.');
+      return;
+    }
+    
+    if (!isValidBudget(budget)) {
+      const nextValidBudget = getNextValidBudget(budget);
+      const prevValidBudget = getPreviousValidBudget(budget);
+      setError(`Budget must increment by 100 KWD from 300 KWD. Valid options: ${prevValidBudget}, ${nextValidBudget}, or any multiple of 100 from 300.`);
+      return;
+    }
+    
     setPackageToPurchase(pkg);
-    setBudget(300);
+    // ✅ Keep current budget - don't reset to 300
     setSuccess('');
     setError('');
     setPurchaseDialogOpen(false);
     setPaymentModalOpen(true);
-    console.log('🔍 Payment modal should be opening now');
-  }, []);
+    console.log('🔍 Payment modal should be opening now with budget:', budget);
+  }, [budget]); // Add budget to dependencies
 
   // Handle payment modal close
   const handleClosePaymentModal = useCallback(() => {
@@ -254,6 +271,7 @@ export default function AdvertiserPackages() {
   const handleIncrementBudget = () => {
     const nextBudget = getNextValidBudget(budget);
     setBudget(nextBudget);
+    localStorage.setItem('advertiser_budget', nextBudget.toString());
     setSuccess('');
     setError('');
   };
@@ -263,9 +281,27 @@ export default function AdvertiserPackages() {
     const prevBudget = getPreviousValidBudget(budget);
     if (prevBudget >= 300) {
       setBudget(prevBudget);
+      localStorage.setItem('advertiser_budget', prevBudget.toString());
       setSuccess('');
       setError('');
     }
+  };
+
+  // Helper function to validate and set budget
+  const validateAndSetBudget = (newBudget) => {
+    const budgetNum = parseFloat(newBudget);
+    if (budgetNum < 300) {
+      setError('Minimum budget is 300 KWD');
+      return false;
+    }
+    if ((budgetNum - 300) % 100 !== 0) {
+      setError('Budget must increment by 100 KWD from 300 KWD');
+      return false;
+    }
+    setBudget(budgetNum);
+    localStorage.setItem('advertiser_budget', budgetNum.toString());
+    setError('');
+    return true;
   };
 
   // Calculate estimated views based on ORIGINAL VIEW APP LOGIC
@@ -1010,7 +1046,10 @@ export default function AdvertiserPackages() {
                   <Box sx={{ textAlign: 'center', minWidth: '120px' }}>
                       <TextField
                         value={budget}
-                        onChange={(e) => setBudget(parseFloat(e.target.value) || 300)}
+                        onChange={(e) => {
+                          const newBudget = parseFloat(e.target.value) || 300;
+                          validateAndSetBudget(newBudget);
+                        }}
                         type="number"
                       size="medium"
                       sx={{ 
@@ -1130,6 +1169,7 @@ export default function AdvertiserPackages() {
 
       {/* Package Payment Modal */}
       {console.log('🔍 AdvertiserPackages render - paymentModalOpen:', paymentModalOpen, 'packageToPurchase:', packageToPurchase, 'budget:', budget)}
+      {console.log('🔍 Current budget from localStorage:', localStorage.getItem('advertiser_budget'))}
       <PackagePaymentModal
         open={paymentModalOpen}
         onClose={handleClosePaymentModal}
