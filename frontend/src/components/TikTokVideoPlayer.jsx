@@ -124,6 +124,33 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
       to { transform: rotate(360deg); }
     }
     
+    @keyframes fadeInBounce {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+      70% {
+        transform: translate(-50%, -50%) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+    
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(76, 175, 80, 0.6), 0 0 40px rgba(76, 175, 80, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(76, 175, 80, 0.8), 0 0 60px rgba(76, 175, 80, 0.6);
+      }
+    }
+    
     .sr-only {
       position: absolute;
       width: 1px;
@@ -144,6 +171,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
   const [canSkip, setCanSkip] = useState(false);
   const [isWatching, setIsWatching] = useState(false);
   const [rewardEarned, setRewardEarned] = useState(false);
+  const [nextButtonPosition, setNextButtonPosition] = useState({ top: '75%', left: '50%' }); // ✅ NEW: Random button position
   const [showRewardAlert, setShowRewardAlert] = useState(false);
   const [rewardAmount, setRewardAmount] = useState(0);
   const [processedVideos, setProcessedVideos] = useState(new Set()); // Track processed videos
@@ -305,6 +333,49 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
     }
   }, []);
 
+  // ✅ NEW: Generate random position for NEXT button
+  const generateRandomButtonPosition = useCallback(() => {
+    // Define 8 primary zones + random variations for unpredictability
+    const zones = [
+      // Top row
+      { top: 12, left: 15 },   // Top-left
+      { top: 12, left: 50 },   // Top-center
+      { top: 12, left: 85 },   // Top-right
+      
+      // Middle row
+      { top: 45, left: 15 },   // Middle-left
+      { top: 45, left: 85 },   // Middle-right
+      
+      // Bottom row
+      { top: 75, left: 15 },   // Bottom-left
+      { top: 75, left: 50 },   // Bottom-center (default)
+      { top: 75, left: 85 },   // Bottom-right
+    ];
+    
+    // Pick random zone
+    const randomZone = zones[Math.floor(Math.random() * zones.length)];
+    
+    // Add random variation (+/- 5-8%) for unpredictability
+    const topVariation = (Math.random() - 0.5) * 10; // -5% to +5%
+    const leftVariation = (Math.random() - 0.5) * 12; // -6% to +6%
+    
+    // Calculate final position with constraints
+    let finalTop = randomZone.top + topVariation;
+    let finalLeft = randomZone.left + leftVariation;
+    
+    // Ensure button stays within safe bounds (10% to 85% for top, 10% to 90% for left)
+    finalTop = Math.max(10, Math.min(85, finalTop));
+    finalLeft = Math.max(10, Math.min(90, finalLeft));
+    
+    const position = {
+      top: `${finalTop}%`,
+      left: `${finalLeft}%`,
+    };
+    
+    devLog('🎲 Generated random NEXT button position:', position);
+    return position;
+  }, []);
+
   // ✅ OPTIMIZED: Single event handler with proper cleanup
   useEffect(() => {
     const video = videoRef.current;
@@ -319,6 +390,11 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
         setIsPlaying(false);
         setCanSkip(true);
         setIsWatching(false);
+        
+        // ✅ NEW: Generate random position for NEXT button
+        const randomPosition = generateRandomButtonPosition();
+        setNextButtonPosition(randomPosition);
+        devLog('🎲 NEXT button will appear at:', randomPosition);
         
         // Mark video as ready for completion processing
         devLog('🎯 Video marked as ready for NEXT button processing');
@@ -700,6 +776,9 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
       setRewardEarned(false);
       setShowRewardAlert(false); // Reset reward alert for new video
       setShowCompletionMessage(false); // Reset completion message for new video
+      
+      // ✅ NEW: Reset button position (will be randomized on next completion)
+      setNextButtonPosition({ top: '75%', left: '50%' }); // Default position (won't show until canSkip=true)
       
       // ✅ OPTIMIZED: Don't reset processedVideos - preserve progress tracking
       // setProcessedVideos(new Set()); ❌ REMOVED: Preserve processed videos
@@ -1225,16 +1304,17 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           )}
         </Box>
 
-        {/* Prominent Next Button After Completion */}
+        {/* Prominent Next Button After Completion - RANDOM POSITION */}
         {canSkip && (
           <Box sx={{
             position: 'absolute',
-            bottom: '5vh', '@media (min-width: 600px)': { bottom: '8vh' }, '@media (min-width: 960px)': { bottom: '100px' },
-            left: '50%',
-            transform: 'translateX(-50%)',
+            top: nextButtonPosition.top,        // ✅ NEW: Random vertical position
+            left: nextButtonPosition.left,      // ✅ NEW: Random horizontal position
+            transform: 'translate(-50%, -50%)', // Center button on the random point
             zIndex: 15,
-            width: '90vw', '@media (min-width: 600px)': { width: '80vw' }, '@media (min-width: 960px)': { width: 'auto' },
-            maxWidth: '400px', '@media (min-width: 600px)': { maxWidth: '350px' }, '@media (min-width: 960px)': { maxWidth: 'none' }
+            width: 'auto',
+            transition: 'all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)', // ✅ NEW: Bounce-in effect
+            animation: 'fadeInBounce 0.6s ease-out', // ✅ NEW: Entrance animation
           }}>
             <Button
               variant="contained"
@@ -1255,27 +1335,35 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               )}
               disabled={isLoading}
               aria-label={t('viewer.nextVideo') || 'Continue to next video'}
-              fullWidth={{ xs: true, sm: true, md: false }}
               sx={{
-                backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(76, 175, 80, 0.95)',
+                backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(76, 175, 80, 0.98)',
                 color: 'white',
                 fontWeight: 700,
-                fontSize: '1rem', '@media (min-width: 600px)': { fontSize: '1.05rem' }, '@media (min-width: 960px)': { fontSize: '1.1rem' },
-                px: 3, '@media (min-width: 600px)': { px: 3.5 }, '@media (min-width: 960px)': { px: 4 },
-                py: 1.5, '@media (min-width: 600px)': { py: 1.75 }, '@media (min-width: 960px)': { py: 2 },
-                borderRadius: 2.5, '@media (min-width: 600px)': { borderRadius: 2.75 }, '@media (min-width: 960px)': { borderRadius: 3 },
+                fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
+                px: { xs: 3, sm: 3.5, md: 4 },
+                py: { xs: 1.5, sm: 1.75, md: 2 },
+                borderRadius: { xs: 2.5, sm: 2.75, md: 3 },
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                boxShadow: isLoading ? 'none' : '0 8px 32px rgba(76, 175, 80, 0.4)',
-                minHeight: '48px', '@media (min-width: 600px)': { minHeight: '52px' }, '@media (min-width: 960px)': { minHeight: '56px' },
+                boxShadow: isLoading ? 'none' : '0 0 30px rgba(76, 175, 80, 0.7), 0 8px 32px rgba(76, 175, 80, 0.5)',
+                minHeight: { xs: '54px', sm: '58px', md: '62px' },
+                minWidth: { xs: '140px', sm: '160px', md: '180px' },
+                animation: isLoading ? 'none' : 'pulseGlow 2s ease-in-out infinite', // ✅ NEW: Pulsing glow
+                border: '2px solid rgba(255, 255, 255, 0.4)', // ✅ NEW: White border for visibility
+                backdropFilter: 'blur(4px)', // ✅ NEW: Blur background for visibility
                 '&:hover': {
                   backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(76, 175, 80, 1)',
-                  transform: isLoading ? 'none' : 'translateY(-2px)',
-                  boxShadow: isLoading ? 'none' : '0 12px 40px rgba(76, 175, 80, 0.6)'
+                  transform: isLoading ? 'none' : 'scale(1.08)',
+                  boxShadow: isLoading ? 'none' : '0 0 40px rgba(76, 175, 80, 0.9), 0 12px 40px rgba(76, 175, 80, 0.7)',
+                  border: '2px solid rgba(255, 255, 255, 0.6)',
+                },
+                '&:active': {
+                  transform: 'scale(0.98)',
                 },
                 '&:disabled': {
                   backgroundColor: 'rgba(128, 128, 128, 0.95)',
-                  cursor: 'not-allowed'
+                  cursor: 'not-allowed',
+                  animation: 'none',
                 }
               }}
             >
