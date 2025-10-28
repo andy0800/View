@@ -848,9 +848,9 @@
         },
         "p15": {
           "title": "P15 - 15 Seconds",
-          "description": "15-second video ads at 13 fils per view. Starting budget: 300 KWD, increments of 100 KWD.",
+          "description": "15-second video ads at 14 fils per view. Starting budget: 300 KWD, increments of 100 KWD.",
           "duration": "15 seconds",
-          "pricePerView": "0.013 KWD per view",
+          "pricePerView": "0.014 KWD per view",
           "viewerReward": "0.007 KWD to viewer",
           "companyFee": "0.007 KWD to company"
         },

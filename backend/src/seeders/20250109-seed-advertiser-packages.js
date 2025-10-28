@@ -22,10 +22,10 @@ module.exports = {
         id: 2,
         name: '15 Second Package',
         duration: 15, // 15 seconds
-        price_per_view_micro: 13000, // 0.013 KWD in micro units
+        price_per_view_micro: 14000, // 0.014 KWD in micro units
         min_budget_micro: 300000000, // 300 KWD in micro units
         budget_increment_micro: 100000000, // 100 KWD in micro units
-        description: '15-second video ads with 13 fils per viewer',
+        description: '15-second video ads with 14 fils per viewer',
         is_active: true,
         created_at: new Date(),
         updated_at: new Date()
