@@ -217,6 +217,57 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  // 🔄 NEW: Find the most recent completed view for a user+ad
+  // Used to check 24-hour reward cooldown
+  ViewEvent.findLastCompletedViewByUserAndAd = function(userId, adId) {
+    return this.findOne({
+      where: {
+        user_id: userId,
+        ad_id: adId,
+        is_completed: true
+      },
+      order: [['completed_at', 'DESC']]
+    });
+  };
+
+  // 🔄 NEW: Check if user can get rewarded again (24hr cooldown check)
+  // Returns true if user has never watched OR if 24+ hours have passed since last reward
+  ViewEvent.canUserGetRewardedAgain = async function(userId, adId) {
+    const lastView = await this.findLastCompletedViewByUserAndAd(userId, adId);
+    
+    // If never watched, user can get rewarded
+    if (!lastView) {
+      return { canReward: true, reason: 'never_watched' };
+    }
+    
+    // Calculate hours since last completed view
+    const now = Date.now();
+    const lastCompletedTime = new Date(lastView.completed_at).getTime();
+    const hoursSinceLastView = (now - lastCompletedTime) / (1000 * 60 * 60);
+    
+    // Check if 24 hours have passed
+    if (hoursSinceLastView >= 24) {
+      return { 
+        canReward: true, 
+        reason: 'cooldown_expired',
+        hoursSinceLastView: hoursSinceLastView.toFixed(2)
+      };
+    }
+    
+    // Still in cooldown period
+    const hoursRemaining = 24 - hoursSinceLastView;
+    const nextRewardAvailableAt = new Date(lastCompletedTime + (24 * 60 * 60 * 1000));
+    
+    return { 
+      canReward: false, 
+      reason: 'cooldown_active',
+      hoursSinceLastView: hoursSinceLastView.toFixed(2),
+      hoursRemaining: hoursRemaining.toFixed(2),
+      nextRewardAvailableAt: nextRewardAvailableAt.toISOString(),
+      lastRewardedAt: lastView.completed_at
+    };
+  };
+
   // Enhanced fraud detection methods
   ViewEvent.detectFraudPatterns = async function(userId, adId) {
     const recentViews = await this.findAll({

@@ -1,0 +1,190 @@
+       table_name        |          column_name           |          data_type          | is_nullable |                 column_default                  
+-------------------------+--------------------------------+-----------------------------+-------------+-------------------------------------------------
+ ad_appeals              | id                             | uuid                        | NO          | gen_random_uuid()
+ ad_appeals              | ad_id                          | uuid                        | NO          | 
+ ad_appeals              | advertiser_id                  | uuid                        | NO          | 
+ ad_appeals              | reason                         | text                        | NO          | 
+ ad_appeals              | status                         | character varying           | NO          | 'pending'::character varying
+ ad_appeals              | admin_response                 | text                        | YES         | 
+ ad_appeals              | created_at                     | timestamp without time zone | NO          | now()
+ ad_appeals              | updated_at                     | timestamp without time zone | NO          | now()
+ ad_verification_history | id                             | uuid                        | NO          | gen_random_uuid()
+ ad_verification_history | ad_id                          | uuid                        | NO          | 
+ ad_verification_history | admin_id                       | uuid                        | NO          | 
+ ad_verification_history | status                         | USER-DEFINED                | NO          | 
+ ad_verification_history | notes                          | text                        | YES         | 
+ ad_verification_history | created_at                     | timestamp without time zone | NO          | now()
+ admin_settings          | id                             | uuid                        | NO          | gen_random_uuid()
+ admin_settings          | key                            | character varying           | NO          | 
+ admin_settings          | value                          | text                        | YES         | 
+ admin_settings          | created_at                     | timestamp without time zone | NO          | now()
+ admin_settings          | updated_at                     | timestamp without time zone | NO          | now()
+ ads                     | id                             | uuid                        | NO          | gen_random_uuid()
+ ads                     | advertiser_id                  | uuid                        | NO          | 
+ ads                     | package_id                     | integer                     | NO          | 
+ ads                     | purchased_package_id           | uuid                        | NO          | 
+ ads                     | media_url                      | character varying           | NO          | 
+ ads                     | title                          | character varying           | NO          | 
+ ads                     | description                    | text                        | NO          | ''::text
+ ads                     | section                        | character varying           | NO          | 'general'::character varying
+ ads                     | status                         | USER-DEFINED                | NO          | 'draft'::enum_ad_status
+ ads                     | is_active                      | boolean                     | NO          | true
+ ads                     | verification_status            | USER-DEFINED                | NO          | 'pending'::enum_verification_status
+ ads                     | image_key                      | character varying           | YES         | 
+ ads                     | link                           | character varying           | YES         | 
+ ads                     | cta_link                       | character varying           | YES         | 
+ ads                     | cta_text                       | character varying           | YES         | 'Learn More'::character varying
+ ads                     | cta_enabled                    | boolean                     | NO          | true
+ ads                     | budget                         | numeric                     | NO          | 0
+ ads                     | views                          | integer                     | NO          | 0
+ ads                     | spent                          | numeric                     | NO          | 0
+ ads                     | created_at                     | timestamp without time zone | NO          | now()
+ ads                     | updated_at                     | timestamp without time zone | NO          | now()
+ advertiser_packages     | id                             | integer                     | NO          | nextval('advertiser_packages_id_seq'::regclass)
+ advertiser_packages     | name                           | character varying           | NO          | 
+ advertiser_packages     | duration                       | integer                     | NO          | 
+ advertiser_packages     | price_per_view_micro           | bigint                      | NO          | 
+ advertiser_packages     | viewer_reward_percentage       | numeric                     | NO          | 50.00
+ advertiser_packages     | company_share_percentage       | numeric                     | NO          | 50.00
+ advertiser_packages     | estimated_views                | integer                     | NO          | 
+ advertiser_packages     | is_active                      | boolean                     | NO          | true
+ advertiser_packages     | created_at                     | timestamp without time zone | NO          | now()
+ advertiser_packages     | updated_at                     | timestamp without time zone | NO          | now()
+ comment_likes           | id                             | uuid                        | NO          | gen_random_uuid()
+ comment_likes           | comment_id                     | uuid                        | NO          | 
+ comment_likes           | user_id                        | uuid                        | NO          | 
+ comment_likes           | created_at                     | timestamp without time zone | NO          | now()
+ comments                | id                             | uuid                        | NO          | gen_random_uuid()
+ comments                | ad_id                          | uuid                        | NO          | 
+ comments                | user_id                        | uuid                        | NO          | 
+ comments                | content                        | text                        | NO          | 
+ comments                | likes_count                    | integer                     | NO          | 0
+ comments                | created_at                     | timestamp without time zone | NO          | now()
+ comments                | updated_at                     | timestamp without time zone | NO          | now()
+ company_wallets         | id                             | uuid                        | NO          | gen_random_uuid()
+ company_wallets         | balance_micro                  | bigint                      | NO          | 0
+ company_wallets         | balance                        | numeric                     | NO          | 0
+ company_wallets         | total_fees_collected_micro     | bigint                      | NO          | 0
+ company_wallets         | total_fees_collected           | numeric                     | NO          | 0
+ company_wallets         | total_rewards_paid_micro       | bigint                      | NO          | 0
+ company_wallets         | total_rewards_paid             | numeric                     | NO          | 0
+ company_wallets         | created_at                     | timestamp without time zone | NO          | now()
+ company_wallets         | updated_at                     | timestamp without time zone | NO          | now()
+ notifications           | id                             | uuid                        | NO          | gen_random_uuid()
+ notifications           | user_id                        | uuid                        | NO          | 
+ notifications           | title                          | character varying           | NO          | 
+ notifications           | message                        | text                        | NO          | 
+ notifications           | type                           | character varying           | NO          | 
+ notifications           | is_read                        | boolean                     | NO          | false
+ notifications           | created_at                     | timestamp without time zone | NO          | now()
+ notifications           | updated_at                     | timestamp without time zone | NO          | now()
+ otp_codes               | id                             | uuid                        | NO          | gen_random_uuid()
+ otp_codes               | phone                          | character varying           | NO          | 
+ otp_codes               | code                           | character varying           | NO          | 
+ otp_codes               | expires_at                     | timestamp without time zone | NO          | 
+ otp_codes               | created_at                     | timestamp without time zone | NO          | now()
+ purchased_packages      | id                             | uuid                        | NO          | gen_random_uuid()
+ purchased_packages      | advertiser_id                  | uuid                        | NO          | 
+ purchased_packages      | package_id                     | integer                     | NO          | 
+ purchased_packages      | purchased_budget_micro         | bigint                      | NO          | 
+ purchased_packages      | remaining_budget_micro         | bigint                      | NO          | 
+ purchased_packages      | used_budget_micro              | bigint                      | NO          | 0
+ purchased_packages      | purchased_budget               | numeric                     | NO          | 
+ purchased_packages      | remaining_budget               | numeric                     | NO          | 
+ purchased_packages      | used_budget                    | numeric                     | NO          | 0
+ purchased_packages      | estimated_views                | integer                     | NO          | 
+ purchased_packages      | views_completed                | integer                     | NO          | 0
+ purchased_packages      | status                         | character varying           | NO          | 'active'::character varying
+ purchased_packages      | purchased_at                   | timestamp without time zone | NO          | now()
+ purchased_packages      | expires_at                     | timestamp without time zone | YES         | 
+ purchased_packages      | created_at                     | timestamp without time zone | NO          | now()
+ purchased_packages      | updated_at                     | timestamp without time zone | NO          | now()
+ sections                | id                             | uuid                        | NO          | gen_random_uuid()
+ sections                | key                            | character varying           | NO          | 
+ sections                | title                          | character varying           | NO          | 
+ sections                | description                    | text                        | YES         | 
+ sections                | icon                           | character varying           | YES         | 
+ sections                | color                          | character varying           | YES         | 
+ sections                | sort_order                     | integer                     | NO          | 0
+ sections                | is_active                      | boolean                     | NO          | true
+ sections                | created_at                     | timestamp without time zone | NO          | now()
+ sections                | updated_at                     | timestamp without time zone | NO          | now()
+ sessions                | sid                            | character varying           | NO          | 
+ sessions                | sess                           | json                        | NO          | 
+ sessions                | expire                         | timestamp without time zone | NO          | 
+ transactions            | id                             | uuid                        | NO          | gen_random_uuid()
+ transactions            | user_id                        | uuid                        | NO          | 
+ transactions            | from_wallet_id                 | uuid                        | YES         | 
+ transactions            | to_wallet_id                   | uuid                        | YES         | 
+ transactions            | amount_micro                   | bigint                      | NO          | 
+ transactions            | amount                         | numeric                     | NO          | 
+ transactions            | type                           | USER-DEFINED                | NO          | 
+ transactions            | status                         | character varying           | NO          | 'completed'::character varying
+ transactions            | transaction_category           | character varying           | YES         | 
+ transactions            | reference                      | character varying           | YES         | 
+ transactions            | reference_id                   | character varying           | YES         | 
+ transactions            | meta                           | jsonb                       | YES         | 
+ transactions            | processed_at                   | timestamp without time zone | YES         | 
+ transactions            | created_at                     | timestamp without time zone | NO          | now()
+ transactions            | updated_at                     | timestamp without time zone | NO          | now()
+ users                   | id                             | uuid                        | NO          | gen_random_uuid()
+ users                   | name                           | character varying           | NO          | 
+ users                   | civil_id                       | character varying           | YES         | 
+ users                   | phone                          | character varying           | NO          | 
+ users                   | role                           | USER-DEFINED                | NO          | 
+ users                   | kyc_status                     | USER-DEFINED                | YES         | 'pending'::enum_users_kyc_status
+ users                   | civil_front_key                | character varying           | YES         | 
+ users                   | civil_back_key                 | character varying           | YES         | 
+ users                   | company_name                   | character varying           | YES         | 
+ users                   | license_number                 | character varying           | YES         | 
+ users                   | signatory_name                 | character varying           | YES         | 
+ users                   | license_doc_key                | character varying           | YES         | 
+ users                   | verified_at                    | timestamp without time zone | YES         | 
+ users                   | email                          | character varying           | YES         | 
+ users                   | commercial_registration_number | character varying           | YES         | 
+ users                   | created_at                     | timestamp without time zone | NO          | now()
+ users                   | updated_at                     | timestamp without time zone | NO          | now()
+ videos                  | id                             | uuid                        | NO          | gen_random_uuid()
+ videos                  | url                            | character varying           | NO          | 
+ videos                  | title                          | character varying           | YES         | 
+ videos                  | size                           | integer                     | YES         | 
+ videos                  | user_id                        | uuid                        | YES         | 
+ videos                  | ad_id                          | uuid                        | YES         | 
+ videos                  | created_at                     | timestamp without time zone | NO          | now()
+ videos                  | updated_at                     | timestamp without time zone | NO          | now()
+ view_events             | id                             | uuid                        | NO          | gen_random_uuid()
+ view_events             | ad_id                          | uuid                        | NO          | 
+ view_events             | user_id                        | uuid                        | NO          | 
+ view_events             | purchased_package_id           | uuid                        | NO          | 
+ view_events             | package_id                     | integer                     | NO          | 
+ view_events             | proof_token                    | character varying           | NO          | 
+ view_events             | proof_token_expires_at         | timestamp without time zone | NO          | 
+ view_events             | charged_micro                  | bigint                      | NO          | 0
+ view_events             | viewer_reward_micro            | bigint                      | NO          | 0
+ view_events             | company_share_micro            | bigint                      | NO          | 0
+ view_events             | viewer_reward                  | numeric                     | NO          | 0.000
+ view_events             | company_fee                    | numeric                     | NO          | 0.000
+ view_events             | total_cost                     | numeric                     | NO          | 0.000
+ view_events             | is_completed                   | boolean                     | NO          | false
+ view_events             | watched_duration_ms            | integer                     | YES         | 
+ view_events             | required_duration_ms           | integer                     | NO          | 
+ view_events             | completion_duration            | integer                     | YES         | 
+ view_events             | required_duration              | integer                     | NO          | 10
+ view_events             | viewed_at                      | timestamp without time zone | NO          | now()
+ view_events             | completed_at                   | timestamp without time zone | YES         | 
+ wallets                 | id                             | uuid                        | NO          | gen_random_uuid()
+ wallets                 | user_id                        | uuid                        | NO          | 
+ wallets                 | balance_micro                  | bigint                      | NO          | 0
+ wallets                 | balance                        | numeric                     | NO          | 0
+ wallets                 | created_at                     | timestamp without time zone | NO          | now()
+ wallets                 | updated_at                     | timestamp without time zone | NO          | now()
+ withdrawals             | id                             | uuid                        | NO          | gen_random_uuid()
+ withdrawals             | user_id                        | uuid                        | NO          | 
+ withdrawals             | amount                         | numeric                     | NO          | 
+ withdrawals             | amount_micro                   | bigint                      | NO          | 0
+ withdrawals             | status                         | character varying           | NO          | 'pending'::character varying
+ withdrawals             | approved                       | boolean                     | YES         | false
+ withdrawals             | created_at                     | timestamp without time zone | NO          | now()
+ withdrawals             | updated_at                     | timestamp without time zone | NO          | now()
+(186 rows)
+

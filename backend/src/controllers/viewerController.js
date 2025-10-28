@@ -71,7 +71,7 @@ exports.getSections = async (req, res) => {
             model: PurchasedPackage,
             as: 'purchasedPackage',
             where: {
-              remaining_budget: { [Op.gt]: 0 }
+              remaining_micro: { [Op.gt]: 0 }
               // ✅ REMOVED: status: 'active' - packages are marked 'used' after ad creation
             },
             required: true
@@ -114,9 +114,15 @@ exports.getSectionVideos = async (req, res) => {
     const ads = await Ad.getActiveAdsBySection(key, { limit: 50 });
     console.log(`🔍 Found ${ads.length} ads in section ${key} before watched flagging`);
 
-    // Compute watched ad IDs for this user (we will not filter them out anymore)
+    // 🔄 UPDATED: Compute watched ad IDs for this user in LAST 24 HOURS
+    // This enables 24-hour recurring rewards - ads watched >24hrs ago will show as rewardable again
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     const watchedRows = await ViewEvent.findAll({
-      where: { user_id: req.user.id, is_completed: true },
+      where: { 
+        user_id: req.user.id, 
+        is_completed: true,
+        completed_at: { [Op.gte]: twentyFourHoursAgo } // ✅ Only views from last 24 hours
+      },
       attributes: ['ad_id'],
       raw: true
     });
@@ -159,7 +165,7 @@ exports.getSectionVideos = async (req, res) => {
         model: PurchasedPackage,
         as: 'purchasedPackage',
         where: {
-          remaining_budget: { [Op.gt]: 0 }
+          remaining_micro: { [Op.gt]: 0 }
           // ✅ REMOVED: status: 'active' - packages are marked 'used' after ad creation
         },
         required: true
@@ -236,6 +242,24 @@ exports.startWatchingAd = async (req, res) => {
     if (!ad.isAvailableForViewing()) {
       return res.status(400).json({ message: 'Ad is not available for viewing' });
     }
+
+    // 🔄 NEW: Check 24-hour reward cooldown before allowing new rewarded view
+    const rewardEligibility = await ViewEvent.canUserGetRewardedAgain(userId, adId);
+    if (!rewardEligibility.canReward) {
+      return res.status(400).json({ 
+        message: `You must wait 24 hours before earning a reward for this ad again`,
+        error: 'reward_cooldown_active',
+        cooldownInfo: {
+          reason: rewardEligibility.reason,
+          hoursSinceLastView: rewardEligibility.hoursSinceLastView,
+          hoursRemaining: rewardEligibility.hoursRemaining,
+          nextRewardAvailableAt: rewardEligibility.nextRewardAvailableAt,
+          lastRewardedAt: rewardEligibility.lastRewardedAt
+        }
+      });
+    }
+
+    console.log(`✅ User ${userId} is eligible for reward:`, rewardEligibility.reason);
 
     // Check if user already has an incomplete view for this ad
     const existingView = await ViewEvent.findActiveByUserAndAd(userId, adId);
@@ -525,7 +549,7 @@ exports.getAllAds = async (req, res) => {
           model: PurchasedPackage,
           as: 'purchasedPackage',
           where: {
-            remaining_budget_micro: { [Op.gt]: 0 }
+            remaining_micro: { [Op.gt]: 0 }
             // ✅ REMOVED: status: 'active' - packages are marked 'used' after ad creation
             // We only need remaining budget > 0 for viewing
           },
@@ -547,14 +571,20 @@ exports.getAllAds = async (req, res) => {
 
     console.log(`🔍 getAllAds: Found ${ads.length} total ads before filtering`);
     
-    // Compute watched ad IDs for this user (we will not filter them out anymore)
+    // 🔄 UPDATED: Compute watched ad IDs for this user in LAST 24 HOURS
+    // This enables 24-hour recurring rewards - ads watched >24hrs ago will show as rewardable again
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     const watchedRows = await ViewEvent.findAll({
-      where: { user_id: req.user.id, is_completed: true },
+      where: { 
+        user_id: req.user.id, 
+        is_completed: true,
+        completed_at: { [Op.gte]: twentyFourHoursAgo } // ✅ Only views from last 24 hours
+      },
       attributes: ['ad_id'],
       raw: true
     });
     const watchedIds = new Set(watchedRows.map(r => r.ad_id));
-    console.log(`🔍 getAllAds: Computed watched set size: ${watchedIds.size}`);
+    console.log(`🔍 getAllAds: Computed watched set size (last 24hrs): ${watchedIds.size}`);
 
     // Transform ads for frontend with media URL validation
     const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${req.protocol}://${req.get('host')}`;

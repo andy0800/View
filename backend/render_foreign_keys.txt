@@ -1,0 +1,27 @@
+            constraint_name            |       table_name        |     column_name      | foreign_table_name  | foreign_column_name 
+---------------------------------------+-------------------------+----------------------+---------------------+---------------------
+ ad_appeals_ad_id_fkey                 | ad_appeals              | ad_id                | ads                 | id
+ ad_appeals_advertiser_id_fkey         | ad_appeals              | advertiser_id        | users               | id
+ ad_verification_history_ad_id_fkey    | ad_verification_history | ad_id                | ads                 | id
+ ad_verification_history_admin_id_fkey | ad_verification_history | admin_id             | users               | id
+ ads_advertiser_id_fkey                | ads                     | advertiser_id        | users               | id
+ ads_package_id_fkey                   | ads                     | package_id           | advertiser_packages | id
+ ads_purchased_package_id_fkey         | ads                     | purchased_package_id | purchased_packages  | id
+ comment_likes_comment_id_fkey         | comment_likes           | comment_id           | comments            | id
+ comment_likes_user_id_fkey            | comment_likes           | user_id              | users               | id
+ comments_ad_id_fkey                   | comments                | ad_id                | ads                 | id
+ comments_user_id_fkey                 | comments                | user_id              | users               | id
+ notifications_user_id_fkey            | notifications           | user_id              | users               | id
+ purchased_packages_advertiser_id_fkey | purchased_packages      | advertiser_id        | users               | id
+ purchased_packages_package_id_fkey    | purchased_packages      | package_id           | advertiser_packages | id
+ transactions_user_id_fkey             | transactions            | user_id              | users               | id
+ videos_ad_id_fkey                     | videos                  | ad_id                | ads                 | id
+ videos_user_id_fkey                   | videos                  | user_id              | users               | id
+ view_events_ad_id_fkey                | view_events             | ad_id                | ads                 | id
+ view_events_package_id_fkey           | view_events             | package_id           | advertiser_packages | id
+ view_events_purchased_package_id_fkey | view_events             | purchased_package_id | purchased_packages  | id
+ view_events_user_id_fkey              | view_events             | user_id              | users               | id
+ wallets_user_id_fkey                  | wallets                 | user_id              | users               | id
+ withdrawals_user_id_fkey              | withdrawals             | user_id              | users               | id
+(23 rows)
+

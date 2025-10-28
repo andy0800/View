@@ -44,7 +44,7 @@ exports.getVideosBySection = async (req, res) => {
           model: PurchasedPackage,
           as: 'purchasedPackage',
           where: {
-            remaining_budget: { [Op.gt]: 0 }, // Use purchased package budget
+            remaining_micro: { [Op.gt]: 0 }, // Use purchased package budget
             status: 'active'
           }
         }
