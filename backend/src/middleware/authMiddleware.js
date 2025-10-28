@@ -32,11 +32,12 @@ async function authenticate(req, res, next) {
     
     console.log('🔍 JWT payload:', payload);
     
-    // Handle admin user specially (admin has id: 0)
-    if (payload.role === 'admin' && payload.id === 0) {
-      req.user = { id: 0, role: 'admin', kyc_status: 'verified' };
+    // Handle admin user specially (admin has id: 0 or admin UUID)
+    const adminUuid = '00000000-0000-0000-0000-000000000000';
+    if (payload.role === 'admin' && (payload.id === 0 || payload.id === adminUuid)) {
+      req.user = { id: payload.id, role: 'admin', kyc_status: 'verified' };
       req.userRole = 'admin';
-      console.log('✅ Admin user authenticated');
+      console.log('✅ Admin user authenticated with ID:', payload.id);
       return next();
     }
     
