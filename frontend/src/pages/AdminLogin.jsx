@@ -26,12 +26,21 @@ export default function AdminLogin() {
         password
       });
 
+      console.log('✅ Admin login response:', data);
+
       // Admin login returns user data; cookie holds the token
-      persist({ user: data.user });
+      // Persist user data to localStorage AND context (await to ensure it completes)
+      await persist({ user: data.user, token: data.token });
+      
+      // Verify user was persisted
+      const storedUser = localStorage.getItem('user');
+      console.log('✅ User persisted to localStorage:', storedUser);
       
       // Navigate to admin dashboard instead of /admin (which is the login page)
+      console.log('✅ Navigating to admin dashboard...');
       navigate('/admin/dashboard', { replace: true });
     } catch (err) {
+      console.error('❌ Admin login error:', err);
       setError(err.response?.data?.message || t('errors.loginFailed'));
     } finally {
       setLoading(false);

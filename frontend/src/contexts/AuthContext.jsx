@@ -36,11 +36,28 @@ export function AuthProvider({ children }) {
   const persist = ({ user: usr, token }) => {
     try {
       console.log('AuthContext: Persisting user:', usr);
+      
+      // Save to localStorage synchronously
       localStorage.setItem('user', JSON.stringify(usr));
-      // Do not persist token; rely on httpOnly cookie
+      
+      // If token provided, save it too (though cookie is primary)
+      if (token) {
+        localStorage.setItem('token', token);
+      }
+      
+      // Update state immediately
       setUser(usr);
+      
+      // Force a small delay to ensure state is updated
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log('AuthContext: User persisted and state updated');
+          resolve();
+        }, 50);
+      });
     } catch (err) {
       console.error('❌ Failed to persist user/token:', err);
+      return Promise.reject(err);
     }
   };
 
