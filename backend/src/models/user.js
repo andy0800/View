@@ -216,7 +216,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'viewEvents' 
     });
     User.hasMany(models.PurchasedPackage, {
-      foreignKey: 'user_id',
+      foreignKey: 'advertiser_id', // ✅ FIXED: Changed from user_id to advertiser_id (matches DB schema)
       as: 'purchasedPackages'
     });
     User.hasMany(models.Comment, {
