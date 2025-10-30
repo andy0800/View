@@ -36,7 +36,7 @@ const getPendingReviewAds = async (req, res) => {
         { 
           model: AdvertiserPackage, 
           as: 'package',
-          attributes: ['name', 'duration', 'price_per_view'] 
+          attributes: ['name', 'duration', 'price_per_view_micro'] 
         }
       ],
       order: [['submitted_for_review_at', 'ASC']], // Oldest first
@@ -567,7 +567,7 @@ const getAllVideos = async (req, res) => {
         {
           model: AdvertiserPackage,
           as: 'package',
-          attributes: ['name', 'duration', 'price_per_view']
+          attributes: ['name', 'duration', 'price_per_view_micro']
         }
       ],
       attributes: [

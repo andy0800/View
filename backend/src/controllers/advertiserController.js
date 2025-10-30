@@ -338,7 +338,9 @@ async function createAd(req, res) {
         cta_enabled: cta_enabled !== undefined ? cta_enabled : true,
         status: 'pending_review',
         is_active: true,
-        verification_status: 'pending'
+        verification_status: 'pending',
+        submitted_for_review_at: new Date(),
+        review_deadline: new Date(Date.now() + 24 * 60 * 60 * 1000)
       }, { transaction });
 
       // ✅ CRITICAL FIX: Mark purchased package as 'used' - ONE TIME USAGE ONLY
