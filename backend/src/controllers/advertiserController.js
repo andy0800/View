@@ -151,24 +151,17 @@ async function purchasePackage(req, res) {
         estimatedViews
       }, transaction);
 
-      // Create PurchasedPackage record with all required fields
+      // ✅ FIXED: Create PurchasedPackage record without user_id (doesn't exist in database)
       const purchasedPackage = await PurchasedPackage.create({
-        user_id: advertiserId, // Use user_id for database compatibility
-        advertiser_id: advertiserId, // Also set advertiser_id for controller logic
+        advertiser_id: advertiserId, // Only advertiser_id field exists in database
         package_id: packageId,
-        // KWD values for backward compatibility
-        purchased_budget: budgetValidation.budgetKWD,
-        remaining_budget: budgetValidation.budgetKWD,
-        used_budget: 0.00,
         // Micro unit values for precise calculations
         budget_micro: budgetMicro,
         remaining_micro: budgetMicro,
-        used_micro: 0,
         estimated_views: estimatedViews,
         views_completed: 0,
         status: 'active',
         expires_at: null, // No expiration for now
-        version: 1 // Optimistic locking version
       }, { transaction });
 
       await transaction.commit();

@@ -8,26 +8,16 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
-    user_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    },
     advertiser_id: {
       type: DataTypes.UUID,
-      allowNull: true, // Will be populated from user_id
+      allowNull: false, // ✅ FIXED: Made required (database has NOT NULL constraint)
       references: {
         model: 'users',
         key: 'id'
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
-      comment: 'Advertiser ID (same as user_id for purchased packages)'
+      comment: 'Advertiser ID who purchased the package'
     },
     package_id: {
       type: DataTypes.INTEGER,
@@ -81,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     indexes: [
       {
-        fields: ['user_id']
+        fields: ['advertiser_id'] // ✅ FIXED: Changed from user_id to advertiser_id
       },
       {
         fields: ['package_id']
@@ -187,7 +177,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   // Class methods for package management
-  PurchasedPackage.createFromPackage = async function(userId, packageId, totalBudgetMicro, transaction) {
+  PurchasedPackage.createFromPackage = async function(advertiserId, packageId, totalBudgetMicro, transaction) {
     const advertiserPackage = await sequelize.models.AdvertiserPackage.findByPk(packageId);
     if (!advertiserPackage) {
       throw new Error('Advertiser package not found');
@@ -196,8 +186,7 @@ module.exports = (sequelize, DataTypes) => {
     const estimatedViews = Math.floor(totalBudgetMicro / advertiserPackage.price_per_view_micro);
 
     return this.create({
-      user_id: userId,
-      advertiser_id: userId, // Set advertiser_id same as user_id
+      advertiser_id: advertiserId, // ✅ FIXED: Only advertiser_id field
       package_id: packageId,
       budget_micro: totalBudgetMicro,
       remaining_micro: totalBudgetMicro,
@@ -208,10 +197,10 @@ module.exports = (sequelize, DataTypes) => {
     }, { transaction });
   };
 
-  PurchasedPackage.getActiveForUser = function(userId) {
+  PurchasedPackage.getActiveForUser = function(advertiserId) {
     return this.findAll({
       where: {
-        user_id: userId,
+        advertiser_id: advertiserId, // ✅ FIXED: Changed from user_id to advertiser_id
         status: 'active',
         remaining_micro: {
           [sequelize.Sequelize.Op.gt]: 0
@@ -273,8 +262,8 @@ module.exports = (sequelize, DataTypes) => {
 
   PurchasedPackage.associate = models => {
     PurchasedPackage.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user'
+      foreignKey: 'advertiser_id', // ✅ FIXED: Changed from user_id to advertiser_id
+      as: 'advertiser'  // ✅ FIXED: Changed alias from 'user' to 'advertiser'
     });
 
     PurchasedPackage.belongsTo(models.AdvertiserPackage, {
