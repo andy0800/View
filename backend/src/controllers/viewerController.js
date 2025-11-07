@@ -615,25 +615,21 @@ exports.getAllAds = async (req, res) => {
     
     const validAds = [];
     for (const ad of ads) {
-      let mediaUrl = ad.mediaUrl;
-      if (mediaUrl) {
-        const u = String(mediaUrl).trim();
-        if (!/^https?:\/\//i.test(u)) {
-          const filename = path.basename(u);
-          const normalized = u.startsWith('/uploads/ads/')
-            ? u
-            : `/uploads/ads/${filename}`;
-          mediaUrl = `${origin}${normalized}`;
-        }
+      const raw = (ad.mediaUrl || '').toString().trim();
+      const filename = raw ? path.basename(raw) : '';
+      if (!filename) continue; // require a filename
+
+      // Always build a normalized local path first
+      const normalized = raw.startsWith('/uploads/ads/') ? raw : `/uploads/ads/${filename}`;
+
+      // Ensure file exists on disk before emitting URL
+      const filePath = path.resolve(__dirname, '..', 'uploads', 'ads', path.basename(normalized));
+      if (!fs.existsSync(filePath)) {
+        continue; // Skip ads with missing files to avoid 404s
       }
-      
-      // Check if file exists (skip remote URLs)
-      if (mediaUrl && !mediaUrl.startsWith('http')) {
-        const filePath = path.resolve(__dirname, '..', 'uploads', 'ads', path.basename(mediaUrl));
-        if (!fs.existsSync(filePath)) {
-          continue; // Skip ads with missing files
-        }
-      }
+
+      // Absolutize for client consumption
+      const mediaUrl = `${origin}${normalized}`;
 
       validAds.push({
         id: ad.id,
