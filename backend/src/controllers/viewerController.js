@@ -168,7 +168,22 @@ exports.getSectionVideos = async (req, res) => {
     };
     const fileExists = url => {
       if (!url) return false;
-      if (/^https?:\/\//i.test(url)) return true; // assume remote exists
+      // If absolute URL, verify locally when it points to this backend origin
+      if (/^https?:\/\//i.test(url)) {
+        try {
+          const abs = new URL(url);
+          const thisOrigin = new URL(origin);
+          if (abs.host === thisOrigin.host) {
+            // Map /uploads/... to local filesystem path
+            const rel = abs.pathname.replace(/^\/?uploads\//i, '');
+            const filePath = path.resolve(__dirname, '..', 'uploads', rel);
+            return fs.existsSync(filePath);
+          }
+          return true; // remote third-party URL - assume available
+        } catch (_e) {
+          return false;
+        }
+      }
       const rel = url.replace(/^\/?uploads\//i, '');
       const filePath = path.resolve(__dirname, '..', 'uploads', rel);
       return fs.existsSync(filePath);
@@ -624,7 +639,7 @@ exports.getAllAds = async (req, res) => {
 
       // Ensure file exists on disk before emitting URL
       const filePath = path.resolve(__dirname, '..', 'uploads', 'ads', path.basename(normalized));
-      if (!fs.existsSync(filePath)) {
+        if (!fs.existsSync(filePath)) {
         continue; // Skip ads with missing files to avoid 404s
       }
 
