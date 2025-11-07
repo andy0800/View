@@ -134,12 +134,20 @@ exports.getSectionVideos = async (req, res) => {
     const fs = require('fs');
     const normalize = url => {
       if (!url) return '';
-      const u = String(url);
+      const u = String(url).trim();
       if (/^https?:\/\//i.test(u)) return u; // already absolute
-      if (u.startsWith('/uploads/')) return u;
+      // If it's already under uploads, ensure ads subfolder when missing
+      if (u.startsWith('/uploads/')) {
+        if (!u.startsWith('/uploads/ads/')) {
+          const path = require('path');
+          return `/uploads/ads/${path.basename(u)}`;
+        }
+        return u;
+      }
+      // Bare filename -> map to uploads/ads
       const parts = u.split('/');
       const filename = parts[parts.length - 1];
-      return filename ? `/uploads/${filename}` : '';
+      return filename ? `/uploads/ads/${filename}` : '';
     };
     const absolutize = url => {
       if (!url) return '';
@@ -594,8 +602,15 @@ exports.getAllAds = async (req, res) => {
     const validAds = [];
     for (const ad of ads) {
       let mediaUrl = ad.mediaUrl;
-      if (mediaUrl && !mediaUrl.startsWith('http')) {
-        mediaUrl = `${origin}${mediaUrl.startsWith('/') ? '' : '/'}${mediaUrl}`;
+      if (mediaUrl) {
+        const u = String(mediaUrl).trim();
+        if (!/^https?:\/\//i.test(u)) {
+          const filename = path.basename(u);
+          const normalized = u.startsWith('/uploads/ads/')
+            ? u
+            : `/uploads/ads/${filename}`;
+          mediaUrl = `${origin}${normalized}`;
+        }
       }
       
       // Check if file exists (skip remote URLs)

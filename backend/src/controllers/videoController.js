@@ -790,13 +790,19 @@ async function getAllAdsRandomly(req, res) {
     const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${req.protocol}://${req.get('host')}`;
     const normalize = url => {
       if (!url) return url;
-      const u = String(url);
+      const u = String(url).trim();
       if (/^https?:\/\//i.test(u)) return u; // already absolute
-      if (u.startsWith('/uploads/')) return u;
-      // Map legacy paths or bare filenames to /uploads
+      if (u.startsWith('/uploads/')) {
+        if (!u.startsWith('/uploads/ads/')) {
+          const path = require('path');
+          return `/uploads/ads/${path.basename(u)}`;
+        }
+        return u;
+      }
+      // Bare filename -> map to uploads/ads
       const parts = u.split('/');
       const filename = parts[parts.length - 1];
-      return `/uploads/${filename}`;
+      return filename ? `/uploads/ads/${filename}` : u;
     };
     const absolutize = url => {
       if (!url) return url;
