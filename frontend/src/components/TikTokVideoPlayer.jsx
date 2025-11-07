@@ -495,7 +495,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
         }
         return;
       }
-      const proofToken = currentProofTokenRef.current;
+      let proofToken = currentProofTokenRef.current;
       const startTime = viewStartTimeRef.current;
       
       if (!proofToken) {
@@ -510,7 +510,8 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             const newProofToken = currentProofTokenRef.current;
             if (newProofToken) {
               devLog('✅ Successfully regenerated proof token:', newProofToken);
-              // Continue with the new token
+              // Use the new token for completion
+              proofToken = newProofToken;
             } else {
               devError('❌ Failed to regenerate proof token');
               return;
@@ -1279,7 +1280,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           {canSkip && currentVideoIndex < videos.length - 1 && (
             <IconButton
               onClick={handleNextVideo}
-              disabled={isLoading}
+              disabled={isProcessingReward}
               aria-label={t('viewer.nextVideo') || 'Go to next video'}
               sx={{
                 backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : 'rgba(76, 175, 80, 0.9)',
@@ -1333,7 +1334,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               ) : (
                 <SkipNext />
               )}
-              disabled={isLoading}
+              disabled={isProcessingReward}
               aria-label={t('viewer.nextVideo') || 'Continue to next video'}
               sx={{
                 backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(76, 175, 80, 0.98)',
