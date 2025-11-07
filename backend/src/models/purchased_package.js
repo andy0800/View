@@ -103,7 +103,9 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   PurchasedPackage.prototype.canAffordView = function() {
-    return this.remaining_micro > 0 && this.status === 'active';
+    // Treat 'used' as a valid in-use state once an ad is created from this package.
+    // As long as there is remaining budget, allow views.
+    return this.remaining_micro > 0 && (this.status === 'active' || this.status === 'used');
   };
 
   PurchasedPackage.prototype.isExpired = function() {
