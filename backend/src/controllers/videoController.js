@@ -791,7 +791,17 @@ async function getAllAdsRandomly(req, res) {
     const normalize = url => {
       if (!url) return url;
       const u = String(url).trim();
-      if (/^https?:\/\//i.test(u)) return u; // already absolute
+      if (/^https?:\/\//i.test(u)) {
+        try {
+          const parsed = new URL(u);
+          const p = parsed.pathname || '';
+          if (p.startsWith('/uploads/') && !p.startsWith('/uploads/ads/')) {
+            const path = require('path');
+            return `${parsed.origin}/uploads/ads/${path.basename(p)}`;
+          }
+        } catch (_e) {}
+        return u; // already absolute
+      }
       if (u.startsWith('/uploads/')) {
         if (!u.startsWith('/uploads/ads/')) {
           const path = require('path');
