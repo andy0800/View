@@ -787,7 +787,9 @@ async function getAllAdsRandomly(req, res) {
     console.log(`🔍 After filtering: ${unwatchedAds.length} unwatched ads`);
 
     // Helpers to normalize and absolutize media URLs
-    const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${req.protocol}://${req.get('host')}`;
+    const forwardedProto = req.headers['x-forwarded-proto'];
+    const proto = (Array.isArray(forwardedProto) ? forwardedProto[0] : forwardedProto) || req.protocol || 'https';
+    const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${proto}://${req.get('host')}`;
     const normalize = url => {
       if (!url) return url;
       const u = String(url).trim();

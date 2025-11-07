@@ -129,7 +129,9 @@ exports.getSectionVideos = async (req, res) => {
     const watchedIds = new Set(watchedRows.map(r => r.ad_id));
 
     // Normalize and validate media URLs; skip any ad without a valid file
-    const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${req.protocol}://${req.get('host')}`;
+    const forwardedProto = req.headers['x-forwarded-proto'];
+    const proto = (Array.isArray(forwardedProto) ? forwardedProto[0] : forwardedProto) || req.protocol || 'https';
+    const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${proto}://${req.get('host')}`;
     const path = require('path');
     const fs = require('fs');
     const normalize = url => {
@@ -605,7 +607,9 @@ exports.getAllAds = async (req, res) => {
     console.log(`🔍 getAllAds: Computed watched set size (last 24hrs): ${watchedIds.size}`);
 
     // Transform ads for frontend with media URL validation
-    const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${req.protocol}://${req.get('host')}`;
+    const forwardedProto2 = req.headers['x-forwarded-proto'];
+    const proto2 = (Array.isArray(forwardedProto2) ? forwardedProto2[0] : forwardedProto2) || req.protocol || 'https';
+    const origin = (process.env.BACKEND_PUBLIC_URL?.trim()) || `${proto2}://${req.get('host')}`;
     const path = require('path');
     const fs = require('fs');
     
