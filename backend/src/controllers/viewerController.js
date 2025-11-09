@@ -631,15 +631,45 @@ exports.getAllAds = async (req, res) => {
     const validAds = [];
     for (const ad of ads) {
       const raw = (ad.mediaUrl || '').toString().trim();
+
+      // Case 1: Absolute remote URL (e.g., S3/CloudFront) → accept as-is
+      if (/^https?:\/\//i.test(raw)) {
+        validAds.push({
+          id: ad.id,
+          title: ad.title,
+          description: ad.description,
+          mediaUrl: raw,
+          section: ad.section,
+          package: {
+            name: ad.purchasedPackage.package.name,
+            duration: ad.purchasedPackage.package.duration,
+            pricePerView: ad.purchasedPackage.package.getPricePerViewKWD ? ad.purchasedPackage.package.getPricePerViewKWD() : (ad.purchasedPackage.package.price_per_view_micro / 1_000_000),
+            viewer_reward: ad.purchasedPackage.package.getViewerRewardKWD ? ad.purchasedPackage.package.getViewerRewardKWD() : ((ad.purchasedPackage.package.price_per_view_micro / 2) / 1_000_000)
+          },
+          advertiser: {
+            name: ad.advertiser.name,
+            companyName: ad.advertiser.company_name
+          },
+          cta_data: {
+            enabled: ad.cta_enabled,
+            link: ad.cta_link,
+            text: ad.cta_text
+          },
+          is_watched: watchedIds.has(ad.id)
+        });
+        continue;
+      }
+
+      // Case 2: Legacy/local relative path → require local file existence
       const filename = raw ? path.basename(raw) : '';
       if (!filename) continue; // require a filename
 
-      // Always build a normalized local path first
+      // Build a normalized local path under /uploads/ads
       const normalized = raw.startsWith('/uploads/ads/') ? raw : `/uploads/ads/${filename}`;
 
       // Ensure file exists on disk before emitting URL
       const filePath = path.resolve(__dirname, '..', 'uploads', 'ads', path.basename(normalized));
-        if (!fs.existsSync(filePath)) {
+      if (!fs.existsSync(filePath)) {
         continue; // Skip ads with missing files to avoid 404s
       }
 
