@@ -147,7 +147,8 @@ module.exports = (sequelize, DataTypes) => {
       throw new Error('Insufficient remaining budget');
     }
 
-    if (this.status !== 'active') {
+    // Allow deduction when status is 'active' or 'used' (used = ad created)
+    if (this.status !== 'active' && this.status !== 'used') {
       throw new Error('Package is not active');
     }
 

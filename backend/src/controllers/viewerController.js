@@ -429,7 +429,7 @@ exports.completeView = async (req, res) => {
       }, { transaction });
 
       // Deduct cost from purchased package with optimistic locking
-      await ad.purchasedPackage.deductViewCost(transaction);
+      await ad.purchasedPackage.deductViewCost(pricePerViewMicro, transaction);
 
       // Add reward to viewer wallet
       await viewerWallet.addBalance(viewerShareMicro, transaction);

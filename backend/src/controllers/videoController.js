@@ -553,7 +553,7 @@ async function completeWatchingAd(req, res) {
 
       // Deduct cost from purchased package with optimistic locking
       console.log('🔍 Deducting view cost from purchased package...');
-      await ad.purchasedPackage.deductViewCost(transaction);
+      await ad.purchasedPackage.deductViewCost(pricePerViewMicro, transaction);
       console.log('✅ View cost deducted successfully');
 
       // Add reward to viewer wallet
