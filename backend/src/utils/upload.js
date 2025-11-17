@@ -58,14 +58,15 @@ async function uploadToS3(buffer, originalName, folder) {
     else if (lower === '.pdf') contentType = 'application/pdf';
 
     // Use high-level Upload for multi-part support on large files
+    // Note: ACL is not included as the bucket has ACLs disabled
+    // Public access should be configured via bucket policy if needed
     const uploader = new Upload({
       client: s3,
       params: {
         Bucket: S3_BUCKET,
         Key: key,
         Body: buffer,
-        ContentType: contentType,
-        ACL: 'public-read' // Public read access for bucket objects
+        ContentType: contentType
       }
     });
 
