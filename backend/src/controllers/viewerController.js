@@ -168,22 +168,12 @@ exports.getSectionVideos = async (req, res) => {
     };
     const fileExists = url => {
       if (!url) return false;
-      // If absolute URL, verify locally when it points to this backend origin
+      // All files are now on S3 - if it's an absolute URL (S3 or other), assume it exists
       if (/^https?:\/\//i.test(url)) {
-        try {
-          const abs = new URL(url);
-          const thisOrigin = new URL(origin);
-          if (abs.host === thisOrigin.host) {
-            // Map /uploads/... to local filesystem path
-            const rel = abs.pathname.replace(/^\/?uploads\//i, '');
-            const filePath = path.resolve(__dirname, '..', 'uploads', rel);
-            return fs.existsSync(filePath);
-          }
-          return true; // remote third-party URL - assume available
-        } catch (_e) {
-          return false;
-        }
+        return true; // S3 URLs or other remote URLs - assume available
       }
+      // Legacy local paths - still check for backward compatibility
+      // But new uploads will always be S3 URLs
       const rel = url.replace(/^\/?uploads\//i, '');
       const filePath = path.resolve(__dirname, '..', 'uploads', rel);
       return fs.existsSync(filePath);

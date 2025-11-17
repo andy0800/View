@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { User, Wallet, Session } = require('../models');
 const SessionService = require('../services/sessionService');
 const { validateKuwaitPhone, validateCivilId } = require('../middleware/authMiddleware');
+const { uploadToS3 } = require('../utils/upload');
 
 // ─────────────────────────────────────────────
 // Test OTP fallback helper (when Redis is unavailable)
@@ -186,6 +187,18 @@ exports.registerViewer = async (req, res, next) => {
       }
     }
 
+    // Upload Civil ID documents to S3
+    const civilFrontUrl = await uploadToS3(
+      files.civil_front[0].buffer,
+      files.civil_front[0].originalname || 'civil_front.jpg',
+      'civil'
+    );
+    const civilBackUrl = await uploadToS3(
+      files.civil_back[0].buffer,
+      files.civil_back[0].originalname || 'civil_back.jpg',
+      'civil'
+    );
+
     // Create user
     const user = await User.create({
       name,
@@ -193,8 +206,8 @@ exports.registerViewer = async (req, res, next) => {
       phone,
       role: 'viewer',
       kyc_status: 'pending',
-      civil_front_key: files.civil_front[0].filename,
-      civil_back_key: files.civil_back[0].filename
+      civil_front_key: civilFrontUrl,
+      civil_back_key: civilBackUrl
     });
 
     // Create wallet
@@ -267,6 +280,13 @@ exports.registerAdvertiser = async (req, res, next) => {
       return res.status(400).json({ message: 'Phone already registered' });
     }
 
+    // Upload license document to S3
+    const licenseDocUrl = await uploadToS3(
+      files.license_doc[0].buffer,
+      files.license_doc[0].originalname || 'license_doc.pdf',
+      'licenses'
+    );
+
     // Create user
     const user = await User.create({
       name,
@@ -276,7 +296,7 @@ exports.registerAdvertiser = async (req, res, next) => {
       company_name,
       license_number,
       signatory_name,
-      license_doc_key: files.license_doc[0].filename
+      license_doc_key: licenseDocUrl
     });
 
     // Create wallet
@@ -388,18 +408,33 @@ exports.register = async (req, res, next) => {
       is_active: true
     };
 
-    // Add advertiser-specific fields
-    if (userType === 'advertiser') {
+    // Handle file uploads to S3
+    if (userType === 'advertiser' && req.files.licenseDocument) {
+      const licenseDocUrl = await uploadToS3(
+        req.files.licenseDocument[0].buffer,
+        req.files.licenseDocument[0].originalname || 'license_doc.pdf',
+        'licenses'
+      );
       userData.company_name = req.body.companyName;
       userData.license_number = req.body.licenseNumber;
       userData.signatory_name = req.body.signatoryName;
-      userData.license_doc_key = req.files.licenseDocument[0].filename;
+      userData.license_doc_key = licenseDocUrl;
     }
 
-    // Add viewer-specific fields (civil ID documents)
-    if (userType === 'viewer') {
-      userData.civil_front_key = req.files.civilIdFront[0].filename;
-      userData.civil_back_key = req.files.civilIdBack[0].filename;
+    // Handle viewer-specific file uploads to S3
+    if (userType === 'viewer' && req.files.civilIdFront && req.files.civilIdBack) {
+      const civilFrontUrl = await uploadToS3(
+        req.files.civilIdFront[0].buffer,
+        req.files.civilIdFront[0].originalname || 'civil_front.jpg',
+        'civil'
+      );
+      const civilBackUrl = await uploadToS3(
+        req.files.civilIdBack[0].buffer,
+        req.files.civilIdBack[0].originalname || 'civil_back.jpg',
+        'civil'
+      );
+      userData.civil_front_key = civilFrontUrl;
+      userData.civil_back_key = civilBackUrl;
     }
 
     const user = await User.create(userData);
@@ -409,18 +444,6 @@ exports.register = async (req, res, next) => {
       user_id: user.id,
       balance: 0.00
     });
-
-    // Handle file uploads for viewers only
-    if (userType === 'viewer') {
-      const civilFrontKey = req.files.civilIdFront[0].filename;
-      const civilBackKey = req.files.civilIdBack[0].filename;
-
-      // Update user with file keys
-      await user.update({
-        civil_front_key: civilFrontKey,
-        civil_back_key: civilBackKey
-      });
-    }
 
     res.status(201).json({
       success: true,

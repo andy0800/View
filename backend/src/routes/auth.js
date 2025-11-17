@@ -53,10 +53,8 @@ const sessionRateLimiter = (req, res, next) => {
   next();
 };
 
-// Setup multer for file uploads
-const upload = multer({
-  dest: path.join(__dirname, '../uploads')
-});
+// Setup multer for file uploads - use memory storage for S3 uploads
+const { upload } = require('../utils/upload');
 
 // ─────────────────────────────────────────────
 // 1) OTP Login Routes
