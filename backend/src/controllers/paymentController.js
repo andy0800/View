@@ -1,3 +1,4 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT REWARDS
 const Stripe = require('stripe');
 const { Wallet, Transaction } = require('../models');
 const { validateAndConvertToFils } = require('../utils/currencyUtils');

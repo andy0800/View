@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { 
   Box, 
@@ -21,18 +21,17 @@ import {
   Visibility,
   AttachMoney
 } from '@mui/icons-material';
-import { CreditContext } from "../contexts/CreditContext";
 import CreditBar from "../components/CreditBar";
 import ResponsiveLayout from '../components/ResponsiveLayout';
 import { useTranslation } from 'react-i18next';
 
 import api from '../api';
+import { startWatchingAd, completeWatchingAd } from '../api/viewer';
 
 
 export default function VideoPage() {
   const { id: sectionKey, adId } = useParams();
   const navigate = useNavigate();
-  const { addCredit } = useContext(CreditContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
@@ -48,9 +47,12 @@ export default function VideoPage() {
   const [error, setError] = useState('');
   const [rewarding, setRewarding] = useState(false);
   const [isIndividualAd, setIsIndividualAd] = useState(false);
+  const [requiredDurationMs, setRequiredDurationMs] = useState(null);
   
   const videoRef = useRef(null);
   const progressIntervalRef = useRef(null);
+  const proofTokenRef = useRef(null);
+  const viewStartTimeRef = useRef(null);
 
   useEffect(() => {
     // Check if this is an individual ad or section-based viewing
@@ -71,6 +73,26 @@ export default function VideoPage() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    // FIXED: now uses backend response, no local mutation
+    const startRewardFlow = async () => {
+      if (!currentVideo?.id) return;
+      try {
+        const response = await startWatchingAd(currentVideo.id);
+        if (response?.success && response?.viewEvent?.proofToken) {
+          proofTokenRef.current = response.viewEvent.proofToken;
+          viewStartTimeRef.current = Date.now();
+          if (response.viewEvent.requiredDuration) {
+            setRequiredDurationMs(response.viewEvent.requiredDuration);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to start reward flow:', error);
+      }
+    };
+    startRewardFlow();
+  }, [currentVideo?.id]);
 
   const fetchIndividualAd = async () => {
     try {
@@ -161,9 +183,10 @@ export default function VideoPage() {
       if (videoRef.current) {
         const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
         setVideoProgress(progress);
-        
-        // Check if video is finished (99% or more)
-        if (progress >= 99) {
+        // FIXED: align completion threshold with backend-required duration
+        const watchedMs = (videoRef.current.currentTime || 0) * 1000;
+        const thresholdMs = requiredDurationMs || (videoRef.current.duration * 1000);
+        if (thresholdMs && watchedMs >= thresholdMs * 0.95) {
           handleVideoEnded();
         }
       }
@@ -190,25 +213,25 @@ export default function VideoPage() {
         videoTitle: currentVideo.title
       });
 
-      // Reward the viewer for watching the video
-      const rewardResponse = await api.post('/viewer/wallet/reward', {
-        adId: currentVideo.id,
-        sectionKey: sectionKey
-      });
-
-      console.log('✅ Reward response:', rewardResponse.data);
-
-      // Add credit to the context
-      if (rewardResponse.data.reward) {
-        addCredit(rewardResponse.data.reward);
-        console.log('✅ Credit added to context:', rewardResponse.data.reward);
+      // FIXED: now uses backend response, no local mutation
+      const proofToken = proofTokenRef.current;
+      const startedAt = viewStartTimeRef.current;
+      if (!proofToken || !startedAt) {
+        throw new Error('Missing proof token or start time for reward completion');
       }
+      const watchedDurationMs = Date.now() - startedAt;
+      const rewardResponse = await completeWatchingAd(currentVideo.id, proofToken, watchedDurationMs);
+
+      console.log('✅ Reward response:', rewardResponse);
+
+      // FIXED: now uses backend response, no local mutation
 
       // Move to next video
       if (currentVideoIndex < videos.length - 1) {
         setCurrentVideoIndex(prev => prev + 1);
         setIsVideoFinished(false);
         setVideoProgress(0);
+        setRequiredDurationMs(null);
         if (videoRef.current) {
           videoRef.current.currentTime = 0;
         }

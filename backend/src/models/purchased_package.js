@@ -1,3 +1,4 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT REWARDS
 // backend/src/models/purchased_package.js
 'use strict';
 

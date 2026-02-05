@@ -1,0 +1,4 @@
+- Never grant rewards outside the authoritative processor
+- Frontend events are untrusted
+- All reward writes must be idempotent
+- Database must enforce uniqueness

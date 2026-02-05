@@ -1,4 +1,8 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT REWARDS
 // backend/src/models/company_wallet.js
+
+// ⚠️ DUPLICATE CANDIDATE — DO NOT MODIFY
+// Found during reward-logic audit
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {

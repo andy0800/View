@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Box, 
   Typography, 
@@ -13,11 +13,10 @@ import { ArrowBack } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
 
-import { CreditContext } from '../contexts/CreditContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import TikTokVideoPlayer from './TikTokVideoPlayer';
 import CreditBar from './CreditBar';
-import { getVideosBySection, completeWatchingAd } from '../api/viewer';
+import { getVideosBySection } from '../api/viewer';
 
 export default function SectionVideos() {
   const [videos, setVideos] = useState([]);
@@ -29,7 +28,6 @@ export default function SectionVideos() {
   const { sectionKey } = useParams();
   const { t } = useTranslation();
   const { currentLanguage } = useLanguage();
-  const { addCredit } = useContext(CreditContext);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -84,11 +82,11 @@ export default function SectionVideos() {
   const handleEarnCredits = async (video, rewardAmount) => {
     console.log('Earning credits in SectionVideos (use provided reward):', video, rewardAmount);
     if (!video || !video.id) return;
-    const reward = parseFloat(rewardAmount) || 0;
+    // FIXED: now uses backend response, no local mutation
+    const reward = Number(rewardAmount) || 0;
     if (reward > 0) {
       setRewardAmount(reward);
       setShowRewardAlert(true);
-      addCredit(reward);
       setTimeout(() => setShowRewardAlert(false), 4000);
     }
   };

@@ -1,4 +1,7 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT REWARDS
 // backend/src/models/companyWallet.js
+
+// ✅ AUTHORITATIVE — ACTIVE REWARD LOGIC
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {

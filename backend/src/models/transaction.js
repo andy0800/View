@@ -1,3 +1,4 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT REWARDS
 // backend/src/models/transaction.js
 'use strict';
 

@@ -1,3 +1,4 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT REWARDS
 // backend/src/routes/wallet.js
 const express = require('express');
 const { authenticate } = require('../middleware/authMiddleware');

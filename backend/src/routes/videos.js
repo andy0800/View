@@ -1,3 +1,4 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT VIEW REWARDS
 // backend/src/routes/videos.js
 const express = require('express');
 const router = express.Router();

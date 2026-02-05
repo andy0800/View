@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Box, 
   Typography, 
@@ -11,7 +11,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
 
-import { CreditContext } from '../contexts/CreditContext';
 import TikTokVideoPlayer from './TikTokVideoPlayer';
 import CreditBar from './CreditBar';
 import { getAllAdsRandomly } from '../api/viewer';
@@ -24,7 +23,6 @@ export default function AllAdsTab() {
   const [rewardAmount, setRewardAmount] = useState(0);
   const { t } = useTranslation();
   const { currentLanguage } = useLanguage();
-  const { addCredit } = useContext(CreditContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -90,25 +88,12 @@ export default function AllAdsTab() {
         console.error('❌ Invalid video object:', video);
         return;
       }
-
-      // Use the reward amount provided by the player/backend
-      let reward = parseFloat(rewardAmount);
-      if (!reward || reward <= 0) {
-        // Fallback calculation if not provided (rare)
-        if (video.package?.viewer_reward) {
-          reward = parseFloat(video.package.viewer_reward);
-        } else if (video.package?.pricePerView) {
-          reward = parseFloat(video.package.pricePerView) / 2;
-        } else {
-          // ✅ FIXED: Use dynamic calculation instead of hardcoded fallback
-          reward = 0.005; // This will be overridden by backend response anyway
-        }
+      // FIXED: now uses backend response, no local mutation
+      const reward = Number(rewardAmount) || 0;
+      if (reward > 0) {
+        setRewardAmount(reward);
+        setShowRewardAlert(true);
       }
-      setRewardAmount(reward);
-      setShowRewardAlert(true);
-      
-      // Update credit context for real-time balance update
-      addCredit(reward);
       
       console.log('🎯 Credit earning successful:', {
         rewardAmount: reward,

@@ -1,14 +1,13 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT VIEW REWARDS
 // backend/src/controllers/viewerController.js
 const { 
   User, 
   Wallet, 
-  Transaction, 
   ViewEvent, 
   Ad, 
   PurchasedPackage,
   AdvertiserPackage,
   Section,
-  CompanyWallet,
   sequelize 
 } = require('../models');
 const { Op } = require('sequelize');
@@ -341,11 +340,10 @@ exports.startWatchingAd = async (req, res) => {
   }
 };
 
-// Complete watching an ad (processes reward and updates budget)
+// Complete watching an ad (delegates to authoritative reward processor)
 exports.completeView = async (req, res) => {
   try {
     const { adId, proofToken, watchedDurationMs } = req.body;
-    const userId = req.user.id;
 
     if (!adId || !proofToken || !watchedDurationMs) {
       return res.status(400).json({ 
@@ -353,130 +351,10 @@ exports.completeView = async (req, res) => {
       });
     }
 
-    // Find and validate view event
-    const viewEvent = await ViewEvent.findByProofToken(proofToken);
-    if (!viewEvent) {
-      return res.status(400).json({ message: 'Invalid proof token' });
-    }
-
-    if (viewEvent.user_id !== userId) {
-      return res.status(403).json({ message: 'Proof token does not match user' });
-    }
-
-    if (viewEvent.ad_id !== adId) {
-      return res.status(400).json({ message: 'Proof token does not match ad' });
-    }
-
-    if (viewEvent.is_completed) {
-      return res.status(400).json({ message: 'View already completed' });
-    }
-
-    if (viewEvent.isProofTokenExpired()) {
-      return res.status(400).json({ message: 'Proof token has expired' });
-    }
-
-    // Validate watched duration (must watch at least 95% of required duration)
-    if (watchedDurationMs < (viewEvent.required_duration_ms * 0.95)) {
-      return res.status(400).json({ 
-        message: 'Must watch at least 95% of the video to receive reward' 
-      });
-    }
-
-    // Get ad with package details
-    const ad = await Ad.getAdWithPackageDetails(adId);
-    if (!ad) {
-      return res.status(404).json({ message: 'Ad not found' });
-    }
-
-    // Check if ad can still afford a view
-    if (!ad.canAffordView()) {
-      return res.status(400).json({ message: 'Ad has insufficient budget' });
-    }
-
-    // Get or create viewer wallet
-    let viewerWallet = await Wallet.findByUserId(userId);
-    if (!viewerWallet) {
-      viewerWallet = await Wallet.createForUser(userId);
-    }
-
-    // Calculate rewards using micro-units
-    const pricePerViewMicro = ad.getPackagePricePerViewMicro();
-    const viewerShareMicro = ad.package.getViewerRewardMicro();
-    const companyShareMicro = ad.package.getCompanyShareMicro();
-
-    // Start database transaction
-    const transaction = await sequelize.transaction();
-
-    try {
-      // Update view event
-      await viewEvent.update({
-        is_completed: true,
-        watched_duration_ms: watchedDurationMs,
-        charged_micro: pricePerViewMicro,
-        viewer_reward_micro: viewerShareMicro,
-        company_share_micro: companyShareMicro,
-        completed_at: new Date()
-      }, { transaction });
-
-      // Deduct cost from purchased package with optimistic locking
-      await ad.purchasedPackage.deductViewCost(pricePerViewMicro, transaction);
-
-      // Add reward to viewer wallet
-      await viewerWallet.addBalance(viewerShareMicro, transaction);
-
-      // Create transactions
-      await Transaction.createViewTransaction({
-        fromWalletId: ad.purchasedPackage.id, // From purchased package
-        toWalletId: viewerWallet.id, // To viewer wallet
-        userId,
-        amountMicro: pricePerViewMicro,
-        adId,
-        purchasedPackageId: ad.purchased_package_id,
-        type: 'view_charge'
-      }, transaction);
-
-      await Transaction.createRewardTransaction({
-        toWalletId: viewerWallet.id,
-        userId,
-        amountMicro: viewerShareMicro,
-        adId,
-        purchasedPackageId: ad.purchased_package_id
-      }, transaction);
-
-      // Create company fee transaction and update company wallet
-      const companyWallet = await CompanyWallet.getOrCreateMainWallet();
-      await companyWallet.addCompanyFee(companyShareMicro, transaction);
-      await companyWallet.addViewerReward(viewerShareMicro, transaction);
-
-      await Transaction.createCompanyFeeTransaction({
-        toWalletId: companyWallet.id,
-        amountMicro: companyShareMicro,
-        adId,
-        purchasedPackageId: ad.purchased_package_id
-      }, transaction);
-
-      await transaction.commit();
-
-      res.json({
-        success: true,
-        message: 'View completed successfully',
-        reward: viewerShareMicro / 1_000_000, // Convert to KWD
-        newBalance: viewerWallet.getBalanceKWD(),
-        ad: {
-          id: ad.id,
-          title: ad.title,
-          remainingBudget: ad.purchasedPackage.getRemainingKWD()
-        }
-      });
-
-    } catch (error) {
-      await transaction.rollback();
-      console.error('Error in completeView transaction:', error);
-      res.status(500).json({ 
-        message: 'Failed to complete view. Please try again.' 
-      });
-    }
-
+    // Delegate to the authoritative reward processor (videoController)
+    const { completeWatchingAd } = require('../controllers/videoController');
+    req.params.adId = adId;
+    return completeWatchingAd(req, res);
   } catch (error) {
     console.error('Error completing view:', error);
     res.status(500).json({ message: 'Failed to complete view' });

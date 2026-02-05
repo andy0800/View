@@ -1,3 +1,4 @@
+// ✅ AUTHORITATIVE REWARD PROCESSOR — VIEW COMPLETION & REWARDS
 // backend/src/controllers/videoController.js
 const { 
   User, 

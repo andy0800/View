@@ -1,0 +1,324 @@
+# VIEW APP - Cursor Rules
+# Comprehensive project documentation and coding guidelines
+
+## PROJECT OVERVIEW
+
+**VIEW APP** is a full-stack advertising rewards platform where:
+- **Viewers** watch ads and earn rewards (KWD)
+- **Advertisers** purchase packages and create ads
+- **Admins** manage users, verify ads, and handle appeals
+- **Company** receives fees from ad views
+
+### Tech Stack
+- **Backend**: Node.js, Express.js, Sequelize ORM, PostgreSQL
+- **Frontend**: React 18, Vite, Material-UI, React Router
+- **Database**: PostgreSQL (Render.com)
+- **Storage**: AWS S3 (eu-north-1)
+- **Cache**: Redis (ioredis)
+- **Payments**: Stripe, MyFatoorah
+- **Auth**: JWT (httpOnly cookies), Session management
+- **Mobile**: Capacitor (Android/iOS support)
+
+### Architecture
+```
+View/
+├── backend/          # Express.js API server
+│   ├── src/
+│   │   ├── models/          # Sequelize models (27 models)
+│   │   ├── controllers/     # Route handlers (11 controllers)
+│   │   ├── routes/           # Express routes (11 route files)
+│   │   ├── middleware/       # Auth, error handling
+│   │   ├── services/         # Business logic (MyFatoorah, Session)
+│   │   └── utils/            # Helpers (upload, currency, JWT, OTP)
+│   └── config/               # Database configuration
+├── frontend/         # React SPA
+│   ├── src/
+│   │   ├── pages/            # Route pages (viewer, advertiser, admin)
+│   │   ├── components/       # Reusable components
+│   │   ├── contexts/         # React contexts (Auth, Theme, Language)
+│   │   ├── services/         # API services (socket, payment)
+│   │   └── utils/            # Frontend utilities
+└── render.yaml               # Render.com deployment config
+```
+
+## CORE BUSINESS LOGIC
+
+### Currency System
+- **Micro Units**: All amounts stored as BIGINT in micro units (1,000,000 micro = 1 KWD)
+- **Conversion**: Always use model methods (`getBalanceKWD()`, `getAmountKWD()`)
+- **Precision**: Never use DECIMAL for calculations, only for display
+- **Files**: `backend/src/models/wallet.js`, `backend/src/utils/currencyUtils.js`
+
+### User Roles
+1. **Viewer** (`role: 'viewer'`)
+   - Requires: Civil ID (12 digits), front/back photos
+   - KYC: Auto-verified on registration
+   - Can: Watch ads, earn rewards, withdraw
+
+2. **Advertiser** (`role: 'advertiser'`)
+   - Requires: Company name, license number, signatory name, license doc
+   - KYC: Manual admin verification required
+   - Can: Purchase packages, create ads, view analytics
+
+3. **Admin** (`role: 'admin'`)
+   - ID: `'00000000-0000-0000-0000-000000000000'` (UUID) or `0` (legacy)
+   - No session tracking (stateless JWT)
+   - Can: Manage users, verify ads, handle appeals, view all data
+
+### Authentication Flow
+1. **OTP Login**: Phone → OTP → Session created → JWT cookie set
+2. **Admin Login**: Username/password → JWT cookie (no session)
+3. **Session Management**: Redis + PostgreSQL `sessions` table
+4. **Middleware**: `authenticate` → `authorizeRoles` → `requireKyc` (if needed)
+
+### Ad Viewing Flow
+1. Viewer requests ad → Backend generates proof token (HMAC)
+2. Viewer watches ad → Frontend tracks duration
+3. Viewer completes → Frontend sends proof token + watched duration
+4. Backend validates → Deducts from package budget → Rewards viewer → Company fee
+
+### Package System
+- **AdvertiserPackage**: Template packages (P15, P20, P30, etc.)
+- **PurchasedPackage**: Active package with budget
+- **Status Flow**: `active` → `used` (when ad created) → `expired`/`cancelled`
+- **Budget**: Stored in micro units, deducted per view
+
+### Payment Flow
+1. Advertiser deposits → MyFatoorah/Stripe → Wallet credited
+2. Advertiser purchases package → Wallet deducted → PurchasedPackage created
+3. Ad created → Uses PurchasedPackage budget
+4. View completed → Package budget deducted → Viewer rewarded → Company fee
+
+## DATABASE SCHEMA
+
+### Core Tables
+- **users**: Unified user table (viewers, advertisers, admins)
+- **wallets**: User balances (balance_micro, held_micro)
+- **transactions**: All financial transactions
+- **advertiser_packages**: Package templates
+- **purchased_packages**: Active advertiser packages
+- **ads**: Advertisements (linked to purchased_packages)
+- **view_events**: Ad view tracking with proof tokens
+- **sessions**: Active user sessions
+- **sections**: Ad categories
+
+### Key Relationships
+- `User` → `Wallet` (1:1)
+- `User` → `PurchasedPackage` (1:many, advertiser_id)
+- `PurchasedPackage` → `Ad` (1:many)
+- `Ad` → `ViewEvent` (1:many)
+- `ViewEvent` → `User` (viewer), `PurchasedPackage`, `AdvertiserPackage`
+
+### Important Fields
+- **IDs**: UUID (v4) for most tables, INTEGER for packages/sections
+- **Timestamps**: `created_at`, `updated_at` (automatic)
+- **Status Fields**: `is_active`, `status`, `verification_status`, `kyc_status`
+- **Micro Units**: `balance_micro`, `amount_micro`, `budget_micro`, `remaining_micro`
+
+## FILE STRUCTURE CONVENTIONS
+
+### Backend
+- **Models**: `backend/src/models/*.js` - Sequelize models
+- **Controllers**: `backend/src/controllers/*Controller.js` - Route handlers
+- **Routes**: `backend/src/routes/*.js` - Express route definitions
+- **Middleware**: `backend/src/middleware/*.js` - Auth, error handling
+- **Services**: `backend/src/services/*Service.js` - External API integrations
+- **Utils**: `backend/src/utils/*.js` - Helper functions
+
+### Frontend
+- **Pages**: `frontend/src/pages/*.jsx` - Route components
+- **Components**: `frontend/src/components/*.jsx` - Reusable components
+- **Contexts**: `frontend/src/contexts/*Context.jsx` - React contexts
+- **Services**: `frontend/src/services/*.js` - API clients
+- **Utils**: `frontend/src/utils/*.js` - Frontend helpers
+
+## CODING STANDARDS
+
+### JavaScript/Node.js
+- Use `async/await` for async operations
+- Always wrap database operations in transactions when modifying multiple records
+- Use Sequelize model methods instead of raw queries
+- Validate input at controller level
+- Use environment variables for all configuration
+- Never commit secrets or credentials
+
+### Error Handling
+- Use try-catch blocks for all async operations
+- Use global error handler middleware (`errorHandler.js`)
+- Return consistent error format: `{ success: false, message: string }`
+- Log errors with context (user ID, request path, etc.)
+
+### Security
+- Always validate user input
+- Use parameterized queries (Sequelize handles this)
+- Sanitize file uploads (type, size validation)
+- Use httpOnly cookies for JWT tokens
+- Implement rate limiting on sensitive endpoints
+- Never expose sensitive data in error messages (production)
+
+### Database Operations
+- Always use transactions for multi-step operations
+- Use model associations instead of manual joins
+- Index frequently queried fields
+- Use `findOrCreate` for wallet creation
+- Handle race conditions (e.g., concurrent balance updates)
+
+### API Design
+- RESTful routes: `/api/{resource}/{id?}/{action?}`
+- Consistent response format: `{ success: boolean, data?: any, message?: string }`
+- Use HTTP status codes correctly (200, 201, 400, 401, 403, 404, 500)
+- Version APIs if breaking changes needed
+
+### Frontend
+- Use React hooks (useState, useEffect, useContext)
+- Keep components small and focused
+- Use context for global state (auth, theme, language)
+- Handle loading and error states
+- Use Material-UI components consistently
+- Support RTL (Arabic) and LTR (English)
+
+## ENVIRONMENT VARIABLES
+
+### Backend (.env)
+```bash
+# Database
+DATABASE_URL=postgresql://...
+DB_HOST=...
+DB_PASS=...
+
+# JWT
+JWT_SECRET=... (64+ character hex string)
+
+# AWS S3
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_S3_BUCKET=viewapp-ads
+AWS_REGION=eu-north-1
+
+# Redis
+REDIS_URL=redis://...
+
+# Payments
+STRIPE_SECRET_KEY=...
+MYFATOORAH_API_KEY=...
+
+# Admin
+ADMIN_USERNAME=admin@example.com
+ADMIN_PASSWORD=ChangeMe123
+```
+
+### Frontend (.env)
+```bash
+# API
+VITE_API_BASE_URL=https://viewapp-backend.onrender.com
+
+# Stripe (public key only)
+VITE_STRIPE_PUBLISHABLE_KEY=pk_...
+
+# App Config
+VITE_DEFAULT_CURRENCY=KWD
+VITE_DEFAULT_LANGUAGE=en
+```
+
+## COMMON PATTERNS
+
+### Creating a New Model
+1. Create model file: `backend/src/models/{name}.js`
+2. Define schema with DataTypes
+3. Add instance methods (e.g., `getBalanceKWD()`)
+4. Add class methods (e.g., `findByUserId()`)
+5. Define associations in `associate()` function
+6. Register in `backend/src/models/index.js` (auto-loaded)
+
+### Creating a New Controller
+1. Create controller: `backend/src/controllers/{name}Controller.js`
+2. Export async functions: `async function actionName(req, res, next)`
+3. Use transactions for multi-step operations
+4. Return consistent response format
+5. Handle errors with try-catch
+
+### Creating a New Route
+1. Create route file: `backend/src/routes/{name}.js`
+2. Import controller functions
+3. Apply middleware: `authenticate`, `authorizeRoles`
+4. Define routes: `router.get/post/put/delete(...)`
+5. Register in `backend/src/app.js`
+
+### Adding Frontend Page
+1. Create page: `frontend/src/pages/{Name}Page.jsx`
+2. Add route in `frontend/src/App.jsx`
+3. Use `PrivateRoute` for protected pages
+4. Fetch data with `api.get/post(...)`
+5. Handle loading/error states
+
+## KNOWN ISSUES & FIXES
+
+### Fixed Issues
+1. **Admin 401 Errors**: Fixed ID type mismatch (UUID vs integer 0)
+2. **Admin Login Redirect Loop**: Fixed race condition in auth context
+3. **Wallet Balance Type Errors**: Fixed string concatenation (use parseInt)
+4. **PurchasedPackage user_id**: Changed to advertiser_id (matches DB schema)
+5. **24-Hour Reward Cooldown**: Implemented in ViewEvent model
+
+### Current Limitations
+1. **OTP System**: Falls back to test OTPs when Redis unavailable
+2. **Payment Simulation**: Enabled in development (MyFatoorah)
+3. **Admin Session**: No session tracking (by design)
+4. **Video Model**: Legacy, functionality moved to Ad model
+
+## DEPLOYMENT
+
+### Render.com
+- **Backend**: Node.js service on port 10000
+- **Frontend**: Static site (Vite build)
+- **Database**: PostgreSQL (external)
+- **Redis**: External service
+- **Config**: `render.yaml` for multi-service setup
+
+### Environment
+- Production: `NODE_ENV=production`
+- Development: `NODE_ENV=development` (enables sync, debug logs)
+
+## TESTING
+
+### Test OTPs
+- Development: `'0000'` or `'1234'`
+- Test Viewer: `process.env.TEST_VIEWER_OTP`
+- Test Advertiser: `process.env.TEST_ADVERTISER_OTP`
+
+### Payment Simulation
+- Enabled: `PAYMENT_SIMULATION_ENABLED=true`
+- Success Rate: `PAYMENT_SUCCESS_RATE=0.8` (80%)
+
+## IMPORTANT NOTES
+
+1. **Never modify database schema directly** - Use migrations
+2. **Always use micro units** for currency calculations
+3. **Transactions are critical** - Use for wallet operations
+4. **Admin bypasses session check** - This is intentional
+5. **Proof tokens expire** - 5 minutes default
+6. **24-hour cooldown** - Viewers can't get rewarded twice for same ad in 24h
+7. **KYC required** - Advertisers must be verified before creating ads
+8. **Package status** - `used` means ad created, not exhausted
+
+## QUICK REFERENCE
+
+### Model Methods
+- `wallet.getBalanceKWD()` - Get balance in KWD
+- `wallet.addBalance(amountMicro, transaction)` - Add to balance
+- `wallet.deductBalance(amountMicro, transaction)` - Deduct from balance
+- `purchasedPackage.canAffordView()` - Check if budget available
+- `purchasedPackage.deductViewCost(costMicro, transaction)` - Deduct view cost
+- `ad.isAvailableForViewing()` - Check if ad can be viewed
+
+### Common Queries
+- `User.findByPk(id)` - Find user by ID
+- `Wallet.findByUserId(userId)` - Find wallet by user
+- `PurchasedPackage.getActiveForUser(advertiserId)` - Get active packages
+- `Ad.getActiveAdsBySection(sectionKey, options)` - Get ads for section
+
+### Middleware
+- `authenticate` - Verify JWT, load user
+- `authorizeRoles('viewer', 'advertiser', 'admin')` - Check role
+- `requireKyc` - Ensure advertiser KYC verified
+

@@ -179,6 +179,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
   // ✅ OPTIMIZED: Use only refs for proof tokens (no re-renders needed)
   const currentProofTokenRef = useRef(null);
   const viewStartTimeRef = useRef(null);
+  const requiredDurationMsRef = useRef(null);
   
   // New states for CTA and comments
   const [showComments, setShowComments] = useState(false);
@@ -201,11 +202,14 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
   });
   
   const videoReward = useMemo(() => {
-    const base = currentVideo?.package?.viewer_reward || 
-           (currentVideo?.package?.pricePerView ? (currentVideo.package.pricePerView / 2).toFixed(6) : '0.005');
-    // If this ad was already watched, show 0 reward to indicate rewatching has no reward
-    return currentVideo?.is_watched ? '0.000' : base;
+    // FIXED: now uses backend response, no local mutation
+    const backendReward = currentVideo?.package?.viewer_reward ?? currentVideo?.viewer_reward;
+    if (currentVideo?.is_watched) return '0.000';
+    if (backendReward == null) return null;
+    return Number(backendReward).toFixed(6);
   }, [currentVideo]);
+  // FIXED: now uses backend response, no local mutation
+  const displayReward = videoReward ?? '—';
   
   // Function to fetch comment count for current video with enhanced error handling
   const fetchCommentCount = useCallback(async (videoId, retryCount = 0) => {
@@ -321,6 +325,10 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
         // ✅ OPTIMIZED: Only use refs, no state updates
         currentProofTokenRef.current = proofToken;
         viewStartTimeRef.current = startTime;
+        // FIXED: now uses backend response, no local mutation
+        if (response.viewEvent.requiredDuration) {
+          requiredDurationMsRef.current = Number(response.viewEvent.requiredDuration) || null;
+        }
         
         devLog('✅ Video watching started with proof token:', proofToken);
       } else {
@@ -405,7 +413,10 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
     };
 
     const handleTimeUpdate = () => {
-      if (video.currentTime >= video.duration - 0.1 && !rewardEarned) {
+      if (rewardEarned) return;
+      const thresholdMs = requiredDurationMsRef.current || (video.duration * 1000);
+      const watchedMs = video.currentTime * 1000;
+      if (thresholdMs && watchedMs >= thresholdMs * 0.95) {
         devLog('🎯 Time update completion detected - video ready for completion');
         // ✅ FIXED: Don't auto-advance, just mark as ready
       }
@@ -435,7 +446,9 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             setProgress(newProgress);
             
             // ✅ FIXED: Only detect completion, don't auto-advance
-            if (newProgress >= 99.5 && !rewardEarned) {
+            const thresholdMs = requiredDurationMsRef.current || (duration * 1000);
+            const watchedMs = currentTime * 1000;
+            if (thresholdMs && watchedMs >= thresholdMs * 0.95 && !rewardEarned) {
               devLog('🎯 Progress-based completion detected - video ready for completion');
               // Don't call handleVideoComplete here - let user click NEXT
             }
@@ -944,8 +957,8 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           {t('viewer.videoDescription', { 
             title: currentVideo.title || 'Video',
             duration: formatDuration(currentVideo.package?.duration || currentVideo.duration || 10),
-            reward: videoReward
-          }) || `${currentVideo.title || 'Video'} with ${formatDuration(currentVideo.package?.duration || currentVideo.duration || 10)} duration and ${videoReward} KWD reward`}
+            reward: displayReward
+          }) || `${currentVideo.title || 'Video'} with ${formatDuration(currentVideo.package?.duration || currentVideo.duration || 10)} duration and ${displayReward} KWD reward`}
         </div>
         
         {/* Video Loading Overlay */}
@@ -1114,7 +1127,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             <Tooltip title={currentVideo?.is_watched ? (t('viewer.alreadyRewardedTooltip') || 'Already rewarded - rewatching will not earn credits') : ''} disableHoverListener={!currentVideo?.is_watched}>
               <Chip
                 icon={isLoading ? <Box sx={{ animation: prefersReducedMotion ? 'none' : 'spin 1s linear infinite' }}><CheckCircle /></Box> : (currentVideo?.is_watched ? <InfoOutlined /> : <AttachMoney />)}
-                label={isLoading ? (t('viewer.loading') || 'Loading...') : `${t('currency.kwd')} ${videoReward}`}
+                label={isLoading ? (t('viewer.loading') || 'Loading...') : `${t('currency.kwd')} ${displayReward}`}
                 sx={{
                   backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : (currentVideo?.is_watched ? 'rgba(96, 125, 139, 0.9)' : (rewardEarned ? 'rgba(76, 175, 80, 0.9)' : 'rgba(26, 35, 126, 0.9)')),
                   color: 'white',
@@ -1842,7 +1855,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                 {t('viewer.loading') || 'Loading...'}
               </Box>
             ) : (
-              `+${t('currency.kwd')} ${videoReward}`
+              `+${t('currency.kwd')} ${displayReward}`
             )}
           </Typography>
           {!isLoading && (

@@ -1,3 +1,4 @@
+// ⚠️ DELEGATE ONLY — MUST NOT GRANT REWARDS
 // backend/src/controllers/walletController.js
 const { Wallet, Transaction, sequelize } = require('../models');
 const { microToKwd, kwdToMicro } = require('../constants/advertiser');
