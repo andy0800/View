@@ -12,6 +12,8 @@ import {
 import { ArrowBack } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
+import { motion } from 'framer-motion';
+import { fadeIn, motionTokens } from '../theme/motion';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import TikTokVideoPlayer from './TikTokVideoPlayer';
@@ -180,10 +182,18 @@ export default function SectionVideos() {
   }
 
   return (
-    <Box sx={{ 
-      minHeight: '100vh',
-      backgroundColor: theme.palette.background.default
-    }}>
+    <Box
+      component={motion.div}
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+      transition={{ duration: motionTokens.normal, ease: motionTokens.ease }}
+      sx={{ 
+        minHeight: '100vh',
+        backgroundColor: 'background.default',
+        backgroundImage: 'radial-gradient(circle at top, rgba(229,9,20,0.12), transparent 45%)'
+      }}
+    >
       {/* Back Button */}
       <Box sx={{ p: 3 }}>
         <Button

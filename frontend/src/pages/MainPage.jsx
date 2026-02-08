@@ -33,6 +33,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { fadeIn, motionTokens } from '../theme/motion';
 import AllAdsTab from '../components/AllAdsTab';
 import CreditBar from '../components/CreditBar';
 import api, { } from '../api';
@@ -131,11 +133,19 @@ export default function MainPage() {
   }));
 
   return (
-    <Box sx={{ 
-      minHeight: '100vh', 
-      backgroundColor: theme.palette.background.default,
-      padding: isMobile ? 2 : 4
-    }}>
+    <Box
+      component={motion.div}
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+      transition={{ duration: motionTokens.normal, ease: motionTokens.ease }}
+      sx={{ 
+        minHeight: '100vh', 
+        backgroundColor: 'background.default',
+        backgroundImage: 'radial-gradient(circle at top, rgba(229,9,20,0.12), transparent 45%)',
+        padding: isMobile ? 2 : 4
+      }}
+    >
       {/* Credit Bar - Fixed in upright corner as per app requirements */}
       <CreditBar />
       
@@ -145,7 +155,7 @@ export default function MainPage() {
           variant={isMobile ? 'h4' : 'h3'} 
           sx={{ 
             fontWeight: 700, 
-            color: theme.palette.primary.main,
+            color: 'text.primary',
             mb: 2
           }}
         >
@@ -153,7 +163,7 @@ export default function MainPage() {
         </Typography>
         <Typography 
           variant="h6" 
-          color="textSecondary"
+          color="text.secondary"
           sx={{ maxWidth: 600, mx: 'auto' }}
         >
           {t('viewer.welcomeSubtitle')}
@@ -166,10 +176,11 @@ export default function MainPage() {
         maxWidth: 600, 
         mx: 'auto', 
         mb: 4,
-        backgroundColor: 'white',
+        backgroundColor: 'background.paper',
         borderRadius: 3,
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-        overflow: 'hidden'
+        boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
+        overflow: 'hidden',
+        border: '1px solid rgba(255,255,255,0.06)'
       }}>
         <Tabs 
           value={activeTab} 
@@ -177,13 +188,14 @@ export default function MainPage() {
           variant="fullWidth"
           sx={{
             '& .MuiTab-root': {
-              fontSize: '1.1rem',
+              fontSize: '1rem',
               fontWeight: 600,
               textTransform: 'none',
-              py: 2
+              py: 2,
+              color: 'text.secondary'
             },
             '& .Mui-selected': {
-              color: theme.palette.primary.main
+              color: 'primary.main'
             }
           }}
         >
@@ -223,7 +235,7 @@ export default function MainPage() {
           
           {loading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-              <CircularProgress />
+              <CircularProgress color="primary" />
             </Box>
           ) : error ? (
             <ErrorComponent message={error} onRetry={() => {
@@ -233,10 +245,10 @@ export default function MainPage() {
             }} />
           ) : businessSections.length === 0 ? (
             <Box sx={{ textAlign: 'center', py: 4 }}>
-              <Typography variant="h6" color="textSecondary">
+              <Typography variant="h6" color="text.secondary">
                 {t('viewer.noBusinessSections')}
               </Typography>
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="body2" color="text.secondary">
                 {t('viewer.checkBackLater')}
               </Typography>
             </Box>
@@ -250,8 +262,8 @@ export default function MainPage() {
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      transform: 'translateY(-8px)',
-                      boxShadow: '0 12px 40px rgba(0,0,0,0.15)'
+                      transform: 'translateY(-6px)',
+                      boxShadow: '0 20px 50px rgba(229,9,20,0.15)'
                     }
                   }}
                   onClick={() => handleSectionClick(section.key)}
@@ -260,7 +272,7 @@ export default function MainPage() {
                     component="div"
                     sx={{
                       height: 120,
-                      backgroundColor: section.color,
+                      backgroundColor: section.color || theme.palette.primary.main,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -286,7 +298,7 @@ export default function MainPage() {
                     
                     <Typography 
                       variant="body2" 
-                      color="textSecondary" 
+                      color="text.secondary" 
                       sx={{ mb: 2, minHeight: 40 }}
                     >
                       {section.description}
@@ -300,15 +312,15 @@ export default function MainPage() {
                       size="small"
                       sx={{ 
                         fontWeight: 600,
-                        borderColor: section.color,
-                        color: section.color
+                        borderColor: section.color || theme.palette.primary.main,
+                        color: section.color || theme.palette.primary.main
                       }}
                     />
                     
                     {/* Additional Info */}
                     <Typography 
                       variant="caption" 
-                      color="textSecondary" 
+                      color="text.secondary" 
                       sx={{ 
                         display: 'block', 
                         mt: 1,
