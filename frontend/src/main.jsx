@@ -6,7 +6,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import App from './App.jsx';
 import { AppProvider } from './contexts/AppProvider.jsx';
 import './i18n.js';
-import './styles/tailwind.css';
 import './styles/rtlStyles.css';
 import './styles/arabicStyles.css';
 import './styles/fontOptimizations.css';
