@@ -1,81 +1,226 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { 
-  Box, 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Button, 
-  Container,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  useTheme,
-  useMediaQuery,
-  Avatar,
-  Chip,
-  Divider
-} from '@mui/material';
-import { keyframes } from '@mui/material/styles';
-import { 
-  Home, 
-  AccountBalance, 
-  Person, 
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Home,
+  Wallet,
+  User,
   Menu,
-  Logout,
-  VideoLibrary,
-  MonetizationOn
-} from '@mui/icons-material';
+  X,
+  LogOut,
+  Play,
+  Globe,
+  Sparkles,
+  ChevronRight
+} from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
 import CreditBar from './CreditBar';
 import LanguageSwitcher from './LanguageSwitcher';
+import { Separator } from './ui/separator';
+import { cn } from '../lib/utils';
 
+/* ──────────────────────────── Animation variants ──────────────────────────── */
+const sidebarSpring = { type: 'spring', stiffness: 300, damping: 30 };
+
+const navItemVariants = {
+  rest: { x: 0, scale: 1 },
+  hover: { x: 4, scale: 1.01, transition: { duration: 0.15 } },
+  tap: { scale: 0.97 }
+};
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06 } }
+};
+
+const staggerItem = {
+  hidden: { opacity: 0, x: -12 },
+  visible: { opacity: 1, x: 0 }
+};
+
+/* ──────────────────────────── Nav Item ──────────────────────────── */
+function SidebarNavItem({ to, icon: Icon, label, description, isRTL, onClick }) {
+  return (
+    <motion.div variants={staggerItem}>
+      <NavLink
+        to={to}
+        end={to === '/viewer'}
+        onClick={onClick}
+        className={({ isActive }) =>
+          cn(
+            'group relative flex items-center gap-3 rounded-2xl px-4 py-3.5 transition-all duration-200',
+            'hover:bg-white/[0.08]',
+            isActive
+              ? 'bg-gradient-to-r from-blue-600/25 to-blue-400/10 ring-1 ring-blue-400/30 shadow-[0_0_24px_rgba(59,130,246,0.15)]'
+              : 'bg-white/[0.03]'
+          )
+        }
+      >
+        {({ isActive }) => (
+          <>
+            {/* Active indicator bar */}
+            {isActive && (
+              <motion.span
+                layoutId="nav-indicator"
+                className={cn(
+                  'absolute top-2 bottom-2 w-1 rounded-full bg-blue-500',
+                  isRTL ? 'right-0' : 'left-0'
+                )}
+                transition={sidebarSpring}
+              />
+            )}
+
+            <div
+              className={cn(
+                'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors duration-200',
+                isActive
+                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                  : 'bg-white/10 text-white/80 group-hover:bg-white/15 group-hover:text-white'
+              )}
+            >
+              <Icon className="h-[18px] w-[18px]" strokeWidth={2} />
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-semibold leading-tight text-white truncate">
+                {label}
+              </p>
+              <p className="mt-0.5 text-[11px] leading-tight text-white/50 truncate">
+                {description}
+              </p>
+            </div>
+
+            <ChevronRight
+              className={cn(
+                'h-4 w-4 text-white/20 transition-all duration-200 group-hover:text-white/50',
+                isActive && 'text-blue-400',
+                isRTL && 'rotate-180'
+              )}
+            />
+          </>
+        )}
+      </NavLink>
+    </motion.div>
+  );
+}
+
+/* ──────────────────────────── Sidebar Content ──────────────────────────── */
+function SidebarContent({ navItems, user, isRTL, t, onLogout, onNavClick }) {
+  return (
+    <div
+      dir={isRTL ? 'rtl' : 'ltr'}
+      className={cn(
+        'relative flex h-full w-[280px] flex-col overflow-hidden',
+        'bg-gradient-to-b from-[#0c1524] via-[#0f1a2e] to-[#080d18]',
+        'text-white font-sans',
+        isRTL && 'font-arabic'
+      )}
+    >
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(59,130,246,0.18),_transparent_60%)]" />
+
+      {/* ── Brand header ── */}
+      <div className="relative px-5 pt-7 pb-5">
+        <div className="flex items-center gap-3">
+          <motion.div
+            whileHover={{ rotate: 8, scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-600 shadow-lg shadow-blue-600/30"
+          >
+            <Play className="h-5 w-5 text-white" fill="white" />
+          </motion.div>
+          <div>
+            <h2 className="text-[17px] font-bold tracking-tight">{t('viewer.view')}</h2>
+            <p className="text-[11px] font-medium text-white/50">{t('viewer.viewerDashboard')}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Earn badge ── */}
+      <div className="relative px-5 pb-4">
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          className="flex items-center gap-2 rounded-xl bg-amber-500/10 px-3.5 py-2.5 ring-1 ring-amber-400/20"
+        >
+          <Sparkles className="h-4 w-4 text-amber-400" />
+          <span className="text-xs font-semibold text-amber-300">
+            {t('viewer.earnCredits')}
+          </span>
+        </motion.div>
+      </div>
+
+      <Separator className="bg-white/[0.06]" />
+
+      {/* ── Navigation ── */}
+      <motion.nav
+        className="relative flex-1 space-y-1.5 overflow-y-auto px-3 py-4"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+      >
+        {navItems.map((item) => (
+          <SidebarNavItem
+            key={item.to}
+            {...item}
+            isRTL={isRTL}
+            onClick={onNavClick}
+          />
+        ))}
+      </motion.nav>
+
+      <Separator className="bg-white/[0.06]" />
+
+      {/* ── Footer: user + lang + logout ── */}
+      <div className="relative px-4 pb-5 pt-4 space-y-4">
+        {/* User card */}
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white shadow-lg shadow-blue-600/20">
+            {user?.name?.charAt(0)?.toUpperCase() || 'V'}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold">{user?.name || t('viewer.viewer')}</p>
+            <p className="text-[11px] text-white/40">{t('profile.viewerAccount')}</p>
+          </div>
+        </div>
+
+        {/* Language switcher */}
+        <div className="flex items-center justify-center">
+          <LanguageSwitcher variant="button" />
+        </div>
+
+        {/* Logout */}
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={onLogout}
+          className={cn(
+            'flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-4 py-2.5',
+            'text-sm font-medium text-white/80 transition-colors hover:border-white/30 hover:bg-white/[0.06] hover:text-white',
+            isRTL && 'flex-row-reverse'
+          )}
+        >
+          <LogOut className="h-4 w-4" />
+          {t('common.logout')}
+        </motion.button>
+      </div>
+    </div>
+  );
+}
+
+/* ──────────────────────────── Main Layout ──────────────────────────── */
 export default function ViewerLayout() {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const { t } = useTranslation();
   const { isRTL } = useLanguage();
 
-  // Debug mobile state
-  console.log('ViewerLayout - isMobile:', isMobile, 'mobileOpen:', mobileOpen, 'isRTL:', isRTL);
-
-  const fontStack = '"Inter", "Poppins", "Cairo", "Noto Sans Arabic", "Roboto", "Helvetica", "Arial", sans-serif';
-
-  const glow = keyframes`
-    0% { box-shadow: 0 0 0 rgba(25, 118, 210, 0.0); }
-    100% { box-shadow: 0 18px 45px rgba(25, 118, 210, 0.25); }
-  `;
-
-  const navigationItems = [
-    { 
-      to: '/viewer', 
-      label: t('navigation.home'), 
-      icon: <Home />,
-      description: t('viewer.browseSections'),
-      color: 'primary'
-    },
-    { 
-      to: '/credits', 
-      label: t('navigation.credits'), 
-      icon: <AccountBalance />,
-      description: t('viewer.earnCredits'),
-      color: 'success'
-    },
-    { 
-      to: '/profile', 
-      label: t('navigation.profile'), 
-      icon: <Person />,
-      description: t('profile.subtitle'),
-      color: 'info'
-    }
+  const navItems = [
+    { to: '/viewer', label: t('navigation.home'), description: t('viewer.browseSections'), icon: Home },
+    { to: '/credits', label: t('navigation.credits'), description: t('viewer.earnCredits'), icon: Wallet },
+    { to: '/profile', label: t('navigation.profile'), description: t('profile.subtitle'), icon: User }
   ];
 
   const handleLogout = () => {
@@ -83,287 +228,124 @@ export default function ViewerLayout() {
     navigate('/', { replace: true });
   };
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-    console.log('Toggle mobile menu:', !mobileOpen);
-  };
-
-  const drawer = (
-    <Box
-      dir={isRTL ? 'rtl' : 'ltr'}
-      sx={{ 
-        width: 296,
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        background: 'linear-gradient(180deg, #0f1a2b 0%, #0b1320 100%)',
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      <Box
-        sx={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(circle at top, rgba(25,118,210,0.25), transparent 55%)',
-          pointerEvents: 'none'
-        }}
-      />
-      {/* Header */}
-      <Box sx={{ 
-        p: 3, 
-        textAlign: isRTL ? 'right' : 'left',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
-        position: 'relative'
-      }}>
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: isRTL ? 'flex-end' : 'flex-start',
-          mb: 1.5,
-          gap: 1
-        }}>
-          <Avatar
-            sx={{
-              width: 38,
-              height: 38,
-              bgcolor: 'rgba(25,118,210,0.2)',
-              color: 'primary.main'
-            }}
-          >
-            <VideoLibrary />
-          </Avatar>
-          <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: fontStack }}>
-            {t('viewer.view')}
-          </Typography>
-        </Box>
-        <Typography variant="body2" sx={{ opacity: 0.8, fontFamily: fontStack }}>
-          {t('viewer.viewerDashboard')}
-        </Typography>
-      </Box>
-
-      {/* Navigation Items */}
-      <Box sx={{ flex: 1, p: 2, position: 'relative' }}>
-        {navigationItems.map((item) => (
-          <ListItem
-            key={item.to}
-            component={NavLink}
-            to={item.to}
-            sx={{
-              mb: 1,
-              borderRadius: 2.5,
-              color: 'white',
-              backgroundColor: 'rgba(255,255,255,0.03)',
-              textDecoration: 'none',
-              transition: 'all 180ms ease',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.08)',
-                transform: 'translateY(-1px)'
-              },
-              '&.active': {
-                backgroundColor: 'rgba(25,118,210,0.25)',
-                borderLeft: isRTL ? 'none' : '4px solid #1976d2',
-                borderRight: isRTL ? '4px solid #1976d2' : 'none',
-                animation: `${glow} 260ms ease`
-              }
-            }}
-            onClick={() => setMobileOpen(false)}
-          >
-            <ListItemIcon sx={{ color: 'white', minWidth: 40 }}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText 
-              primary={item.label}
-              secondary={item.description}
-              primaryTypographyProps={{ fontWeight: 600, fontFamily: fontStack }}
-              secondaryTypographyProps={{ fontSize: '0.75rem', opacity: 0.8, fontFamily: fontStack }}
-            />
-          </ListItem>
-        ))}
-      </Box>
-
-      {/* User Info & Logout */}
-      <Box sx={{ p: 2, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-        {/* Language Switcher for Mobile */}
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: 'center' }}>
-          <LanguageSwitcher variant="button" />
-        </Box>
-        
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <Avatar sx={{ mr: isRTL ? 0 : 2, ml: isRTL ? 2 : 0, bgcolor: 'rgba(25,118,210,0.2)', color: 'primary.main' }}>
-            <Person />
-          </Avatar>
-          <Box>
-            <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: fontStack }}>
-              {user?.name || t('viewer.viewer')}
-            </Typography>
-            <Chip 
-              label={t('profile.viewerAccount')} 
-              size="small" 
-              sx={{ 
-                bgcolor: 'rgba(255,255,255,0.12)', 
-                color: 'white',
-                fontSize: '0.7rem',
-                fontFamily: fontStack
-              }} 
-            />
-          </Box>
-        </Box>
-        
-        <Button
-          fullWidth
-          variant="outlined"
-          onClick={handleLogout}
-          startIcon={isRTL ? null : <Logout />}
-          endIcon={isRTL ? <Logout /> : null}
-          sx={{ 
-            color: 'white', 
-            borderColor: 'rgba(255,255,255,0.25)',
-            borderRadius: 2,
-            textTransform: 'none',
-            '&:hover': {
-              borderColor: 'rgba(255,255,255,0.6)',
-              backgroundColor: 'rgba(255,255,255,0.08)'
-            }
-          }}
-        >
-          {t('common.logout')}
-        </Button>
-      </Box>
-    </Box>
-  );
-
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Desktop Navigation */}
-      {!isMobile && (
-        <Box
-          component="nav"
-          sx={{
-            width: 296,
-            flexShrink: 0,
-            position: 'fixed',
-            height: '100vh',
-            zIndex: 1200,
-            right: isRTL ? 0 : 'auto',
-            left: isRTL ? 'auto' : 0
-          }}
-        >
-          {drawer}
-        </Box>
-      )}
+    <div dir={isRTL ? 'rtl' : 'ltr'} className={cn('flex min-h-screen bg-slate-50', isRTL && 'font-arabic')}>
 
-      {/* Mobile Navigation */}
-      {isMobile && (
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{ keepMounted: true }}
-          anchor={isRTL ? 'right' : 'left'}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { 
-              width: 296,
-              boxSizing: 'border-box',
-              background: 'linear-gradient(180deg, #0f1a2b 0%, #0b1320 100%)',
-              zIndex: 1300
-            }
-          }}
-        >
-          {drawer}
-        </Drawer>
-      )}
-
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          ml: { xs: 0, md: isRTL ? 0 : '296px' },
-          mr: { xs: 0, md: isRTL ? '296px' : 0 },
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
+      {/* ═══════════ Desktop sidebar ═══════════ */}
+      <aside
+        className={cn(
+          'hidden md:fixed md:inset-y-0 md:z-40 md:flex',
+          isRTL ? 'right-0' : 'left-0'
+        )}
       >
-        {/* Top App Bar */}
-        <AppBar 
-          position="sticky" 
-          sx={{ 
-            bgcolor: 'rgba(255,255,255,0.88)',
-            color: 'text.primary',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
-            backdropFilter: 'blur(14px)',
-            zIndex: 1100
-          }}
-        >
-          <Toolbar sx={{ gap: 2 }}>
-            {isMobile && (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge={isRTL ? 'end' : 'start'}
-                onClick={handleDrawerToggle}
-                sx={{ mr: isRTL ? 0 : 2, ml: isRTL ? 2 : 0, display: { xs: 'flex', md: 'none' } }}
-              >
-                <Menu />
-              </IconButton>
-            )}
-            
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
-                <VideoLibrary sx={{ fontSize: 18 }} />
-              </Avatar>
-              <Typography variant="h6" component="div" sx={{ fontWeight: 700, fontFamily: fontStack }}>
-                {t('viewer.viewerDashboard')}
-              </Typography>
-            </Box>
+        <SidebarContent
+          navItems={navItems}
+          user={user}
+          isRTL={isRTL}
+          t={t}
+          onLogout={handleLogout}
+          onNavClick={() => {}}
+        />
+      </aside>
 
-            <Box sx={{ flexGrow: 1 }} />
-
-            {!isMobile && (
-              <Chip
-                icon={<MonetizationOn />}
-                label={t('viewer.earnCredits')}
-                sx={{
-                  bgcolor: 'rgba(25,118,210,0.1)',
-                  color: 'primary.main',
-                  borderRadius: 2,
-                  fontWeight: 600,
-                  fontFamily: fontStack
-                }}
+      {/* ═══════════ Mobile overlay + drawer ═══════════ */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              key="overlay"
+              className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+            />
+            <motion.aside
+              key="drawer"
+              className={cn('fixed inset-y-0 z-50 md:hidden', isRTL ? 'right-0' : 'left-0')}
+              initial={{ x: isRTL ? 300 : -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: isRTL ? 300 : -300 }}
+              transition={sidebarSpring}
+            >
+              <SidebarContent
+                navItems={navItems}
+                user={user}
+                isRTL={isRTL}
+                t={t}
+                onLogout={handleLogout}
+                onNavClick={() => setMobileOpen(false)}
               />
-            )}
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
 
-            {/* Credit Balance Display */}
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <CreditBar />
-            </Box>
+      {/* ═══════════ Main column ═══════════ */}
+      <div className={cn('flex min-h-screen flex-1 flex-col', isRTL ? 'md:mr-[280px]' : 'md:ml-[280px]')}>
 
-            {/* Language Switcher */}
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <LanguageSwitcher variant="icon" />
-            </Box>
+        {/* ── Sticky header bar ── */}
+        <motion.header
+          className="sticky top-0 z-30 border-b border-slate-200/60 bg-white/80 backdrop-blur-xl"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="flex items-center gap-3 px-4 py-3 md:px-6">
 
-            {/* User Info */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Avatar sx={{ bgcolor: 'primary.main' }}>
-                {user?.name?.charAt(0) || 'V'}
-              </Avatar>
-              <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: fontStack }}>
-                {user?.name || t('viewer.viewer')}
-              </Typography>
-            </Box>
-          </Toolbar>
-        </AppBar>
+            {/* Mobile hamburger */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm md:hidden"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5 text-slate-700" />
+            </motion.button>
 
-        {/* Page Content */}
-        <Box sx={{ flex: 1, p: { xs: 2, md: 3 } }}>
+            {/* Brand mark (small) */}
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shadow-md shadow-blue-600/20">
+                <Play className="h-3.5 w-3.5" fill="white" />
+              </div>
+              <div className="hidden sm:block">
+                <p className="text-sm font-bold text-slate-800">{t('viewer.viewerDashboard')}</p>
+              </div>
+            </div>
+
+            {/* Spacer */}
+            <div className="flex-1" />
+
+            {/* Desktop earn badge */}
+            <div className="hidden lg:flex items-center">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+                <Sparkles className="h-3.5 w-3.5" />
+                {t('viewer.earnCredits')}
+              </span>
+            </div>
+
+            {/* Credit bar */}
+            <CreditBar />
+
+            {/* Language */}
+            <LanguageSwitcher variant="icon" />
+
+            {/* User avatar */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white shadow-md shadow-blue-600/20 cursor-default"
+              title={user?.name || ''}
+            >
+              {user?.name?.charAt(0)?.toUpperCase() || 'V'}
+            </motion.div>
+          </div>
+        </motion.header>
+
+        {/* ── Page content ── */}
+        <main className="flex-1 px-4 py-5 md:px-6 md:py-6">
           <Outlet />
-        </Box>
-      </Box>
-    </Box>
+        </main>
+      </div>
+    </div>
   );
 }

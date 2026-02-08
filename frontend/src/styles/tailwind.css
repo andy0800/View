@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: "Inter", "Poppins", "Cairo", "Noto Sans Arabic", "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+  [dir="rtl"],
+  [lang="ar"] {
+    font-family: "Cairo", "Tajawal", "Noto Sans Arabic", "Amiri", sans-serif;
+  }
+}
