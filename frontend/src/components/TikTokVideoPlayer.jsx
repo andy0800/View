@@ -1,33 +1,31 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { 
   Box, 
-  IconButton, 
-  Typography, 
-  LinearProgress,
-  Button,
-  Chip,
-  Tooltip,
   Snackbar,
   Alert
 } from '@mui/material';
-import { 
-  PlayArrow, 
-  SkipNext, 
-  VolumeUp, 
-  VolumeOff,
-  Fullscreen,
-  AttachMoney,
-  Business,
-  CheckCircle,
-  ChatBubbleOutline,
-  OpenInNew,
-  InfoOutlined,
-  Visibility,
-  Lock
-} from '@mui/icons-material';
+import { CheckCircle } from '@mui/icons-material';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Play,
+  SkipForward,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  DollarSign,
+  Building2,
+  CheckCircle2,
+  MessageCircle,
+  ExternalLink,
+  Info,
+  Eye,
+  Lock,
+  Loader2
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import CommentSection from './CommentSection';
+import { cn } from '../lib/utils';
 
 import { startWatchingAd, completeWatchingAd } from '../api/viewer';
 import api from '../api';
@@ -53,30 +51,20 @@ class VideoPlayerErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '60vh',
-          backgroundColor: '#000',
-          color: 'white',
-          padding: '20px'
-        }}>
-          <Typography variant="h5" component="div" sx={{ mb: 2, color: '#ff6b6b' }}>
+        <div className="flex min-h-[60vh] flex-col items-center justify-center bg-black p-5 text-white">
+          <p className="mb-2 text-xl font-bold text-red-400">
             {this.props.t?.('viewer.errorOccurred') || 'Something went wrong'}
-          </Typography>
-          <Typography variant="body1" component="div" sx={{ mb: 3, textAlign: 'center' }}>
+          </p>
+          <p className="mb-4 text-center text-sm text-white/70">
             {this.props.t?.('viewer.videoPlayerError') || 'The video player encountered an error. Please refresh the page to try again.'}
-          </Typography>
-          <Button
-            variant="contained"
+          </p>
+          <button
             onClick={() => window.location.reload()}
-            sx={{ backgroundColor: '#4CAF50' }}
+            className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             {this.props.t?.('common.refresh') || 'Refresh Page'}
-          </Button>
-        </Box>
+          </button>
+        </div>
       );
     }
 
@@ -867,32 +855,20 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
 
   if (!currentVideo) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-        <Typography variant="h6" component="div" color="textSecondary">
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-lg font-semibold text-slate-400">
           {t('common.noVideosAvailable')}
-        </Typography>
-      </Box>
+        </p>
+      </div>
     );
   }
 
   return (
     <VideoPlayerErrorBoundary t={t}>
       <style>{creditBarStyles}</style>
-      <Box sx={{ 
-        position: 'relative', 
-        height: '100vh', '@media (min-width: 600px)': { height: '100vh' }, '@media (min-width: 960px)': { height: '100vh' },
-        backgroundColor: '#000',
-        overflow: 'hidden'
-      }}>
+      <div className="relative h-screen w-full overflow-hidden bg-black">
       {/* Main Video Player */}
-      <Box sx={{ 
-        position: 'relative', 
-        height: '100%', 
-        display: 'flex', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%'
-      }}>
+      <div className="relative flex h-full w-full items-center justify-center">
         {currentVideo && currentVideo.mediaUrl && (
           <video
             ref={videoRef}
@@ -962,429 +938,221 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
         </div>
         
         {/* Video Loading Overlay */}
-        {isVideoLoading && (
-          <Box sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 15,
-            textAlign: 'center',
-            color: 'white',
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            padding: '16px', '@media (min-width: 600px)': { padding: '18px' }, '@media (min-width: 960px)': { padding: '20px' },
-            borderRadius: '8px', '@media (min-width: 600px)': { borderRadius: '9px' }, '@media (min-width: 960px)': { borderRadius: '10px' },
-            width: '90vw', '@media (min-width: 600px)': { width: '85vw' }, '@media (min-width: 960px)': { width: 'auto' },
-            maxWidth: '350px', '@media (min-width: 600px)': { maxWidth: '400px' }, '@media (min-width: 960px)': { maxWidth: 'none' }
-          }}>
-            <Box sx={{ animation: 'spin 1s linear infinite', mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } }}>
-              <PlayArrow sx={{ 
-                fontSize: 32, 
-                color: '#4CAF50',
-                '@media (min-width: 600px)': { fontSize: 36 },
-                '@media (min-width: 960px)': { fontSize: 40 }
-              }} />
-            </Box>
-            <Typography variant="h6" component="div" sx={{ 
-              color: 'white',
-              fontSize: '1rem',
-              '@media (min-width: 600px)': { fontSize: '1.125rem' },
-              '@media (min-width: 960px)': { fontSize: '1.25rem' }
-            }}>
-              {t('viewer.loadingVideo') || 'Loading Video...'}
-            </Typography>
-          </Box>
-        )}
+        <AnimatePresence>
+          {isVideoLoading && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="absolute left-1/2 top-1/2 z-[15] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black/80 px-6 py-5 text-center backdrop-blur-sm"
+            >
+              <Loader2 className="mx-auto mb-3 h-8 w-8 animate-spin text-blue-500 md:h-10 md:w-10" />
+              <p className="text-sm font-semibold text-white md:text-base">
+                {t('viewer.loadingVideo') || 'Loading Video...'}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
         
         {/* General Loading Overlay */}
-        {isLoading && (
-          <Box sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 20,
-            textAlign: 'center',
-            color: 'white',
-            backgroundColor: 'rgba(0,0,0,0.9)',
-            padding: '16px', '@media (min-width: 600px)': { padding: '18px' }, '@media (min-width: 960px)': { padding: '20px' },
-            borderRadius: '8px', '@media (min-width: 600px)': { borderRadius: '9px' }, '@media (min-width: 960px)': { borderRadius: '10px' },
-            width: '90vw', '@media (min-width: 600px)': { width: '85vw' }, '@media (min-width: 960px)': { width: 'auto' },
-            maxWidth: '350px', '@media (min-width: 600px)': { maxWidth: '400px' }, '@media (min-width: 960px)': { maxWidth: 'none' }
-          }}>
-            <Box sx={{ animation: 'spin 1s linear infinite', mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } }}>
-              <CheckCircle sx={{ 
-                fontSize: 32, '@media (min-width: 600px)': { fontSize: 36 }, '@media (min-width: 960px)': { fontSize: 40 }, 
-                color: '#4CAF50' 
-              }} />
-            </Box>
-            <Typography variant="h6" component="div" sx={{ 
-              color: 'white',
-              fontSize: '1rem', '@media (min-width: 600px)': { fontSize: '1.125rem' }, '@media (min-width: 960px)': { fontSize: '1.25rem' }
-            }}>
-              {t('viewer.processing') || 'Processing...'}
-            </Typography>
-            <Typography variant="body2" component="div" sx={{ 
-              color: 'rgba(255,255,255,0.8)',
-              fontSize: '0.75rem', '@media (min-width: 600px)': { fontSize: '0.8125rem' }, '@media (min-width: 960px)': { fontSize: '0.875rem' }
-            }}>
-              {t('viewer.pleaseWait') || 'Please wait while we prepare your video'}
-            </Typography>
-          </Box>
-        )}
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black/90 px-6 py-5 text-center backdrop-blur-sm"
+            >
+              <Loader2 className="mx-auto mb-3 h-8 w-8 animate-spin text-blue-500 md:h-10 md:w-10" />
+              <p className="text-sm font-semibold text-white md:text-base">
+                {t('viewer.processing') || 'Processing...'}
+              </p>
+              <p className="mt-1 text-xs text-white/70">
+                {t('viewer.pleaseWait') || 'Please wait while we prepare your video'}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
         
         {/* Video Overlay */}
-        <Box sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: isLoading ? 
-            'linear-gradient(180deg, rgba(76, 175, 80, 0.2) 0%, transparent 20%, transparent 80%, rgba(76, 175, 80, 0.2) 100%)' :
-            'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.3) 100%)',
-          pointerEvents: 'none',
-          transition: 'background 0.3s ease'
-        }} />
-
-        {/* Progress Bar - Back to Original Position */}
-        <Box sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '4px',
-          backgroundColor: 'rgba(255,255,255,0.3)'
-        }}>
-          <LinearProgress
-            variant={isLoading ? "indeterminate" : "determinate"}
-            value={isLoading ? undefined : progress}
-            sx={{
-              height: '100%',
-              backgroundColor: 'transparent',
-              '& .MuiLinearProgress-bar': {
-                backgroundColor: isLoading ? '#4CAF50' : (currentVideo?.is_watched ? '#2196F3' : (rewardEarned ? '#4CAF50' : '#1a237e'))
-              }
-            }}
-          />
-          {canSkip && (
-            <Box sx={{
-              position: 'absolute',
-              top: '-3px',
-              right: '-3px',
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              backgroundColor: '#4CAF50',
-              boxShadow: '0 0 8px rgba(76,175,80,0.8)'
-            }} />
+        <div
+          className={cn(
+            'pointer-events-none absolute inset-0 transition-all duration-300',
+            isLoading
+              ? 'bg-gradient-to-b from-blue-500/20 via-transparent to-blue-500/20'
+              : 'bg-gradient-to-b from-black/30 via-transparent to-black/30'
           )}
-        </Box>
+        />
+
+        {/* Progress Bar */}
+        <div className="absolute left-0 right-0 top-0 h-1 bg-white/20">
+          {isLoading ? (
+            <div className="h-full w-full animate-pulse bg-blue-500/60" />
+          ) : (
+            <motion.div
+              className={cn(
+                'h-full',
+                currentVideo?.is_watched ? 'bg-sky-500' : rewardEarned ? 'bg-emerald-500' : 'bg-blue-600'
+              )}
+              style={{ width: `${progress}%` }}
+              transition={{ duration: 0.1 }}
+            />
+          )}
+          {canSkip && (
+            <div className="absolute -right-1 -top-[3px] h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+          )}
+        </div>
 
         {/* Video Info Overlay */}
-        <Box sx={{
-          position: 'absolute',
-          bottom: 20,
-          left: 20,
-          right: 20,
-          color: 'white',
-          zIndex: 10
-        }}>
-          <Typography variant="h6" component="div" sx={{ fontWeight: 700, mb: 1, textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
+        <div className="absolute bottom-5 left-5 right-5 z-10 text-white">
+          <h3 className="mb-1.5 text-lg font-bold drop-shadow-lg md:text-xl">
             {isLoading ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle sx={{ fontSize: 16 }} />
-                </Box>
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
                 {t('viewer.loading') || 'Loading...'}
-              </Box>
+              </span>
             ) : (
               currentVideo.title || currentVideo.id
             )}
-          </Typography>
-          
-          <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, mb: 2, background: 'rgba(0,0,0,0.35)', borderRadius: '10px', padding: '6px 10px' }}>
-            <Business sx={{ fontSize: 16 }} />
-            <Box>
-              {isLoading ? (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                    <CheckCircle sx={{ fontSize: 12 }} />
-                  </Box>
-                  <Typography variant="body2" component="span">
-                    {t('viewer.loading') || 'Loading...'}
-                  </Typography>
-                </Box>
-              ) : (
-                <Typography variant="body2" component="span">
-                  {currentVideo.section || t('viewer.businessSection')}
-                </Typography>
-              )}
-            </Box>
-          </Box>
+          </h3>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Tooltip title={currentVideo?.is_watched ? (t('viewer.alreadyRewardedTooltip') || 'Already rewarded - rewatching will not earn credits') : ''} disableHoverListener={!currentVideo?.is_watched}>
-              <Chip
-                icon={isLoading ? <Box sx={{ animation: prefersReducedMotion ? 'none' : 'spin 1s linear infinite' }}><CheckCircle /></Box> : (currentVideo?.is_watched ? <InfoOutlined /> : <AttachMoney />)}
-                label={isLoading ? (t('viewer.loading') || 'Loading...') : `${t('currency.kwd')} ${displayReward}`}
-                sx={{
-                  backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : (currentVideo?.is_watched ? 'rgba(96, 125, 139, 0.9)' : (rewardEarned ? 'rgba(76, 175, 80, 0.9)' : 'rgba(26, 35, 126, 0.9)')),
-                  color: 'white',
-                  fontWeight: 600
-                }}
-              />
-            </Tooltip>
-            
-            <Typography variant="body2" component="div" sx={{ opacity: 0.8 }}>
-            {isLoading ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle sx={{ fontSize: 12 }} />
-                </Box>
-                {t('viewer.loading') || 'Loading...'}
-              </Box>
-            ) : (
-              formatDuration(currentVideo.package?.duration || currentVideo.duration || 10)
+          <div className="mb-3 inline-flex items-center gap-2 rounded-xl bg-black/40 px-3 py-1.5 backdrop-blur-sm">
+            <Building2 className="h-4 w-4" />
+            <span className="text-xs">
+              {isLoading ? (t('viewer.loading') || 'Loading...') : (currentVideo.section || t('viewer.businessSection'))}
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Reward badge */}
+            <span
+              className={cn(
+                'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white',
+                isLoading ? 'bg-gray-500/90' : currentVideo?.is_watched ? 'bg-slate-500/90' : rewardEarned ? 'bg-emerald-600/90' : 'bg-blue-700/90'
+              )}
+              title={currentVideo?.is_watched ? (t('viewer.alreadyRewardedTooltip') || 'Already rewarded') : ''}
+            >
+              {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : currentVideo?.is_watched ? <Info className="h-3 w-3" /> : <DollarSign className="h-3 w-3" />}
+              {isLoading ? (t('viewer.loading') || 'Loading...') : `${t('currency.kwd')} ${displayReward}`}
+            </span>
+
+            {/* Duration */}
+            <span className="text-xs text-white/70">
+              {isLoading ? '...' : formatDuration(currentVideo.package?.duration || currentVideo.duration || 10)}
+            </span>
+
+            {/* Watched indicator */}
+            {!isLoading && currentVideo?.is_watched && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-sky-500/90 px-2.5 py-0.5 text-[10px] font-semibold text-white">
+                <CheckCircle2 className="h-3 w-3" />
+                {t('viewer.alreadyWatched') || 'WATCHED'}
+              </span>
             )}
-            </Typography>
-            
-          {/* Watched Status Indicator */}
-          {!isLoading && currentVideo?.is_watched && (
-            <Tooltip title={t('viewer.alreadyRewardedTooltip') || 'You have already been rewarded for this ad'}>
-              <Chip
-                icon={<CheckCircle />}
-                label={t('viewer.alreadyWatched') || 'WATCHED · no reward'}
-                sx={{
-                  backgroundColor: 'rgba(33, 150, 243, 0.9)',
-                  color: 'white',
-                  fontWeight: 600,
-                  fontSize: '0.75rem'
-                }}
-              />
-            </Tooltip>
-          )}
-            
-            {/* Loading Status Indicator */}
+
+            {/* Loading indicator */}
             {isLoading && (
-              <Chip
-                icon={<Box sx={{ animation: 'spin 1s linear infinite' }}><CheckCircle /></Box>}
-                label={t('viewer.loading') || 'Loading...'}
-                sx={{
-                  backgroundColor: 'rgba(128, 128, 128, 0.9)',
-                  color: 'white',
-                  fontWeight: 600,
-                  fontSize: '0.75rem'
-                }}
-              />
+              <span className="inline-flex items-center gap-1 rounded-full bg-gray-500/90 px-2.5 py-0.5 text-[10px] font-semibold text-white">
+                <Loader2 className="h-3 w-3 animate-spin" />
+                {t('viewer.loading') || 'Loading...'}
+              </span>
             )}
-          </Box>
-        </Box>
+          </div>
+        </div>
 
         {/* Control Buttons */}
-        <Box sx={{
-          position: 'absolute',
-          right: 20,
-          bottom: 120,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          zIndex: 10
-        }}>
-          <IconButton
+        <div className="absolute bottom-[120px] right-5 z-10 flex flex-col gap-3">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
             onClick={toggleMute}
             disabled={isLoading}
             aria-label={isMuted ? (t('viewer.unmute') || 'Unmute video') : (t('viewer.mute') || 'Mute video')}
-            sx={{
-              backgroundColor: isLoading ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.5)',
-              color: 'white',
-              '&:hover': { backgroundColor: isLoading ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.7)' },
-              '&:disabled': {
-                backgroundColor: 'rgba(0,0,0,0.3)',
-                cursor: 'not-allowed'
-              }
-            }}
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition hover:bg-black/70 disabled:cursor-not-allowed disabled:bg-black/30"
           >
-            {isLoading ? (
-              <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                <CheckCircle />
-              </Box>
-            ) : (
-              isMuted ? <VolumeOff /> : <VolumeUp />
-            )}
-          </IconButton>
+            {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+          </motion.button>
 
-          <IconButton
+          <motion.button
+            whileTap={{ scale: 0.9 }}
             onClick={() => navigate(`/viewer/ad/${currentVideo.id}`)}
             disabled={isLoading}
             aria-label={t('viewer.fullscreen') || 'Open video in fullscreen'}
-            sx={{
-              backgroundColor: isLoading ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.5)',
-              color: 'white',
-              '&:hover': { backgroundColor: isLoading ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.7)' },
-              '&:disabled': {
-                backgroundColor: 'rgba(0,0,0,0.3)',
-                cursor: 'not-allowed'
-              }
-            }}
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition hover:bg-black/70 disabled:cursor-not-allowed disabled:bg-black/30"
           >
-            {isLoading ? (
-              <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                <CheckCircle />
-              </Box>
-            ) : (
-              <Fullscreen />
-            )}
-          </IconButton>
-        </Box>
+            {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Maximize2 className="h-5 w-5" />}
+          </motion.button>
+        </div>
 
         {/* Navigation Buttons */}
-        <Box sx={{
-          position: 'absolute',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-          display: 'flex',
-          gap: 4,
-          zIndex: 10
-        }}>
-          {/* Loading Overlay for Navigation */}
+        <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 gap-6">
           {isLoading && (
-            <Box sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              backgroundColor: 'rgba(0,0,0,0.8)',
-              color: 'white',
-              padding: '8px 16px',
-              borderRadius: '20px',
-              fontSize: '0.8rem',
-              zIndex: 15
-            }}>
+            <div className="absolute left-1/2 top-1/2 z-[15] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/80 px-4 py-2 text-xs text-white">
               {t('viewer.loading') || 'Loading...'}
-            </Box>
+            </div>
           )}
           {currentVideoIndex > 0 && (
-            <IconButton
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={handlePreviousVideo}
               disabled={isLoading}
               aria-label={t('viewer.previousVideo') || 'Go to previous video'}
-              sx={{
-                backgroundColor: isLoading ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.5)',
-                color: 'white',
-                '&:hover': { backgroundColor: isLoading ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.7)' },
-                '&:disabled': {
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  cursor: 'not-allowed'
-                }
-              }}
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition hover:bg-black/70 disabled:cursor-not-allowed disabled:bg-black/30"
             >
-              {isLoading ? (
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle sx={{ transform: 'rotate(180deg)', fontSize: 20 }} />
-                </Box>
-              ) : (
-                <SkipNext sx={{ transform: 'rotate(180deg)' }} />
-              )}
-            </IconButton>
+              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <SkipForward className="h-5 w-5 rotate-180" />}
+            </motion.button>
           )}
 
           {canSkip && currentVideoIndex < videos.length - 1 && (
-            <IconButton
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
               onClick={handleNextVideo}
               disabled={isProcessingReward}
               aria-label={t('viewer.nextVideo') || 'Go to next video'}
-              sx={{
-                backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : 'rgba(76, 175, 80, 0.9)',
-                color: 'white',
-                width: 80,
-                height: 80,
-                '&:hover': { backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : 'rgba(76, 175, 80, 1)' },
-                '&:disabled': {
-                  backgroundColor: 'rgba(128, 128, 128, 0.9)',
-                  cursor: 'not-allowed'
-                }
-              }}
+              className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg shadow-blue-600/40 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-500"
             >
-              {isLoading ? (
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle sx={{ fontSize: 40 }} />
-                </Box>
-              ) : (
-                <SkipNext sx={{ fontSize: 40 }} />
-              )}
-            </IconButton>
+              {isLoading ? <Loader2 className="h-10 w-10 animate-spin" /> : <SkipForward className="h-10 w-10" />}
+            </motion.button>
           )}
-        </Box>
+        </div>
 
         {/* Prominent Next Button After Completion - RANDOM POSITION */}
-        {canSkip && (
-          <Box sx={{
-            position: 'absolute',
-            top: nextButtonPosition.top,        // ✅ NEW: Random vertical position
-            left: nextButtonPosition.left,      // ✅ NEW: Random horizontal position
-            transform: 'translate(-50%, -50%)', // Center button on the random point
-            zIndex: 15,
-            width: 'auto',
-            transition: 'all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)', // ✅ NEW: Bounce-in effect
-            animation: 'fadeInBounce 0.6s ease-out', // ✅ NEW: Entrance animation
-          }}>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => {
-                if (process.env.NODE_ENV === 'development') {
-                  devLog('🎯 NEXT button clicked!');
-                  devLog('🔍 Button state - canSkip:', canSkip, 'rewardEarned:', rewardEarned, 'currentVideoIndex:', currentVideoIndex);
-                }
-                handleNextVideo();
-              }}
-              startIcon={isLoading ? (
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle />
-                </Box>
-              ) : (
-                <SkipNext />
-              )}
-              disabled={isProcessingReward}
-              aria-label={t('viewer.nextVideo') || 'Continue to next video'}
-              sx={{
-                backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(76, 175, 80, 0.98)',
-                color: 'white',
-                fontWeight: 700,
-                fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
-                px: { xs: 3, sm: 3.5, md: 4 },
-                py: { xs: 1.5, sm: 1.75, md: 2 },
-                borderRadius: { xs: 2.5, sm: 2.75, md: 3 },
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                boxShadow: isLoading ? 'none' : '0 0 30px rgba(76, 175, 80, 0.7), 0 8px 32px rgba(76, 175, 80, 0.5)',
-                minHeight: { xs: '54px', sm: '58px', md: '62px' },
-                minWidth: { xs: '140px', sm: '160px', md: '180px' },
-                animation: isLoading ? 'none' : 'pulseGlow 2s ease-in-out infinite', // ✅ NEW: Pulsing glow
-                border: '2px solid rgba(255, 255, 255, 0.4)', // ✅ NEW: White border for visibility
-                backdropFilter: 'blur(4px)', // ✅ NEW: Blur background for visibility
-                '&:hover': {
-                  backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(76, 175, 80, 1)',
-                  transform: isLoading ? 'none' : 'scale(1.08)',
-                  boxShadow: isLoading ? 'none' : '0 0 40px rgba(76, 175, 80, 0.9), 0 12px 40px rgba(76, 175, 80, 0.7)',
-                  border: '2px solid rgba(255, 255, 255, 0.6)',
-                },
-                '&:active': {
-                  transform: 'scale(0.98)',
-                },
-                '&:disabled': {
-                  backgroundColor: 'rgba(128, 128, 128, 0.95)',
-                  cursor: 'not-allowed',
-                  animation: 'none',
-                }
-              }}
+        <AnimatePresence>
+          {canSkip && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.3 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.3 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+              className="absolute z-[15]"
+              style={{ top: nextButtonPosition.top, left: nextButtonPosition.left, transform: 'translate(-50%, -50%)' }}
             >
-              {isLoading ? (t('viewer.loading') || 'Loading...') : (currentVideoIndex < videos.length - 1 ? (t('viewer.nextVideo') || 'NEXT') : (t('viewer.complete') || 'COMPLETE'))}
-            </Button>
-          </Box>
-        )}
+              <motion.button
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                animate={isLoading ? {} : { boxShadow: ['0 0 20px rgba(37,99,235,0.5)', '0 0 40px rgba(37,99,235,0.8)', '0 0 20px rgba(37,99,235,0.5)'] }}
+                transition={isLoading ? {} : { duration: 2, repeat: Infinity }}
+                onClick={() => {
+                  if (process.env.NODE_ENV === 'development') {
+                    devLog('🎯 NEXT button clicked!');
+                    devLog('🔍 Button state - canSkip:', canSkip, 'rewardEarned:', rewardEarned, 'currentVideoIndex:', currentVideoIndex);
+                  }
+                  handleNextVideo();
+                }}
+                disabled={isProcessingReward}
+                aria-label={t('viewer.nextVideo') || 'Continue to next video'}
+                className={cn(
+                  'flex items-center gap-2 rounded-2xl border-2 border-white/40 px-6 py-3 text-base font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-colors md:px-8 md:py-4 md:text-lg',
+                  isLoading ? 'bg-gray-500/90' : 'bg-blue-600/95 hover:bg-blue-700',
+                  'disabled:cursor-not-allowed disabled:bg-gray-500/90',
+                  'min-h-[54px] min-w-[140px] md:min-h-[62px] md:min-w-[180px]'
+                )}
+              >
+                {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <SkipForward className="h-5 w-5" />}
+                {isLoading ? (t('viewer.loading') || 'Loading...') : (currentVideoIndex < videos.length - 1 ? (t('viewer.nextVideo') || 'NEXT') : (t('viewer.complete') || 'COMPLETE'))}
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
         
         {/* Debug Info - Only in Development */}
         {process.env.NODE_ENV === 'development' && (
@@ -1426,653 +1194,217 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
         )}
 
         {/* Play/Pause Button */}
-        {!isPlaying && (
-          <Box sx={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 10
-          }}>
-            <IconButton
-              onClick={togglePlayPause}
-              disabled={isLoading}
-              aria-label={t('viewer.playVideo') || 'Play video'}
-              sx={{
-                backgroundColor: isLoading ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.7)',
-                color: 'white',
-                width: 80,
-                height: 80,
-                '&:hover': { backgroundColor: isLoading ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.9)' },
-                '&:disabled': {
-                  backgroundColor: 'rgba(0,0,0,0.4)',
-                  cursor: 'not-allowed'
-                }
-              }}
+        <AnimatePresence>
+          {!isPlaying && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
             >
-              {isLoading ? (
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle sx={{ fontSize: 40 }} />
-                </Box>
-              ) : (
-                <PlayArrow sx={{ fontSize: 40 }} />
-              )}
-            </IconButton>
-          </Box>
-        )}
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={togglePlayPause}
+                disabled={isLoading}
+                aria-label={t('viewer.playVideo') || 'Play video'}
+                className="flex h-20 w-20 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-sm transition hover:bg-black/90 disabled:cursor-not-allowed disabled:bg-black/40"
+              >
+                {isLoading ? <Loader2 className="h-10 w-10 animate-spin" /> : <Play className="h-10 w-10" fill="white" />}
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Loading Overlay for Reward Processing */}
-        {isProcessingReward && (
-          <Box sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 25,
-            textAlign: 'center',
-            color: 'white',
-            backgroundColor: 'rgba(0,0,0,0.9)',
-            padding: '16px',
-            borderRadius: '8px',
-            width: '90vw',
-            maxWidth: '350px',
-            '@media (min-width: 600px)': {
-              padding: '18px',
-              borderRadius: '9px',
-              width: '85vw',
-              maxWidth: '400px'
-            },
-            '@media (min-width: 960px)': {
-              padding: '20px',
-              borderRadius: '10px',
-              width: 'auto',
-              maxWidth: 'none'
-            }
-          }}>
-            <Box sx={{ animation: 'spin 1s linear infinite', mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } }}>
-              <CheckCircle sx={{ 
-                fontSize: 32, '@media (min-width: 600px)': { fontSize: 36 }, '@media (min-width: 960px)': { fontSize: 40 }, 
-                color: '#4CAF50' 
-              }} />
-            </Box>
-            <Typography variant="h6" component="div" sx={{ 
-              color: 'white',
-              fontSize: '1rem', '@media (min-width: 600px)': { fontSize: '1.125rem' }, '@media (min-width: 960px)': { fontSize: '1.25rem' }
-            }}>
-              {t('viewer.processingReward') || 'Processing Reward...'}
-            </Typography>
-            <Typography variant="body2" component="div" sx={{ 
-              color: 'rgba(255,255,255,0.8)',
-              fontSize: '0.75rem', '@media (min-width: 600px)': { fontSize: '0.8125rem' }, '@media (min-width: 960px)': { fontSize: '0.875rem' }
-            }}>
-              {t('viewer.pleaseWait') || 'Please wait while we process your reward'}
-            </Typography>
-          </Box>
-        )}
+        <AnimatePresence>
+          {isProcessingReward && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="absolute left-1/2 top-1/2 z-[25] w-[90vw] max-w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black/90 p-5 text-center backdrop-blur md:w-auto md:max-w-none"
+            >
+              <Loader2 className="mx-auto mb-3 h-8 w-8 animate-spin text-blue-500 md:h-10 md:w-10" />
+              <p className="text-sm font-semibold text-white md:text-base">
+                {t('viewer.processingReward') || 'Processing Reward...'}
+              </p>
+              <p className="mt-1 text-xs text-white/70">
+                {t('viewer.pleaseWait') || 'Please wait while we process your reward'}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Reward Completion Indicator */}
-        {rewardEarned && !isProcessingReward && (
-          <Box sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 20,
-            textAlign: 'center',
-            color: 'white',
-            width: '95vw', '@media (min-width: 600px)': { width: '90vw' }, '@media (min-width: 960px)': { width: 'auto' },
-            maxWidth: '400px', '@media (min-width: 600px)': { maxWidth: '450px' }, '@media (min-width: 960px)': { maxWidth: 'none' }
-          }}>
-            <CheckCircle sx={{ 
-              fontSize: 60, '@media (min-width: 600px)': { fontSize: 70 }, '@media (min-width: 960px)': { fontSize: 80 }, 
-              color: '#4CAF50', 
-              mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } 
-            }} />
-            <Typography variant="h5" component="div" sx={{ 
-              fontWeight: 700, 
-              mb: 1, '@media (min-width: 600px)': { mb: 1.25 }, '@media (min-width: 960px)': { mb: 1 },
-              fontSize: '1.25rem', '@media (min-width: 600px)': { fontSize: '1.5rem' }, '@media (min-width: 960px)': { fontSize: '1.5rem' }
-            }}>
-              {t('viewer.videoCompleted')}
-            </Typography>
-            <Typography variant="h6" component="div" sx={{ 
-              color: '#4CAF50', 
-              mb: 1, '@media (min-width: 600px)': { mb: 1.25 }, '@media (min-width: 960px)': { mb: 1 },
-              fontSize: '1.125rem', '@media (min-width: 600px)': { fontSize: '1.25rem' }, '@media (min-width: 960px)': { fontSize: '1.25rem' }
-            }}>
-              +{t('currency.kwd')} {rewardAmount.toFixed(6)}
-            </Typography>
-            <Typography variant="body1" component="div" sx={{ 
-              color: '#4CAF50', 
-              opacity: 0.9,
-              fontSize: '0.875rem', '@media (min-width: 600px)': { fontSize: '0.9375rem' }, '@media (min-width: 960px)': { fontSize: '1rem' }
-            }}>
-              (+{(rewardAmount * 1000).toFixed(0)} {t('currency.fils')})
-            </Typography>
-            
-            {/* ✅ ADDED: Next button instruction */}
-            <Box sx={{ 
-              mt: 2, '@media (min-width: 600px)': { mt: 2.5 }, '@media (min-width: 960px)': { mt: 3 }, 
-              p: 1.5, '@media (min-width: 600px)': { p: 1.75 }, '@media (min-width: 960px)': { p: 2 }, 
-              backgroundColor: 'rgba(0,0,0,0.8)', 
-              borderRadius: 1.5, '@media (min-width: 600px)': { borderRadius: 1.75 }, '@media (min-width: 960px)': { borderRadius: 2 } 
-            }}>
-              <Typography variant="body1" component="div" sx={{ 
-                color: 'white', 
-                mb: 0.75, '@media (min-width: 600px)': { mb: 1 }, '@media (min-width: 960px)': { mb: 1 },
-                fontSize: '0.875rem', '@media (min-width: 600px)': { fontSize: '1rem' }, '@media (min-width: 960px)': { fontSize: '1rem' }
-              }}>
-                🎯 {t('viewer.rewardEarned') || 'Reward Earned!'}
-              </Typography>
-              <Typography variant="body2" component="div" sx={{ 
-                color: 'rgba(255,255,255,0.8)',
-                fontSize: '0.75rem', '@media (min-width: 600px)': { fontSize: '0.8125rem' }, '@media (min-width: 960px)': { fontSize: '0.875rem' }
-              }}>
-                {t('viewer.clickNextToContinue') || 'Click NEXT to continue to next video'}
-              </Typography>
-            </Box>
-          </Box>
-        )}
+        <AnimatePresence>
+          {rewardEarned && !isProcessingReward && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="absolute left-1/2 top-1/2 z-20 w-[95vw] max-w-[400px] -translate-x-1/2 -translate-y-1/2 text-center text-white"
+            >
+              <CheckCircle2 className="mx-auto mb-3 h-16 w-16 text-emerald-500 md:h-20 md:w-20" />
+              <p className="mb-1 text-xl font-bold md:text-2xl">{t('viewer.videoCompleted')}</p>
+              <p className="mb-1 text-lg font-semibold text-emerald-400 md:text-xl">
+                +{t('currency.kwd')} {rewardAmount.toFixed(6)}
+              </p>
+              <p className="text-sm text-emerald-400/80">
+                (+{(rewardAmount * 1000).toFixed(0)} {t('currency.fils')})
+              </p>
+              <div className="mt-4 rounded-xl bg-black/80 p-4">
+                <p className="mb-1 text-sm font-semibold">🎯 {t('viewer.rewardEarned') || 'Reward Earned!'}</p>
+                <p className="text-xs text-white/70">
+                  {t('viewer.clickNextToContinue') || 'Click NEXT to continue to next video'}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Completion Message for Last Video */}
-        {showCompletionMessage && (
-          <Box sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 20,
-            textAlign: 'center',
-            color: 'white',
-            backgroundColor: 'rgba(0,0,0,0.9)',
-            padding: '20px', '@media (min-width: 600px)': { padding: '25px' }, '@media (min-width: 960px)': { padding: '30px' },
-            borderRadius: '12px', '@media (min-width: 600px)': { borderRadius: '14px' }, '@media (min-width: 960px)': { borderRadius: '15px' },
-            width: '95vw', '@media (min-width: 600px)': { width: '90vw' }, '@media (min-width: 960px)': { width: '400px' },
-            maxWidth: '400px', '@media (min-width: 600px)': { maxWidth: '450px' }, '@media (min-width: 960px)': { maxWidth: '500px' }
-          }}>
-            <CheckCircle sx={{ 
-              fontSize: 60, '@media (min-width: 600px)': { fontSize: 70 }, '@media (min-width: 960px)': { fontSize: 80 }, 
-              color: '#4CAF50', 
-              mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } 
-            }} />
-            <Typography variant="h4" component="div" sx={{ 
-              fontWeight: 700, 
-              mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 }, 
-              color: '#4CAF50',
-              fontSize: '1.5rem', '@media (min-width: 600px)': { fontSize: '1.75rem' }, '@media (min-width: 960px)': { fontSize: '2.125rem' }
-            }}>
-              🎉 {t('viewer.allVideosCompleted') || 'All Videos Completed!'}
-            </Typography>
-            <Typography variant="h6" component="div" sx={{ 
-              color: 'white', 
-              mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 },
-              fontSize: '1rem', '@media (min-width: 600px)': { fontSize: '1.125rem' }, '@media (min-width: 960px)': { fontSize: '1.25rem' }
-            }}>
-              {t('viewer.congratulations') || 'Congratulations! You have completed all available videos in this section.'}
-            </Typography>
-            <Typography variant="body1" component="div" sx={{ 
-              color: 'rgba(255,255,255,0.8)', 
-              mb: 2, '@media (min-width: 600px)': { mb: 2.5 }, '@media (min-width: 960px)': { mb: 3 },
-              fontSize: '0.875rem', '@media (min-width: 600px)': { fontSize: '0.9375rem' }, '@media (min-width: 960px)': { fontSize: '1rem' }
-            }}>
-              {t('viewer.rewardsCollected') || 'All rewards have been collected and added to your wallet.'}
-            </Typography>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => {
-                setShowCompletionMessage(false);
-                // Could redirect to main page or refresh
-                window.location.reload();
-              }}
-              fullWidth={{ xs: true, sm: true, md: false }}
-              sx={{
-                backgroundColor: '#4CAF50',
-                color: 'white',
-                fontWeight: 700,
-                px: 3, '@media (min-width: 600px)': { px: 3.5 }, '@media (min-width: 960px)': { px: 4 },
-                py: 1.5, '@media (min-width: 600px)': { py: 1.75 }, '@media (min-width: 960px)': { py: 2 },
-                borderRadius: 2.5, '@media (min-width: 600px)': { borderRadius: 2.75 }, '@media (min-width: 960px)': { borderRadius: 3 },
-                textTransform: 'uppercase',
-                fontSize: '0.875rem', '@media (min-width: 600px)': { fontSize: '1rem' }, '@media (min-width: 960px)': { fontSize: '1.1rem' },
-                minHeight: '44px', '@media (min-width: 600px)': { minHeight: '48px' }, '@media (min-width: 960px)': { minHeight: '52px' },
-                '&:hover': {
-                  backgroundColor: '#45a049',
-                  transform: 'translateY(-2px)'
-                }
-              }}
+        <AnimatePresence>
+          {showCompletionMessage && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.85 }}
+              className="absolute left-1/2 top-1/2 z-20 w-[95vw] max-w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-black/90 p-6 text-center text-white backdrop-blur md:max-w-[500px] md:p-8"
             >
-              {t('viewer.backToMain') || 'Back to Main'}
-            </Button>
-          </Box>
-        )}
-      </Box>
+              <CheckCircle2 className="mx-auto mb-4 h-16 w-16 text-emerald-500 md:h-20 md:w-20" />
+              <h3 className="mb-2 text-2xl font-bold text-emerald-400 md:text-3xl">
+                🎉 {t('viewer.allVideosCompleted') || 'All Videos Completed!'}
+              </h3>
+              <p className="mb-2 text-sm text-white md:text-base">
+                {t('viewer.congratulations') || 'Congratulations! You have completed all available videos in this section.'}
+              </p>
+              <p className="mb-5 text-xs text-white/70 md:text-sm">
+                {t('viewer.rewardsCollected') || 'All rewards have been collected and added to your wallet.'}
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => {
+                  setShowCompletionMessage(false);
+                  window.location.reload();
+                }}
+                className="w-full rounded-2xl bg-blue-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-blue-700 md:w-auto md:px-8 md:py-4 md:text-base"
+              >
+                {t('viewer.backToMain') || 'Back to Main'}
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
-      {/* Video Queue Preview - Blocked until NEXT button is clicked */}
-      <Box sx={{
-        position: 'absolute',
-        right: '10px', '@media (min-width: 600px)': { right: '15px' }, '@media (min-width: 960px)': { right: '20px' },
-        top: '50%',
-        transform: 'translateY(-50%)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 0.5, '@media (min-width: 600px)': { gap: 0.75 }, '@media (min-width: 960px)': { gap: 1 },
-        zIndex: 10
-      }}>
-        {videos.slice(currentVideoIndex + 1, currentVideoIndex + 4).map((video, index) => (
-          <Box
+      {/* Video Queue Preview */}
+      <div className="absolute right-2.5 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-1.5 md:right-5 md:gap-2">
+        {videos.slice(currentVideoIndex + 1, currentVideoIndex + 4).map((video) => (
+          <div
             key={video.id}
-            sx={{
-              width: 50, '@media (min-width: 600px)': { width: 55 }, '@media (min-width: 960px)': { width: 60 },
-              height: 65, '@media (min-width: 600px)': { height: 72 }, '@media (min-width: 960px)': { height: 80 },
-              borderRadius: 1.5, '@media (min-width: 600px)': { borderRadius: 1.75 }, '@media (min-width: 960px)': { borderRadius: 2 },
-              overflow: 'hidden',
-              border: canSkip ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(255,255,255,0.1)',
-              cursor: canSkip ? 'pointer' : 'not-allowed',
-              transition: 'all 0.3s ease',
-              opacity: canSkip ? 1 : 0.3,
-              filter: canSkip ? 'none' : 'grayscale(100%)',
-              '&:hover': canSkip ? {
-                borderColor: 'rgba(255,255,255,0.8)',
-                transform: 'scale(1.05)'
-              } : {}
-            }}
             onClick={() => {
-              // ✅ BLOCKED: Users cannot navigate to next video until NEXT button is clicked
               if (canSkip) {
                 devLog('🔄 User clicked on next video preview - allowed because canSkip is true');
-                // Use the proper handleNextVideo function instead of direct index manipulation
                 handleNextVideo();
               } else {
                 devLog('🚫 User clicked on next video preview - blocked because canSkip is false');
               }
             }}
+            className={cn(
+              'relative flex h-[65px] w-[50px] items-center justify-center overflow-hidden rounded-xl border-2 transition-all duration-200 md:h-20 md:w-[60px] md:rounded-2xl',
+              canSkip ? 'cursor-pointer border-white/30 opacity-100 hover:scale-105 hover:border-white/70' : 'cursor-not-allowed border-white/10 opacity-30 grayscale'
+            )}
           >
-            <Box sx={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: isLoading ? 'rgba(76, 175, 80, 0.8)' : (canSkip ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.8)'),
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative'
-            }}>
-              {isLoading ? (
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle sx={{ 
-                    color: 'white', 
-                    fontSize: 16, '@media (min-width: 600px)': { fontSize: 18 }, '@media (min-width: 960px)': { fontSize: 20 } 
-                  }} />
-                </Box>
-              ) : (
-                <PlayArrow sx={{ 
-                  color: canSkip ? 'white' : 'rgba(255,255,255,0.3)', 
-                  fontSize: 16, '@media (min-width: 600px)': { fontSize: 18 }, '@media (min-width: 960px)': { fontSize: 20 } 
-                }} />
-              )}
-              
-              {/* Watched indicator for queued items */}
-              {video?.is_watched && (
-                <Box sx={{
-                  position: 'absolute',
-                  top: 4,
-                  left: 4,
-                  backgroundColor: 'rgba(33,150,243,0.9)',
-                  color: 'white',
-                  borderRadius: '50%',
-                  width: 18,
-                  height: 18,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <Visibility sx={{ fontSize: 12 }} />
-                </Box>
-              )}
-
-              {/* Blocked indicator */}
-              {!canSkip && (
-                <Box sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  backgroundColor: 'rgba(0,0,0,0.8)',
-                  color: 'rgba(255,255,255,0.5)',
-                  fontSize: '0.5rem', '@media (min-width: 600px)': { fontSize: '0.55rem' }, '@media (min-width: 960px)': { fontSize: '0.6rem' },
-                  padding: '1px 3px', '@media (min-width: 600px)': { padding: '1.5px 3.5px' }, '@media (min-width: 960px)': { padding: '2px 4px' },
-                  borderRadius: '3px', '@media (min-width: 600px)': { borderRadius: '3.5px' }, '@media (min-width: 960px)': { borderRadius: '4px' },
-                  whiteSpace: 'nowrap',
-                  zIndex: 1
-                }}>
-                  {t('viewer.nextRequired') || 'NEXT REQUIRED'}
-                </Box>
-              )}
-              
-              {/* Lock glyph when blocked */}
-              {!canSkip && (
-                <Box sx={{
-                  position: 'absolute',
-                  top: 4,
-                  right: 4,
-                  backgroundColor: 'rgba(0,0,0,0.6)',
-                  color: 'white',
-                  borderRadius: '50%',
-                  width: 18,
-                  height: 18,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <Lock sx={{ fontSize: 12 }} />
-                </Box>
-              )}
-
-              {/* Loading indicator */}
-              {isLoading && (
-                <Box sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  backgroundColor: 'rgba(76, 175, 80, 0.9)',
-                  color: 'white',
-                  fontSize: '0.5rem', '@media (min-width: 600px)': { fontSize: '0.55rem' }, '@media (min-width: 960px)': { fontSize: '0.6rem' },
-                  padding: '1px 3px', '@media (min-width: 600px)': { padding: '1.5px 3.5px' }, '@media (min-width: 960px)': { padding: '2px 4px' },
-                  borderRadius: '3px', '@media (min-width: 600px)': { borderRadius: '3.5px' }, '@media (min-width: 960px)': { borderRadius: '4px' },
-                  whiteSpace: 'nowrap',
-                  zIndex: 1
-                }}>
-                  {t('viewer.loading') || 'LOADING...'}
-                </Box>
-              )}
-            </Box>
-          </Box>
+            <div className={cn('flex h-full w-full items-center justify-center', isLoading ? 'bg-blue-600/80' : canSkip ? 'bg-black/50' : 'bg-black/80')}>
+              {isLoading ? <Loader2 className="h-4 w-4 animate-spin text-white" /> : <Play className="h-4 w-4 text-white" fill={canSkip ? 'white' : 'transparent'} />}
+            </div>
+            {video?.is_watched && (
+              <div className="absolute left-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-sky-500/90"><Eye className="h-2.5 w-2.5 text-white" /></div>
+            )}
+            {!canSkip && (
+              <div className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-black/60"><Lock className="h-2.5 w-2.5 text-white" /></div>
+            )}
+          </div>
         ))}
-      </Box>
+      </div>
 
-              {/* Video Counter */}
-        <Box sx={{
-          position: 'absolute',
-          top: '5vh', '@media (min-width: 600px)': { top: '8vh' }, '@media (min-width: 960px)': { top: '20px' },
-          right: '10px', '@media (min-width: 600px)': { right: '15px' }, '@media (min-width: 960px)': { right: '20px' },
-          backgroundColor: 'rgba(0,0,0,0.7)',
-          color: 'white',
-          padding: '6px 12px', '@media (min-width: 600px)': { padding: '7px 14px' }, '@media (min-width: 960px)': { padding: '8px 16px' },
-          borderRadius: 16, '@media (min-width: 600px)': { borderRadius: 18 }, '@media (min-width: 960px)': { borderRadius: 20 },
-          zIndex: 10
-        }}>
-          <Typography variant="body2" component="div" sx={{ 
-            fontWeight: 600,
-            fontSize: '0.75rem', '@media (min-width: 600px)': { fontSize: '0.8125rem' }, '@media (min-width: 960px)': { fontSize: '0.875rem' }
-          }}>
+        {/* Video Counter */}
+        <div className="absolute right-2.5 top-[5vh] z-10 rounded-full bg-black/70 px-3 py-1.5 backdrop-blur-sm md:right-5 md:top-5">
+          <span className="text-xs font-semibold text-white tabular-nums">
             {isLoading ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle sx={{ fontSize: 12, '@media (min-width: 600px)': { fontSize: 13 }, '@media (min-width: 960px)': { fontSize: 14 } }} />
-                </Box>
-                {t('viewer.loading') || 'Loading...'}
-              </Box>
+              <span className="flex items-center gap-1"><Loader2 className="h-3 w-3 animate-spin" /> {t('viewer.loading') || 'Loading...'}</span>
             ) : (
               `${currentVideoIndex + 1} / ${videos.length}`
             )}
-          </Typography>
-        </Box>
+          </span>
+        </div>
 
         {/* Floating Animated Credit Bar */}
-        <Box sx={{
-          position: 'absolute',
-          top: '5vh', '@media (min-width: 600px)': { top: '8vh' }, '@media (min-width: 960px)': { top: '20px' },
-          left: '50%',
-          transform: 'translateX(-50%)',
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          borderRadius: '20px', '@media (min-width: 600px)': { borderRadius: '22px' }, '@media (min-width: 960px)': { borderRadius: '25px' },
-          padding: '10px 20px', '@media (min-width: 600px)': { padding: '11px 22px' }, '@media (min-width: 960px)': { padding: '12px 24px' },
-          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-          zIndex: 20,
-          animation: 'creditBarFloat 3s ease-in-out infinite',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 1.5, '@media (min-width: 600px)': { gap: 1.75 }, '@media (min-width: 960px)': { gap: 2 }
-        }}>
-          <AttachMoney sx={{ 
-            color: '#4CAF50', 
-            fontSize: 18, '@media (min-width: 600px)': { fontSize: 19 }, '@media (min-width: 960px)': { fontSize: 20 },
-            animation: 'creditIconGlow 2s ease-in-out infinite alternate'
-          }} />
-          <Typography variant="body1" component="div" sx={{ 
-            color: 'white', 
-            fontWeight: 600,
-            fontSize: '1rem', '@media (min-width: 600px)': { fontSize: '1.05rem' }, '@media (min-width: 960px)': { fontSize: '1.1rem' }
-          }}>
-            {isLoading ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box sx={{ animation: 'spin 1s linear infinite' }}>
-                  <CheckCircle sx={{ fontSize: 14, '@media (min-width: 600px)': { fontSize: 15 }, '@media (min-width: 960px)': { fontSize: 16 } }} />
-                </Box>
-                {t('viewer.loading') || 'Loading...'}
-              </Box>
-            ) : (
-              `+${t('currency.kwd')} ${displayReward}`
-            )}
-          </Typography>
-          {!isLoading && (
-            <Box sx={{
-              width: '6px', '@media (min-width: 600px)': { width: '7px' }, '@media (min-width: 960px)': { width: '8px' },
-              height: '6px', '@media (min-width: 600px)': { height: '7px' }, '@media (min-width: 960px)': { height: '8px' },
-              backgroundColor: '#4CAF50',
-              borderRadius: '50%',
-              animation: 'creditDotPulse 1.5s ease-in-out infinite'
-            }} />
-          )}
-        </Box>
-
-      {/* CTA Button - Instagram-style with Animation */}
-      {currentVideo?.cta_data?.enabled && currentVideo?.cta_data?.link && (
-        <Box sx={{
-          position: 'absolute',
-          bottom: '20vh', '@media (min-width: 600px)': { bottom: '18vh' }, '@media (min-width: 960px)': { bottom: '160px' },
-          right: '10px', '@media (min-width: 600px)': { right: '15px' }, '@media (min-width: 960px)': { right: '20px' },
-          zIndex: 15
-        }}>
-          <Tooltip title={!canSkip ? (t('viewer.waitForCompletion') || 'Completes after watching') : ''} disableHoverListener={canSkip}>
-            <span>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={() => {
-                  if (canSkip && !isLoading) {
-                    window.open(currentVideo.cta_data.link, '_blank');
-                  }
-                }}
-                disabled={!canSkip || isLoading}
-                startIcon={isLoading ? (
-                  <Box sx={{ animation: prefersReducedMotion ? 'none' : 'spin 1s linear infinite' }}>
-                    <CheckCircle />
-                  </Box>
-                ) : (
-                  <OpenInNew />
-                )}
-                sx={{
-                  background: canSkip && !isLoading ? 'linear-gradient(135deg, #FF4081, #F50057)' : (isLoading ? 'rgba(76, 175, 80, 0.95)' : 'rgba(128, 128, 128, 0.6)'),
-                  color: 'white',
-                  fontWeight: 700,
-                  fontSize: '0.8rem', '@media (min-width: 600px)': { fontSize: '0.85rem' }, '@media (min-width: 960px)': { fontSize: '0.9rem' },
-                  px: 2.5, '@media (min-width: 600px)': { px: 2.75 }, '@media (min-width: 960px)': { px: 3 },
-                  py: 1.25, '@media (min-width: 600px)': { py: 1.375 }, '@media (min-width: 960px)': { py: 1.5 },
-                  borderRadius: 2.5, '@media (min-width: 600px)': { borderRadius: 2.75 }, '@media (min-width: 960px)': { borderRadius: 3 },
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  boxShadow: canSkip && !isLoading ? '0 8px 32px rgba(255, 64, 129, 0.4)' : (isLoading ? '0 8px 32px rgba(76, 175, 80, 0.4)' : 'none'),
-                  transition: 'all 0.3s ease',
-                  animation: prefersReducedMotion ? 'none' : (canSkip ? 'ctaButtonPulse 2s ease-in-out infinite' : 'none'),
-                  minHeight: '40px', '@media (min-width: 600px)': { minHeight: '44px' }, '@media (min-width: 960px)': { minHeight: '48px' },
-                  '&:hover': canSkip && !isLoading ? {
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 12px 40px rgba(255, 64, 129, 0.6)'
-                  } : {},
-                  '&:disabled': {
-                    backgroundColor: 'rgba(128, 128, 128, 0.6)',
-                    color: 'rgba(255, 255, 255, 0.7)',
-                    cursor: 'not-allowed'
-                  }
-                }}
-              >
-                {currentVideo.cta_data.text || t('viewer.learnMore')}
-              </Button>
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute left-1/2 top-[5vh] z-20 -translate-x-1/2 md:top-5"
+        >
+          <div className="flex items-center gap-2.5 rounded-full border border-white/20 bg-black/80 px-5 py-2.5 shadow-2xl backdrop-blur-lg">
+            <DollarSign className="h-4 w-4 text-emerald-400 drop-shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
+            <span className="text-sm font-semibold text-white tabular-nums md:text-base">
+              {isLoading ? (
+                <span className="flex items-center gap-1.5"><Loader2 className="h-3.5 w-3.5 animate-spin" /> {t('viewer.loading') || 'Loading...'}</span>
+              ) : (
+                `+${t('currency.kwd')} ${displayReward}`
+              )}
             </span>
-          </Tooltip>
-          
-          {/* CTA Status Indicator */}
+            {!isLoading && (
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+            )}
+          </div>
+        </motion.div>
+
+      {/* CTA Button */}
+      {currentVideo?.cta_data?.enabled && currentVideo?.cta_data?.link && (
+        <div className="absolute bottom-[20vh] right-2.5 z-[15] md:bottom-40 md:right-5">
+          <motion.button
+            whileHover={canSkip && !isLoading ? { y: -2, scale: 1.03 } : {}}
+            whileTap={canSkip && !isLoading ? { scale: 0.97 } : {}}
+            onClick={() => { if (canSkip && !isLoading) window.open(currentVideo.cta_data.link, '_blank'); }}
+            disabled={!canSkip || isLoading}
+            className={cn(
+              'flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all md:px-5 md:py-3 md:text-sm',
+              canSkip && !isLoading ? 'bg-gradient-to-r from-pink-500 to-rose-600 shadow-lg shadow-pink-500/40' : isLoading ? 'bg-blue-600/90' : 'bg-gray-500/60',
+              'disabled:cursor-not-allowed disabled:opacity-70'
+            )}
+          >
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ExternalLink className="h-4 w-4" />}
+            {currentVideo.cta_data.text || t('viewer.learnMore')}
+          </motion.button>
           {!canSkip && (
-            <Box sx={{
-              position: 'absolute',
-              top: -20,
-            '@media (min-width: 600px)': { top: -22 },
-            '@media (min-width: 960px)': { top: -25 },
-              right: 0,
-              backgroundColor: 'rgba(0,0,0,0.8)',
-              color: 'rgba(255,255,255,0.7)',
-              fontSize: '0.6rem', '@media (min-width: 600px)': { fontSize: '0.65rem' }, '@media (min-width: 960px)': { fontSize: '0.7rem' },
-              padding: '3px 6px', '@media (min-width: 600px)': { padding: '3.5px 7px' }, '@media (min-width: 960px)': { padding: '4px 8px' },
-              borderRadius: '10px', '@media (min-width: 600px)': { borderRadius: '11px' }, '@media (min-width: 960px)': { borderRadius: '12px' },
-              whiteSpace: 'nowrap',
-              zIndex: 16
-            }}>
+            <span className="absolute -top-5 right-0 z-[16] whitespace-nowrap rounded-full bg-black/80 px-2 py-0.5 text-[10px] text-white/70">
               {t('viewer.waitForCompletion') || 'Wait for completion'}
-            </Box>
+            </span>
           )}
-          
-          {/* CTA Loading Indicator */}
-          {!canSkip && isProcessingReward && (
-            <Box sx={{
-              position: 'absolute',
-              top: -35,
-            '@media (min-width: 600px)': { top: -40 },
-            '@media (min-width: 960px)': { top: -45 },
-              right: 0,
-              backgroundColor: 'rgba(76, 175, 80, 0.9)',
-              color: 'white',
-              fontSize: '0.6rem', '@media (min-width: 600px)': { fontSize: '0.65rem' }, '@media (min-width: 960px)': { fontSize: '0.7rem' },
-              padding: '3px 6px', '@media (min-width: 600px)': { padding: '3.5px 7px' }, '@media (min-width: 960px)': { padding: '4px 8px' },
-              borderRadius: '10px', '@media (min-width: 600px)': { borderRadius: '11px' }, '@media (min-width: 960px)': { borderRadius: '12px' },
-              whiteSpace: 'nowrap',
-              zIndex: 16
-            }}>
-              {t('viewer.processingReward') || 'Processing...'}
-            </Box>
-          )}
-        </Box>
+        </div>
       )}
 
       {/* Comment Button */}
-      <Box sx={{
-        position: 'absolute',
-        bottom: '15vh', '@media (min-width: 600px)': { bottom: '13vh' }, '@media (min-width: 960px)': { bottom: '120px' },
-        right: '10px', '@media (min-width: 600px)': { right: '15px' }, '@media (min-width: 960px)': { right: '20px' },
-        zIndex: 15
-      }}>
-        <IconButton
+      <div className="absolute bottom-[15vh] right-2.5 z-[15] md:bottom-[120px] md:right-5">
+        <motion.button
+          whileTap={{ scale: 0.9 }}
           onClick={() => setShowComments(true)}
-          aria-label={t('viewer.openComments') || 'Open comments'}
-          aria-describedby="comment-count"
           disabled={isLoading}
-          sx={{
-            backgroundColor: isLoading ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.7)',
-            color: 'white',
-            width: 48, '@media (min-width: 600px)': { width: 52 }, '@media (min-width: 960px)': { width: 56 },
-            height: 48, '@media (min-width: 600px)': { height: 52 }, '@media (min-width: 960px)': { height: 56 },
-            '&:hover': { backgroundColor: isLoading ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.9)' },
-            '&:disabled': {
-              backgroundColor: 'rgba(0,0,0,0.4)',
-              cursor: 'not-allowed'
-            }
-          }}
+          aria-label={t('viewer.openComments') || 'Open comments'}
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-sm transition hover:bg-black/90 disabled:cursor-not-allowed disabled:bg-black/40 md:h-14 md:w-14"
         >
-          {isLoading ? (
-            <Box sx={{ animation: 'spin 1s linear infinite' }}>
-              <ChatBubbleOutline />
-            </Box>
-          ) : (
-            <ChatBubbleOutline />
-          )}
-        </IconButton>
-        
-        {/* Comment Count Badge */}
+          {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <MessageCircle className="h-5 w-5" />}
+        </motion.button>
         {commentCount > 0 && (
-          <Box 
-            id="comment-count"
-            sx={{
-              position: 'absolute',
-                          top: -6,
-            right: -6,
-            '@media (min-width: 600px)': { top: -7, right: -7 },
-            '@media (min-width: 960px)': { top: -8, right: -8 },
-              backgroundColor: 'error.main',
-              color: 'white',
-              borderRadius: '50%',
-              width: 20, '@media (min-width: 600px)': { width: 22 }, '@media (min-width: 960px)': { width: 24 },
-              height: 20, '@media (min-width: 600px)': { height: 22 }, '@media (min-width: 960px)': { height: 24 },
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '0.625rem', '@media (min-width: 600px)': { fontSize: '0.6875rem' }, '@media (min-width: 960px)': { fontSize: '0.75rem' },
-              fontWeight: 'bold',
-              boxShadow: '0 0 10px rgba(244,67,54,0.7)'
-            }}
-          >
+          <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-[0_0_10px_rgba(239,68,68,0.7)]">
             {commentCount > 99 ? '99+' : commentCount}
-          </Box>
+          </span>
         )}
-        
-        {/* Loading Badge for Comment Count */}
-        {isLoading && commentCount === 0 && (
-          <Box sx={{
-            position: 'absolute',
-            top: -6,
-            right: -6,
-            '@media (min-width: 600px)': { top: -7, right: -7 },
-            '@media (min-width: 960px)': { top: -8, right: -8 },
-            backgroundColor: 'rgba(255,255,255,0.5)',
-            color: 'white',
-            borderRadius: '50%',
-            width: 20, '@media (min-width: 600px)': { width: 22 }, '@media (min-width: 960px)': { width: 24 },
-            height: 20, '@media (min-width: 600px)': { height: 22 }, '@media (min-width: 960px)': { height: 24 },
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '0.625rem', '@media (min-width: 600px)': { fontSize: '0.6875rem' }, '@media (min-width: 960px)': { fontSize: '0.75rem' },
-            fontWeight: 'bold'
-          }}>
-            <Box sx={{ animation: 'spin 1s linear infinite' }}>
-              <ChatBubbleOutline sx={{ fontSize: 10, '@media (min-width: 600px)': { fontSize: 11 }, '@media (min-width: 960px)': { fontSize: 12 } }} />
-            </Box>
-          </Box>
-        )}
-        
-        {/* Fallback Badge for when comment count is unavailable */}
         {!isLoading && commentCount === 0 && (
-          <Box sx={{
-            position: 'absolute',
-            top: -8,
-            right: -8,
-            backgroundColor: 'rgba(255,255,255,0.3)',
-            color: 'white',
-            borderRadius: '50%',
-            width: 24,
-            height: 24,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '0.75rem',
-            fontWeight: 'bold'
-          }}>
-            ?
-          </Box>
+          <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white/30 text-[10px] font-bold text-white">?</span>
         )}
-      </Box>
+      </div>
 
       {/* Reward Alert */}
       <Snackbar
@@ -2104,7 +1436,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           }
         }}
               />
-      </Box>
+      </div>
     </VideoPlayerErrorBoundary>
   );
 }

@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  CircularProgress, 
-  Alert,
-  useTheme,
-  useMediaQuery,
-  Snackbar
-} from '@mui/material';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Loader2, AlertCircle, Film, X, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
+import { cn } from '../lib/utils';
 
 import TikTokVideoPlayer from './TikTokVideoPlayer';
-import CreditBar from './CreditBar';
 import { getAllAdsRandomly } from '../api/viewer';
 
 export default function AllAdsTab() {
@@ -22,9 +15,7 @@ export default function AllAdsTab() {
   const [showRewardAlert, setShowRewardAlert] = useState(false);
   const [rewardAmount, setRewardAmount] = useState(0);
   const { t } = useTranslation();
-  const { currentLanguage } = useLanguage();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { currentLanguage, isRTL } = useLanguage();
 
   useEffect(() => {
     fetchVideos();
@@ -110,103 +101,94 @@ export default function AllAdsTab() {
     }
   };
 
+  /* ── Loading state ── */
   if (loading) {
     return (
-      <Box 
-        display="flex" 
-        justifyContent="center" 
-        alignItems="center" 
-        minHeight="60vh"
-        flexDirection="column"
-        gap={3}
-      >
-        <CircularProgress 
-          size={isMobile ? 50 : 70} 
-          color="primary"
-          thickness={4}
-        />
-        <Typography 
-          variant={isMobile ? "h6" : "h5"} 
-          color="textSecondary"
-          sx={{ fontWeight: 600 }}
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
         >
+          <Loader2 className="h-12 w-12 text-blue-600 md:h-16 md:w-16" />
+        </motion.div>
+        <p className={cn(
+          'text-lg font-semibold text-slate-500 md:text-xl',
+          isRTL && 'font-arabic'
+        )}>
           {t('common.loading')} {t('viewer.allAds')}...
-        </Typography>
-      </Box>
+        </p>
+      </div>
     );
   }
 
+  /* ── Error state ── */
   if (error) {
     return (
-      <Alert 
-        severity="error" 
-        sx={{ 
-          mt: 3,
-          mx: isMobile ? 2 : 0,
-          borderRadius: 3,
-          '& .MuiAlert-message': {
-            fontWeight: 600
-          }
-        }}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mx-auto mt-6 flex max-w-md items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4"
       >
-        {error}
-      </Alert>
+        <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
+        <p className={cn('text-sm font-medium text-red-800', isRTL && 'font-arabic')}>
+          {error}
+        </p>
+      </motion.div>
     );
   }
 
+  /* ── Empty state ── */
   if (videos.length === 0) {
     return (
-      <Box 
-        textAlign="center" 
-        py={isMobile ? 8 : 10}
-        px={isMobile ? 3 : 0}
-      >
-        <Typography 
-          variant={isMobile ? "h5" : "h4"} 
-          color="textSecondary" 
-          gutterBottom
-          sx={{ fontWeight: 700 }}
-        >
+      <div className={cn('py-16 text-center md:py-20', isRTL && 'font-arabic')}>
+        <Film className="mx-auto mb-4 h-14 w-14 text-slate-300" />
+        <h4 className="text-xl font-bold text-slate-600 md:text-2xl">
           {t('viewer.noAdsAvailable')}
-        </Typography>
-        <Typography 
-          variant={isMobile ? "body1" : "h6"} 
-          color="textSecondary"
-          sx={{ fontWeight: 500 }}
-        >
+        </h4>
+        <p className="mt-2 text-base text-slate-400 md:text-lg">
           {t('viewer.checkBackLaterForAds')}
-        </Typography>
-      </Box>
+        </p>
+      </div>
     );
   }
 
+  /* ── Main content ── */
   return (
-    <Box sx={{ 
-      minHeight: '100vh',
-      backgroundColor: theme.palette.background.default
-    }}>
+    <div dir={isRTL ? 'rtl' : 'ltr'} className="relative min-h-screen bg-slate-50">
       <TikTokVideoPlayer
         videos={videos}
         onVideoComplete={handleVideoComplete}
         onEarnCredits={handleEarnCredits}
       />
 
-      {/* Reward Alert */}
-      <Snackbar
-        open={showRewardAlert}
-        autoHideDuration={4000}
-        onClose={() => setShowRewardAlert(false)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert 
-          onClose={() => setShowRewardAlert(false)} 
-          severity="success"
-          sx={{ width: '100%' }}
-        >
-          {t('viewer.rewardEarned', { amount: rewardAmount.toFixed(6) })} - {(rewardAmount * 1000).toFixed(0)} {t('currency.fils')}
-        </Alert>
-      </Snackbar>
-    </Box>
+      {/* ── Reward toast ── */}
+      <AnimatePresence>
+        {showRewardAlert && (
+          <motion.div
+            initial={{ y: -80, opacity: 0, scale: 0.9 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: -80, opacity: 0, scale: 0.9 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            className="fixed left-1/2 top-4 z-[9999] -translate-x-1/2"
+          >
+            <div className="flex items-center gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-3 shadow-xl shadow-emerald-100/50">
+              <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+              <span className={cn(
+                'text-sm font-semibold text-emerald-800',
+                isRTL && 'font-arabic'
+              )}>
+                {t('viewer.rewardEarned', { amount: rewardAmount.toFixed(6) })} — {(rewardAmount * 1000).toFixed(0)} {t('currency.fils')}
+              </span>
+              <button
+                onClick={() => setShowRewardAlert(false)}
+                className="ml-2 rounded-lg p-1 transition hover:bg-emerald-100"
+              >
+                <X className="h-4 w-4 text-emerald-600" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
-
