@@ -866,9 +866,22 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
   return (
     <VideoPlayerErrorBoundary t={t}>
       <style>{creditBarStyles}</style>
-      <div className="relative h-screen w-full overflow-hidden bg-black">
+      <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-[#0a0a1a] via-[#0d1025] to-[#0a0f1e]">
+      {/* Animated ambient mesh */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 z-0 opacity-40"
+        animate={{
+          background: [
+            'radial-gradient(ellipse at 20% 80%, rgba(37,99,235,0.15), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.12), transparent 50%)',
+            'radial-gradient(ellipse at 60% 20%, rgba(37,99,235,0.15), transparent 50%), radial-gradient(ellipse at 30% 80%, rgba(139,92,246,0.12), transparent 50%)',
+            'radial-gradient(ellipse at 20% 80%, rgba(37,99,235,0.15), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.12), transparent 50%)'
+          ]
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+      />
+
       {/* Main Video Player */}
-      <div className="relative flex h-full w-full items-center justify-center">
+      <div className="relative z-[1] flex h-full w-full items-center justify-center">
         {currentVideo && currentVideo.mediaUrl && (
           <video
             ref={videoRef}
@@ -977,12 +990,14 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
         {/* Video Overlay */}
         <div
           className={cn(
-            'pointer-events-none absolute inset-0 transition-all duration-300',
+            'pointer-events-none absolute inset-0 transition-all duration-500',
             isLoading
-              ? 'bg-gradient-to-b from-blue-500/20 via-transparent to-blue-500/20'
-              : 'bg-gradient-to-b from-black/30 via-transparent to-black/30'
+              ? 'bg-gradient-to-b from-blue-600/25 via-transparent to-indigo-900/30'
+              : 'bg-gradient-to-b from-black/40 via-transparent to-[#0a0a1a]/60'
           )}
         />
+        {/* Vignette */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_50%,_rgba(0,0,0,0.4)_100%)]" />
 
         {/* Progress Bar */}
         <div className="absolute left-0 right-0 top-0 h-1 bg-white/20">
@@ -1024,18 +1039,6 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {/* Reward badge */}
-            <span
-              className={cn(
-                'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white',
-                isLoading ? 'bg-gray-500/90' : currentVideo?.is_watched ? 'bg-slate-500/90' : rewardEarned ? 'bg-emerald-600/90' : 'bg-blue-700/90'
-              )}
-              title={currentVideo?.is_watched ? (t('viewer.alreadyRewardedTooltip') || 'Already rewarded') : ''}
-            >
-              {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : currentVideo?.is_watched ? <Info className="h-3 w-3" /> : <DollarSign className="h-3 w-3" />}
-              {isLoading ? (t('viewer.loading') || 'Loading...') : `${t('currency.kwd')} ${displayReward}`}
-            </span>
-
             {/* Duration */}
             <span className="text-xs text-white/70">
               {isLoading ? '...' : formatDuration(currentVideo.package?.duration || currentVideo.duration || 10)}
@@ -1059,28 +1062,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           </div>
         </div>
 
-        {/* Control Buttons */}
-        <div className="absolute bottom-[120px] right-5 z-10 flex flex-col gap-3">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleMute}
-            disabled={isLoading}
-            aria-label={isMuted ? (t('viewer.unmute') || 'Unmute video') : (t('viewer.mute') || 'Mute video')}
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition hover:bg-black/70 disabled:cursor-not-allowed disabled:bg-black/30"
-          >
-            {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-          </motion.button>
-
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => navigate(`/viewer/ad/${currentVideo.id}`)}
-            disabled={isLoading}
-            aria-label={t('viewer.fullscreen') || 'Open video in fullscreen'}
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition hover:bg-black/70 disabled:cursor-not-allowed disabled:bg-black/30"
-          >
-            {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Maximize2 className="h-5 w-5" />}
-          </motion.button>
-        </div>
+        {/* Control Buttons — removed, merged into bottom-right row */}
 
         {/* Navigation Buttons */}
         <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 gap-6">
@@ -1154,44 +1136,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           )}
         </AnimatePresence>
         
-        {/* Debug Info - Only in Development */}
-        {process.env.NODE_ENV === 'development' && (
-          <Box sx={{
-            position: 'absolute',
-            top: '5vh',
-            left: '10px',
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            color: 'white',
-            padding: '6px',
-            borderRadius: '3px',
-            fontSize: '10px',
-            zIndex: 20,
-            maxWidth: '85vw',
-            '@media (min-width: 600px)': {
-              top: '8vh',
-              left: '15px',
-              padding: '7px',
-              borderRadius: '3.5px',
-              fontSize: '11px',
-              maxWidth: '80vw'
-            },
-            '@media (min-width: 960px)': {
-              top: '100px',
-              left: '20px',
-              padding: '8px',
-              borderRadius: '4px',
-              fontSize: '12px',
-              maxWidth: 'auto'
-            }
-          }}>
-            <div>canSkip: {canSkip ? 'true' : 'false'}</div>
-            <div>rewardEarned: {rewardEarned ? 'true' : 'false'}</div>
-            <div>currentVideoIndex: {currentVideoIndex}</div>
-            <div>videos.length: {videos.length}</div>
-            <div>processedVideos: {Array.from(processedVideos).join(', ')}</div>
-            <div>showCompletionMessage: {showCompletionMessage ? 'true' : 'false'}</div>
-          </Box>
-        )}
+        {/* Debug Info removed */}
 
         {/* Play/Pause Button */}
         <AnimatePresence>
@@ -1343,7 +1288,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
         <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute left-1/2 top-[5vh] z-20 -translate-x-1/2 md:top-5"
+          className="absolute left-0 right-0 top-[5vh] z-20 flex justify-center md:top-5"
         >
           <div className="flex items-center gap-2.5 rounded-full border border-white/20 bg-black/80 px-5 py-2.5 shadow-2xl backdrop-blur-lg">
             <DollarSign className="h-4 w-4 text-emerald-400 drop-shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
@@ -1377,33 +1322,47 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ExternalLink className="h-4 w-4" />}
             {currentVideo.cta_data.text || t('viewer.learnMore')}
           </motion.button>
-          {!canSkip && (
-            <span className="absolute -top-5 right-0 z-[16] whitespace-nowrap rounded-full bg-black/80 px-2 py-0.5 text-[10px] text-white/70">
-              {t('viewer.waitForCompletion') || 'Wait for completion'}
-            </span>
-          )}
         </div>
       )}
 
-      {/* Comment Button */}
-      <div className="absolute bottom-[15vh] right-2.5 z-[15] md:bottom-[120px] md:right-5">
+      {/* Bottom-right control row: mute, fullscreen, comments */}
+      <div className="absolute bottom-4 right-3 z-[15] flex items-center gap-2 md:bottom-5 md:right-5 md:gap-3">
         <motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={() => setShowComments(true)}
+          onClick={toggleMute}
           disabled={isLoading}
-          aria-label={t('viewer.openComments') || 'Open comments'}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-sm transition hover:bg-black/90 disabled:cursor-not-allowed disabled:bg-black/40 md:h-14 md:w-14"
+          aria-label={isMuted ? (t('viewer.unmute') || 'Unmute video') : (t('viewer.mute') || 'Mute video')}
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition hover:bg-black/70 disabled:cursor-not-allowed disabled:bg-black/30"
         >
-          {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <MessageCircle className="h-5 w-5" />}
+          {isLoading ? <Loader2 className="h-4.5 w-4.5 animate-spin" /> : isMuted ? <VolumeX className="h-4.5 w-4.5" /> : <Volume2 className="h-4.5 w-4.5" />}
         </motion.button>
-        {commentCount > 0 && (
-          <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-[0_0_10px_rgba(239,68,68,0.7)]">
-            {commentCount > 99 ? '99+' : commentCount}
-          </span>
-        )}
-        {!isLoading && commentCount === 0 && (
-          <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white/30 text-[10px] font-bold text-white">?</span>
-        )}
+
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          onClick={() => navigate(`/viewer/ad/${currentVideo.id}`)}
+          disabled={isLoading}
+          aria-label={t('viewer.fullscreen') || 'Open video in fullscreen'}
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition hover:bg-black/70 disabled:cursor-not-allowed disabled:bg-black/30"
+        >
+          {isLoading ? <Loader2 className="h-4.5 w-4.5 animate-spin" /> : <Maximize2 className="h-4.5 w-4.5" />}
+        </motion.button>
+
+        <div className="relative">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setShowComments(true)}
+            disabled={isLoading}
+            aria-label={t('viewer.openComments') || 'Open comments'}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition hover:bg-black/70 disabled:cursor-not-allowed disabled:bg-black/30"
+          >
+            {isLoading ? <Loader2 className="h-4.5 w-4.5 animate-spin" /> : <MessageCircle className="h-4.5 w-4.5" />}
+          </motion.button>
+          {commentCount > 0 && (
+            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white shadow-[0_0_8px_rgba(239,68,68,0.7)]">
+              {commentCount > 99 ? '99+' : commentCount}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Reward Alert */}

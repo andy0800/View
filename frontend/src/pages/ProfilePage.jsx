@@ -80,14 +80,9 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <ResponsiveLayout>
-        <Box 
-          display="flex" 
-          justifyContent="center" 
-          alignItems="center" 
-          minHeight="60vh"
-        >
-          <CircularProgress size={60} />
+      <ResponsiveLayout transparent>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+          <CircularProgress size={60} sx={{ color: 'rgba(255,255,255,0.8)' }} />
         </Box>
       </ResponsiveLayout>
     );
@@ -95,9 +90,17 @@ export default function ProfilePage() {
 
   if (error) {
     return (
-      <ResponsiveLayout>
+      <ResponsiveLayout transparent>
         <Container maxWidth="md" sx={{ py: 4 }}>
-          <Alert severity="error" sx={{ mb: 3 }}>
+          <Alert
+            severity="error"
+            sx={{
+              mb: 3,
+              bgcolor: 'rgba(239,68,68,0.15)',
+              color: '#fca5a5',
+              border: '1px solid rgba(239,68,68,0.3)'
+            }}
+          >
             {error}
           </Alert>
         </Container>
@@ -107,9 +110,16 @@ export default function ProfilePage() {
 
   if (!profile) {
     return (
-      <ResponsiveLayout>
+      <ResponsiveLayout transparent>
         <Container maxWidth="md" sx={{ py: 4 }}>
-          <Alert severity="info">
+          <Alert
+            severity="info"
+            sx={{
+              bgcolor: 'rgba(59,130,246,0.15)',
+              color: 'rgba(255,255,255,0.9)',
+              border: '1px solid rgba(59,130,246,0.3)'
+            }}
+          >
             {t('profile.noProfileDataAvailable')}
           </Alert>
         </Container>
@@ -117,46 +127,54 @@ export default function ProfilePage() {
     );
   }
 
-  return (
-    <ResponsiveLayout>
-      <Container maxWidth="lg" sx={{ py: isMobile ? 2 : 4 }}>
-        
+  const cardSx = {
+    backdropFilter: 'blur(12px)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    boxShadow: '0 4px 24px rgba(0,0,0,0.2)'
+  };
 
-        <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 4 }}>
-                      {t('profile.viewerProfile')}
+  return (
+    <ResponsiveLayout transparent>
+      <Container maxWidth="lg" sx={{ py: isMobile ? 2 : 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 4, color: 'rgba(255,255,255,0.95)', fontWeight: 700 }}>
+          {t('profile.viewerProfile')}
         </Typography>
 
         <Grid container spacing={3}>
           {/* Profile Header */}
           <Grid item xs={12}>
-            <Card>
+            <Card className="viewer-profile-card" sx={cardSx}>
               <CardContent sx={{ textAlign: 'center', py: 4 }}>
-                <Avatar 
-                  sx={{ 
-                    width: isMobile ? 80 : 120, 
-                    height: isMobile ? 80 : 120, 
-                    mx: 'auto', 
+                <Avatar
+                  sx={{
+                    width: isMobile ? 80 : 120,
+                    height: isMobile ? 80 : 120,
+                    mx: 'auto',
                     mb: 3,
                     fontSize: isMobile ? '2rem' : '3rem',
-                    bgcolor: 'primary.main'
+                    bgcolor: '#3b82f6'
                   }}
                 >
                   {profile.name?.charAt(0)?.toUpperCase() || 'V'}
                 </Avatar>
-                
-                <Typography variant="h4" component="h2" gutterBottom fontWeight="bold">
+
+                <Typography variant="h4" component="h2" gutterBottom fontWeight="bold" sx={{ color: 'rgba(255,255,255,0.95)' }}>
                   {profile.name || t('profile.anonymousViewer')}
                 </Typography>
-                
-                <Chip 
+
+                <Chip
                   label={t('profile.viewerAccount')}
-                  color="primary"
                   variant="outlined"
                   size="large"
-                  sx={{ mb: 2 }}
+                  sx={{
+                    mb: 2,
+                    borderColor: 'rgba(255,255,255,0.3)',
+                    color: 'rgba(255,255,255,0.9)',
+                    bgcolor: 'rgba(255,255,255,0.06)'
+                  }}
                 />
-                
-                <Typography variant="body1" color="textSecondary" paragraph>
+
+                <Typography variant="body1" paragraph sx={{ color: 'rgba(255,255,255,0.7)' }}>
                   {t('profile.memberSince')} {profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : t('profile.notProvided')}
                 </Typography>
               </CardContent>
@@ -165,38 +183,38 @@ export default function ProfilePage() {
 
           {/* Personal Information */}
           <Grid item xs={12} md={6}>
-            <Card>
+            <Card className="viewer-profile-card" sx={cardSx}>
               <CardContent>
-                <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                  <Person sx={{ mr: 1 }} />
+                <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', mb: 3, color: 'rgba(255,255,255,0.95)' }}>
+                  <Person sx={{ mr: 1, color: '#60a5fa' }} />
                   {t('profile.personalInformation')}
                 </Typography>
-                
+
                 <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle2" color="textSecondary">
+                  <Typography variant="subtitle2" sx={{ color: 'rgba(255,255,255,0.6)' }}>
                     {t('profile.phoneNumber')}
                   </Typography>
-                  <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Phone sx={{ mr: 1, fontSize: 'small' }} />
+                  <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', color: 'rgba(255,255,255,0.9)' }}>
+                    <Phone sx={{ mr: 1, fontSize: 'small', color: 'rgba(255,255,255,0.7)' }} />
                     {profile.phone || t('profile.notProvided')}
                   </Typography>
                 </Box>
-                
+
                 <Box sx={{ mb: 2 }}>
-                  <Typography variant="subtitle2" color="textSecondary">
+                  <Typography variant="subtitle2" sx={{ color: 'rgba(255,255,255,0.6)' }}>
                     {t('profile.civilId')}
                   </Typography>
-                  <Typography variant="body1">
+                  <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.9)' }}>
                     {profile.civil_id || t('profile.notProvided')}
                   </Typography>
                 </Box>
-                
+
                 <Box>
-                  <Typography variant="subtitle2" color="textSecondary">
+                  <Typography variant="subtitle2" sx={{ color: 'rgba(255,255,255,0.6)' }}>
                     {t('profile.registrationDate')}
                   </Typography>
-                  <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center' }}>
-                    <CalendarToday sx={{ mr: 1, fontSize: 'small' }} />
+                  <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', color: 'rgba(255,255,255,0.9)' }}>
+                    <CalendarToday sx={{ mr: 1, fontSize: 'small', color: 'rgba(255,255,255,0.7)' }} />
                     {profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : t('profile.notProvided')}
                   </Typography>
                 </Box>
@@ -206,58 +224,58 @@ export default function ProfilePage() {
 
           {/* Account Statistics */}
           <Grid item xs={12} md={6}>
-            <Card>
+            <Card className="viewer-profile-card" sx={cardSx}>
               <CardContent>
-                <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                  <TrendingUp sx={{ mr: 1 }} />
+                <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', mb: 3, color: 'rgba(255,255,255,0.95)' }}>
+                  <TrendingUp sx={{ mr: 1, color: '#60a5fa' }} />
                   {t('profile.accountStatistics')}
                 </Typography>
-                
+
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <Paper variant="outlined" sx={{ p: 2, textAlign: 'center' }}>
-                      <AccountBalance color="primary" sx={{ fontSize: 40, mb: 1 }} />
-                      <Typography variant="h6" color="primary" fontWeight="bold">
+                    <Paper variant="outlined" sx={{ p: 2, textAlign: 'center', bgcolor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)' }}>
+                      <AccountBalance sx={{ fontSize: 40, mb: 1, color: '#60a5fa' }} />
+                      <Typography variant="h6" fontWeight="bold" sx={{ color: 'rgba(255,255,255,0.95)' }}>
                         {typeof stats?.currentBalance === 'number' ? formatKWD(stats.currentBalance) : (profile?.wallet?.balance ? formatKWD(profile.wallet.balance) : '0.000')} {t('currency.kwd')}
                       </Typography>
-                      <Typography variant="caption" color="textSecondary">
+                      <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)' }}>
                         {t('profile.balance')}
                       </Typography>
                     </Paper>
                   </Grid>
-                  
+
                   <Grid item xs={6}>
-                    <Paper variant="outlined" sx={{ p: 2, textAlign: 'center' }}>
-                      <Visibility color="success" sx={{ fontSize: 40, mb: 1 }} />
-                      <Typography variant="h6" color="success.main" fontWeight="bold">
+                    <Paper variant="outlined" sx={{ p: 2, textAlign: 'center', bgcolor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)' }}>
+                      <Visibility sx={{ fontSize: 40, mb: 1, color: '#86efac' }} />
+                      <Typography variant="h6" fontWeight="bold" sx={{ color: 'rgba(255,255,255,0.95)' }}>
                         {stats?.totalViews || 0}
                       </Typography>
-                      <Typography variant="caption" color="textSecondary">
+                      <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)' }}>
                         {t('profile.totalViews')}
                       </Typography>
                     </Paper>
                   </Grid>
-                  
+
                   <Grid item xs={6}>
-                    <Paper variant="outlined" sx={{ p: 2, textAlign: 'center' }}>
-                      <AttachMoney color="warning" sx={{ fontSize: 40, mb: 1 }} />
-                      <Typography variant="h6" color="warning.main" fontWeight="bold">
+                    <Paper variant="outlined" sx={{ p: 2, textAlign: 'center', bgcolor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)' }}>
+                      <AttachMoney sx={{ fontSize: 40, mb: 1, color: '#fbbf24' }} />
+                      <Typography variant="h6" fontWeight="bold" sx={{ color: 'rgba(255,255,255,0.95)' }}>
                         {typeof stats?.totalRewards === 'number' ? formatKWD(stats.totalRewards) : '0.000'} {t('currency.kwd')}
                       </Typography>
-                      <Typography variant="caption" color="textSecondary">
-                                                 {t('profile.totalEarned')}
+                      <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)' }}>
+                        {t('profile.totalEarned')}
                       </Typography>
                     </Paper>
                   </Grid>
-                  
+
                   <Grid item xs={6}>
-                    <Paper variant="outlined" sx={{ p: 2, textAlign: 'center' }}>
-                      <TrendingUp color="info" sx={{ fontSize: 40, mb: 1 }} />
-                      <Typography variant="h6" color="warning.main" fontWeight="bold">
+                    <Paper variant="outlined" sx={{ p: 2, textAlign: 'center', bgcolor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)' }}>
+                      <TrendingUp sx={{ fontSize: 40, mb: 1, color: '#93c5fd' }} />
+                      <Typography variant="h6" fontWeight="bold" sx={{ color: 'rgba(255,255,255,0.95)' }}>
                         {stats?.totalViews || 0}
                       </Typography>
-                      <Typography variant="caption" color="textSecondary">
-                                                 {t('profile.videosWatched')}
+                      <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)' }}>
+                        {t('profile.videosWatched')}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -268,38 +286,46 @@ export default function ProfilePage() {
 
           {/* Account Status */}
           <Grid item xs={12}>
-            <Card>
+            <Card className="viewer-profile-card" sx={cardSx}>
               <CardContent>
-                <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
-                                     {t('profile.accountStatus')}
+                <Typography variant="h6" gutterBottom sx={{ mb: 3, color: 'rgba(255,255,255,0.95)' }}>
+                  {t('profile.accountStatus')}
                 </Typography>
-                
+
                 <Box display="flex" flexWrap="wrap" gap={2}>
-                  <Chip 
+                  <Chip
                     label={profile.is_active ? t('profile.active') : t('profile.inactive')}
-                    color={profile.is_active ? "success" : "error"}
                     variant="outlined"
                     icon={profile.is_active ? <CheckCircle /> : null}
+                    sx={{
+                      borderColor: profile.is_active ? 'rgba(34,197,94,0.5)' : 'rgba(239,68,68,0.5)',
+                      color: profile.is_active ? '#86efac' : '#fca5a5',
+                      '& .MuiChip-icon': { color: 'inherit' }
+                    }}
                   />
-                  
-                  <Chip 
+                  <Chip
                     label={profile.kyc_status === 'verified' ? t('profile.verified') : t('profile.pending')}
-                    color={profile.kyc_status === 'verified' ? "primary" : "warning"}
                     variant="outlined"
+                    sx={{
+                      borderColor: profile.kyc_status === 'verified' ? 'rgba(59,130,246,0.5)' : 'rgba(251,191,36,0.5)',
+                      color: profile.kyc_status === 'verified' ? '#93c5fd' : '#fbbf24'
+                    }}
                   />
-                  
-                  <Chip 
+                  <Chip
                     label={profile.kyc_status === 'verified' ? t('profile.eligibleForRewards') : t('profile.verificationRequired')}
-                    color={profile.kyc_status === 'verified' ? "warning" : "default"}
                     variant="outlined"
+                    sx={{
+                      borderColor: 'rgba(255,255,255,0.3)',
+                      color: 'rgba(255,255,255,0.8)'
+                    }}
                   />
                 </Box>
-                
-                <Divider sx={{ my: 3 }} />
-                
-                <Typography variant="body2" color="textSecondary">
-                  {profile.kyc_status === 'verified' 
-                    ? t('profile.accountStatusDescription') 
+
+                <Divider sx={{ my: 3, borderColor: 'rgba(255,255,255,0.1)' }} />
+
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                  {profile.kyc_status === 'verified'
+                    ? t('profile.accountStatusDescription')
                     : t('profile.verificationRequiredDescription')}
                 </Typography>
               </CardContent>

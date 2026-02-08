@@ -17,7 +17,7 @@ const globalStyles = css`
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #f8f9fa;
+    background-color: transparent;
     color: #1a1a1a;
     line-height: 1.6;
   }
@@ -394,14 +394,14 @@ const globalStyles = css`
   }
   
   body {
-    background-color: #f8f9fa !important;
+    background-color: transparent !important;
     color: #1a1a1a !important;
     color-scheme: light !important;
   }
   
   /* Override Material-UI CssBaseline dark mode */
   .MuiCssBaseline-root {
-    background-color: #f8f9fa !important;
+    background-color: transparent !important;
     color: #1a1a1a !important;
   }
   
@@ -414,6 +414,60 @@ const globalStyles = css`
     background-color: #ffffff !important;
     color: #1a1a1a !important;
     border-color: #e0e0e0 !important;
+  }
+
+  /* Viewer section cards – dark theme override */
+  .viewer-section-card.MuiCard-root {
+    background-color: rgba(255,255,255,0.06) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    color: rgba(255,255,255,0.95) !important;
+  }
+
+  /* Viewer credit page cards – dark theme override */
+  .viewer-credit-card.MuiCard-root {
+    background-color: rgba(255,255,255,0.06) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    color: rgba(255,255,255,0.95) !important;
+  }
+
+  /* Viewer profile page cards – dark theme override */
+  .viewer-profile-card.MuiCard-root {
+    background-color: rgba(255,255,255,0.06) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    color: rgba(255,255,255,0.95) !important;
+  }
+
+  /* Viewer credit page TextField – dark theme, synced with palette */
+  .viewer-credit-card .MuiTextField-root .MuiOutlinedInput-root {
+    background-color: rgba(255,255,255,0.06) !important;
+    color: rgba(255,255,255,0.95) !important;
+  }
+  .viewer-credit-card .MuiTextField-root .MuiOutlinedInput-root input,
+  .viewer-credit-card .MuiTextField-root .MuiOutlinedInput-root .MuiInputBase-input {
+    color: rgba(255,255,255,0.95) !important;
+  }
+  .viewer-credit-card .MuiTextField-root .MuiOutlinedInput-root input::placeholder {
+    color: rgba(255,255,255,0.45) !important;
+    opacity: 1;
+  }
+  .viewer-credit-card .MuiTextField-root .MuiOutlinedInput-root fieldset {
+    border-color: rgba(255,255,255,0.15) !important;
+  }
+  .viewer-credit-card .MuiTextField-root .MuiOutlinedInput-root:hover fieldset {
+    border-color: rgba(96,165,250,0.5) !important;
+  }
+  .viewer-credit-card .MuiTextField-root .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #60a5fa !important;
+    border-width: 2px !important;
+  }
+  .viewer-credit-card .MuiTextField-root .MuiInputLabel-root {
+    color: rgba(255,255,255,0.6) !important;
+  }
+  .viewer-credit-card .MuiTextField-root .MuiInputLabel-root.Mui-focused {
+    color: #93c5fd !important;
+  }
+  .viewer-credit-card .MuiInputAdornment-root .MuiTypography-root {
+    color: rgba(255,255,255,0.6) !important;
   }
   
   .MuiAppBar-root {
@@ -506,7 +560,7 @@ const globalStyles = css`
     }
     
     html, body {
-      background-color: #f8f9fa !important;
+      background-color: transparent !important;
       color: #1a1a1a !important;
       color-scheme: light !important;
     }

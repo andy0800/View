@@ -12,6 +12,7 @@ import './styles/arabicStyles.css';
 import './styles/fontOptimizations.css';
 import GlobalStyles from './styles/globalStyles.jsx';
 import './styles/mobileOptimizations.css';
+import './styles/viewerCreditOverrides.css';
 
 // Register service worker
 if ('serviceWorker' in navigator) {
@@ -26,9 +27,16 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Fixed full-page animated gradient background for the whole project
+function AnimatedBackground() {
+  return (
+    <div className="fixed inset-0 -z-10 min-h-screen w-full overflow-hidden animate-gradient" />
+  );
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // Removed React.StrictMode to prevent double mounting
   <>
+    <AnimatedBackground />
     <CssBaseline enableColorScheme={false} />
     <GlobalStyles />
     <HashRouter>

@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Animated gradient background */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background: linear-gradient(
+    -45deg,
+    #0f0f1a,
+    #1a1a2e,
+    #16213e,
+    #0f3460,
+    #1a1a2e,
+    #0f0f1a
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 12s ease infinite;
+}
+
 @layer base {
   :root {
     font-family: "Inter", "Poppins", "Cairo", "Noto Sans Arabic", "Roboto", "Helvetica", "Arial", sans-serif;

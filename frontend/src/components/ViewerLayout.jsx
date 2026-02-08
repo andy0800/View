@@ -229,7 +229,7 @@ export default function ViewerLayout() {
   };
 
   return (
-    <div dir={isRTL ? 'rtl' : 'ltr'} className={cn('flex min-h-screen bg-slate-50', isRTL && 'font-arabic')}>
+    <div dir={isRTL ? 'rtl' : 'ltr'} className={cn('flex min-h-screen bg-transparent', isRTL && 'font-arabic')}>
 
       {/* ═══════════ Desktop sidebar ═══════════ */}
       <aside
@@ -284,7 +284,7 @@ export default function ViewerLayout() {
       {/* ═══════════ Main column ═══════════ */}
       <div className={cn('flex min-h-screen flex-1 flex-col', isRTL ? 'md:mr-[280px]' : 'md:ml-[280px]')}>
 
-        {/* ── Sticky header bar ── */}
+        {/* ── Sticky header bar (hidden) ──
         <motion.header
           className="sticky top-0 z-30 border-b border-slate-200/60 bg-white/80 backdrop-blur-xl"
           initial={{ y: -20, opacity: 0 }}
@@ -293,7 +293,7 @@ export default function ViewerLayout() {
         >
           <div className="flex items-center gap-3 px-4 py-3 md:px-6">
 
-            {/* Mobile hamburger */}
+            Mobile hamburger
             <motion.button
               whileTap={{ scale: 0.9 }}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm md:hidden"
@@ -303,7 +303,7 @@ export default function ViewerLayout() {
               <Menu className="h-5 w-5 text-slate-700" />
             </motion.button>
 
-            {/* Brand mark (small) */}
+            Brand mark (small)
             <div className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shadow-md shadow-blue-600/20">
                 <Play className="h-3.5 w-3.5" fill="white" />
@@ -313,10 +313,10 @@ export default function ViewerLayout() {
               </div>
             </div>
 
-            {/* Spacer */}
+            Spacer
             <div className="flex-1" />
 
-            {/* Desktop earn badge */}
+            Desktop earn badge
             <div className="hidden lg:flex items-center">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
                 <Sparkles className="h-3.5 w-3.5" />
@@ -324,13 +324,13 @@ export default function ViewerLayout() {
               </span>
             </div>
 
-            {/* Credit bar */}
+            Credit bar
             <CreditBar />
 
-            {/* Language */}
+            Language
             <LanguageSwitcher variant="icon" />
 
-            {/* User avatar */}
+            User avatar
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white shadow-md shadow-blue-600/20 cursor-default"
@@ -340,9 +340,24 @@ export default function ViewerLayout() {
             </motion.div>
           </div>
         </motion.header>
+        */}
+
+        {/* ── Mobile hamburger (floating) ── */}
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setMobileOpen(true)}
+          aria-label="Open menu"
+          className={cn(
+            'fixed top-4 z-40 flex h-11 w-11 items-center justify-center rounded-xl',
+            'bg-white/10 backdrop-blur-md ring-1 ring-white/20 shadow-lg md:hidden',
+            isRTL ? 'right-4' : 'left-4'
+          )}
+        >
+          <Menu className="h-5 w-5 text-white" />
+        </motion.button>
 
         {/* ── Page content ── */}
-        <main className="flex-1 px-4 py-5 md:px-6 md:py-6">
+        <main className="flex-1 px-4 pt-20 pb-5 md:px-6 md:pt-6 md:pb-6">
           <Outlet />
         </main>
       </div>

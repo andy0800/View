@@ -154,7 +154,7 @@ export default function AllAdsTab() {
 
   /* ── Main content ── */
   return (
-    <div dir={isRTL ? 'rtl' : 'ltr'} className="relative min-h-screen bg-slate-50">
+    <div dir={isRTL ? 'rtl' : 'ltr'} className="relative min-h-screen bg-transparent">
       <TikTokVideoPlayer
         videos={videos}
         onVideoComplete={handleVideoComplete}

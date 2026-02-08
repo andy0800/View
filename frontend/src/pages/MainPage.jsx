@@ -49,7 +49,7 @@ const fontStack = '"Inter", "Poppins", "Cairo", "Noto Sans Arabic", "Roboto", "H
 
 const ErrorState = ({ message, onRetry, isRTL }) => (
   <Box sx={{ textAlign: 'center', py: 4 }}>
-    <Typography variant="h6" color="error" gutterBottom sx={{ fontFamily: fontStack }}>
+    <Typography variant="h6" gutterBottom sx={{ fontFamily: fontStack, color: '#fca5a5' }}>
       {message}
     </Typography>
     <Button
@@ -61,6 +61,9 @@ const ErrorState = ({ message, onRetry, isRTL }) => (
         mt: 2,
         borderRadius: 2,
         textTransform: 'none',
+        borderColor: 'rgba(255,255,255,0.3)',
+        color: 'rgba(255,255,255,0.9)',
+        '&:hover': { borderColor: 'rgba(255,255,255,0.5)', backgroundColor: 'rgba(255,255,255,0.05)' },
         '&:active': { transform: 'scale(0.98)' }
       }}
     >
@@ -71,8 +74,8 @@ const ErrorState = ({ message, onRetry, isRTL }) => (
 
 const LoadingState = ({ label }) => (
   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 6 }}>
-    <CircularProgress size={38} />
-    <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary', fontFamily: fontStack }}>
+    <CircularProgress size={38} sx={{ color: 'rgba(255,255,255,0.8)' }} />
+    <Typography variant="body2" sx={{ mt: 2, color: 'rgba(255,255,255,0.7)', fontFamily: fontStack }}>
       {label}
     </Typography>
   </Box>
@@ -80,20 +83,25 @@ const LoadingState = ({ label }) => (
 
 const SectionCard = ({ section, count, onClick, isRTL }) => (
   <Card
+    className="viewer-section-card"
     onClick={onClick}
     role="button"
     aria-label={section.title}
     sx={{
       height: '100%',
+      minHeight: 320,
+      display: 'flex',
+      flexDirection: 'column',
       cursor: 'pointer',
       borderRadius: 3,
       overflow: 'hidden',
-      bgcolor: 'background.paper',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
-      transition: 'transform 200ms ease, box-shadow 200ms ease',
+      backdropFilter: 'blur(12px)',
+      boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+      transition: 'transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease',
       '&:hover': {
         transform: 'translateY(-6px)',
-        boxShadow: '0 18px 40px rgba(0,0,0,0.14)'
+        boxShadow: '0 12px 32px rgba(0,0,0,0.3)',
+        backgroundColor: 'rgba(255,255,255,0.1) !important'
       },
       '&:active': { transform: 'translateY(-2px) scale(0.99)' }
     }}
@@ -101,53 +109,75 @@ const SectionCard = ({ section, count, onClick, isRTL }) => (
     <CardMedia
       component="div"
       sx={{
-        height: 130,
+        height: 120,
+        minHeight: 120,
         backgroundColor: section.color,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'white'
+        color: 'white',
+        flexShrink: 0
       }}
     >
-      <Box sx={{ fontSize: 46 }}>
+      <Box sx={{ fontSize: 40 }}>
         {section.icon}
       </Box>
     </CardMedia>
-    <CardContent sx={{ textAlign: isRTL ? 'right' : 'left' }}>
+    <CardContent
+      sx={{
+        textAlign: isRTL ? 'right' : 'left',
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        py: 2,
+        '&:last-child': { pb: 2 }
+      }}
+    >
       <Typography
         variant="h6"
         sx={{
           fontWeight: 700,
           mb: 1,
-          color: 'text.primary',
-          fontFamily: fontStack
+          color: 'rgba(255,255,255,0.95)',
+          fontFamily: fontStack,
+          fontSize: '1.1rem',
+          lineHeight: 1.3
         }}
       >
         {section.title}
       </Typography>
       <Typography
         variant="body2"
-        color="text.secondary"
-        sx={{ mb: 2, minHeight: 40, fontFamily: fontStack }}
+        sx={{
+          mb: 2,
+          flex: 1,
+          fontFamily: fontStack,
+          color: 'rgba(255,255,255,0.7)',
+          fontSize: '0.875rem',
+          lineHeight: 1.5,
+          display: '-webkit-box',
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden'
+        }}
       >
         {section.description}
       </Typography>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap', mt: 'auto' }}>
         <Chip
           label={`${count || 0} ${section.videosLabel}`}
-          color="primary"
           variant="outlined"
           size="small"
           sx={{
             fontWeight: 600,
-            borderColor: section.color,
-            color: section.color
+            borderColor: 'rgba(255,255,255,0.3)',
+            color: 'rgba(255,255,255,0.9)',
+            backgroundColor: 'rgba(255,255,255,0.06)'
           }}
         />
         <Typography
           variant="caption"
-          color="text.secondary"
-          sx={{ opacity: 0.7, fontFamily: fontStack }}
+          sx={{ fontFamily: fontStack, color: 'rgba(255,255,255,0.6)', fontSize: '0.75rem' }}
         >
           {count > 0 ? section.availableLabel : section.emptyLabel}
         </Typography>
@@ -240,7 +270,7 @@ export default function MainPage() {
       dir={isRTL ? 'rtl' : 'ltr'}
       sx={{ 
         minHeight: '100vh', 
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: 'transparent',
         padding: { xs: 2, sm: 3, md: 4 },
         fontFamily: fontStack
       }}
@@ -261,7 +291,7 @@ export default function MainPage() {
           variant={isMobile ? 'h4' : 'h3'} 
           sx={{ 
             fontWeight: 700, 
-            color: theme.palette.primary.main,
+            color: 'rgba(255,255,255,0.95)',
             mb: 1.5,
             fontFamily: fontStack
           }}
@@ -270,8 +300,7 @@ export default function MainPage() {
         </Typography>
         <Typography 
           variant="h6" 
-          color="text.secondary"
-          sx={{ maxWidth: 720, fontFamily: fontStack }}
+          sx={{ maxWidth: 720, fontFamily: fontStack, color: 'rgba(255,255,255,0.7)' }}
         >
           {t('viewer.welcomeSubtitle')}
         </Typography>
@@ -284,41 +313,43 @@ export default function MainPage() {
           maxWidth: 820, 
           mx: 'auto', 
           mb: { xs: 3, md: 4 },
-          backgroundColor: 'background.paper',
+          backgroundColor: 'rgba(255,255,255,0.06)',
+          backdropFilter: 'blur(12px)',
           borderRadius: 3,
-          boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
           overflow: 'hidden',
-          border: '1px solid rgba(0,0,0,0.05)'
+          border: '1px solid rgba(255,255,255,0.1)'
         }}
       >
         <Tabs 
           value={activeTab} 
           onChange={(e, newValue) => setActiveTab(newValue)}
           variant="fullWidth"
-          TabIndicatorProps={{ sx: { height: 3, borderRadius: 2 } }}
+          TabIndicatorProps={{ sx: { height: 3, borderRadius: 2, bgcolor: '#60a5fa' } }}
           sx={{
             '& .MuiTab-root': {
               fontSize: { xs: '0.95rem', sm: '1rem', md: '1.05rem' },
               fontWeight: 600,
               textTransform: 'none',
               py: { xs: 1.5, sm: 1.75, md: 2 },
-              fontFamily: fontStack
+              fontFamily: fontStack,
+              color: 'rgba(255,255,255,0.6)'
             },
             '& .Mui-selected': {
-              color: theme.palette.primary.main
+              color: '#93c5fd !important'
             }
           }}
         >
           <Tab 
             label={t('viewer.allAds')} 
             sx={{ 
-              borderBottom: activeTab === 0 ? `3px solid ${theme.palette.primary.main}` : 'none'
+              borderBottom: activeTab === 0 ? '3px solid #60a5fa' : 'none'
             }}
           />
           <Tab 
             label={t('viewer.sections')}
             sx={{ 
-              borderBottom: activeTab === 1 ? `3px solid ${theme.palette.primary.main}` : 'none'
+              borderBottom: activeTab === 1 ? '3px solid #60a5fa' : 'none'
             }}
           />
         </Tabs>
@@ -339,7 +370,7 @@ export default function MainPage() {
               fontWeight: 600, 
               mb: { xs: 2, md: 3 }, 
               textAlign: isRTL ? 'right' : 'left',
-              color: theme.palette.text.primary,
+              color: 'rgba(255,255,255,0.9)',
               maxWidth: 980,
               mx: 'auto',
               fontFamily: fontStack
@@ -358,19 +389,19 @@ export default function MainPage() {
             }} />
           ) : businessSections.length === 0 ? (
             <Box sx={{ textAlign: 'center', py: 4 }}>
-              <Typography variant="h6" color="text.secondary" sx={{ fontFamily: fontStack }}>
+              <Typography variant="h6" sx={{ fontFamily: fontStack, color: 'rgba(255,255,255,0.8)' }}>
                 {t('viewer.noBusinessSections')}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ fontFamily: fontStack }}>
+              <Typography variant="body2" sx={{ fontFamily: fontStack, color: 'rgba(255,255,255,0.6)' }}>
                 {t('viewer.checkBackLater')}
               </Typography>
             </Box>
           ) : (
             <Grid container spacing={isTablet ? 2.5 : 3}>
               {businessSections.map((section, index) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={section.key}>
+                <Grid item xs={12} sm={6} md={4} lg={3} key={section.key} sx={{ display: 'flex' }}>
                   <Grow in timeout={220 + index * 40}>
-                    <Box>
+                    <Box sx={{ width: '100%', minHeight: 320 }}>
                       <SectionCard
                         section={section}
                         count={sectionVideoCounts[section.key]}

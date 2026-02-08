@@ -51,9 +51,9 @@ export default function CreditBar() {
   /* ── Loading skeleton ── */
   if (loading && credit === 0) {
     return (
-      <div className="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-1.5">
-        <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
-        <span className="text-xs text-slate-500">Loading credit...</span>
+      <div className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-1.5 ring-1 ring-white/20">
+        <Loader2 className="h-4 w-4 animate-spin text-blue-400" />
+        <span className="text-xs text-white/60">Loading credit...</span>
       </div>
     );
   }
@@ -81,31 +81,31 @@ export default function CreditBar() {
       {/* ── Main credit pill ── */}
       <motion.div
         layout
-        className="flex items-center gap-1.5 rounded-xl bg-slate-100/80 ring-1 ring-slate-200/60 transition-colors hover:bg-slate-100"
+        className="flex items-center gap-1.5 rounded-xl bg-white/10 ring-1 ring-white/20 transition-colors hover:bg-white/[0.14]"
       >
         {/* Balance section */}
         <div className="flex items-center gap-1.5 py-1.5 pl-3 pr-1">
-          <Wallet className="h-4 w-4 text-blue-600" />
+          <Wallet className="h-4 w-4 text-amber-400" />
           <motion.span
             key={getCreditFormatted()}
             initial={{ y: -6, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-sm font-semibold text-blue-700 tabular-nums"
+            className="text-sm font-semibold text-white tabular-nums"
           >
             {getCreditFormatted()}
           </motion.span>
 
           {/* Micro units badge – desktop only */}
-          <span className="hidden lg:inline-flex items-center rounded-md bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-500 ring-1 ring-slate-200">
+          <span className="hidden lg:inline-flex items-center rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] font-medium text-white/60 ring-1 ring-white/20">
             {getCreditFormattedMicro()}
           </span>
         </div>
 
         {/* Divider */}
-        <div className="h-5 w-px bg-slate-200" />
+        <div className="h-5 w-px bg-white/20" />
 
         {/* Last updated – desktop only */}
-        <span className="hidden md:block px-1 text-[10px] text-slate-400 tabular-nums">
+        <span className="hidden md:block px-1 text-[10px] text-white/50 tabular-nums">
           {formatLastUpdated()}
         </span>
 
@@ -118,7 +118,7 @@ export default function CreditBar() {
           aria-label="Refresh credit"
           className={cn(
             'flex h-7 w-7 items-center justify-center rounded-lg transition-colors',
-            'text-slate-400 hover:bg-slate-200/70 hover:text-blue-600',
+            'text-white/50 hover:bg-white/10 hover:text-amber-400',
             loading && 'pointer-events-none'
           )}
         >
@@ -137,8 +137,8 @@ export default function CreditBar() {
           className={cn(
             'flex h-7 w-7 items-center justify-center rounded-lg transition-colors mr-1',
             showDetails
-              ? 'bg-blue-100 text-blue-600'
-              : 'text-slate-400 hover:bg-slate-200/70 hover:text-blue-600'
+              ? 'bg-amber-500/20 text-amber-400'
+              : 'text-white/50 hover:bg-white/10 hover:text-amber-400'
           )}
         >
           <Info className="h-3.5 w-3.5" />
