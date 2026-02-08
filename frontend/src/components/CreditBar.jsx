@@ -1,37 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Typography,
-  Chip,
-  IconButton,
-  Tooltip,
-  useTheme,
-  useMediaQuery,
-  Fade,
-  CircularProgress,
-  Alert,
-  Collapse
-} from '@mui/material';
-import {
-  AccountBalanceWallet,
-  Refresh,
-  TrendingUp,
-  TrendingDown,
-  Info,
-  Close
-} from '@mui/icons-material';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Wallet, RefreshCw, Info, X, TrendingUp, TrendingDown, Loader2 } from 'lucide-react';
 import { useCredit } from '../contexts/CreditContext';
 import { formatKWD } from '../utils/currencyUtils';
+import { cn } from '../lib/utils';
 
 export default function CreditBar() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const { 
-    credit, 
-    creditMicro, 
-    loading, 
-    error, 
-    lastUpdated, 
+  const {
+    credit,
+    creditMicro,
+    loading,
+    error,
+    lastUpdated,
     refreshCredit,
     getCreditFormatted,
     getCreditFormattedMicro
@@ -39,17 +19,6 @@ export default function CreditBar() {
 
   const [showDetails, setShowDetails] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [lastChange, setLastChange] = useState(null);
-  const [changeDirection, setChangeDirection] = useState(null);
-
-  // Track credit changes for animation
-  useEffect(() => {
-    if (lastUpdated) {
-      setLastChange(new Date());
-      // Determine change direction (this is a simplified approach)
-      setChangeDirection('stable'); // In a real app, you'd compare with previous value
-    }
-  }, [credit, lastUpdated]);
 
   // Auto-hide error after 5 seconds
   useEffect(() => {
@@ -70,294 +39,165 @@ export default function CreditBar() {
 
   const formatLastUpdated = () => {
     if (!lastUpdated) return 'Never';
-    
     const now = new Date();
     const diff = now - lastUpdated;
     const seconds = Math.floor(diff / 1000);
-    
     if (seconds < 60) return `${seconds}s ago`;
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
     if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
     return lastUpdated.toLocaleDateString();
   };
 
-  const getChangeIcon = () => {
-    switch (changeDirection) {
-      case 'up':
-        return <TrendingUp color="success" fontSize="small" />;
-      case 'down':
-        return <TrendingDown color="error" fontSize="small" />;
-      default:
-        return null;
-    }
-  };
-
-  const getChangeColor = () => {
-    switch (changeDirection) {
-      case 'up':
-        return theme.palette.success.main;
-      case 'down':
-        return theme.palette.error.main;
-      default:
-        return theme.palette.text.secondary;
-    }
-  };
-
+  /* ── Loading skeleton ── */
   if (loading && credit === 0) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          p: 1,
-          bgcolor: 'background.paper',
-          borderBottom: `1px solid ${theme.palette.divider}`,
-          minHeight: '48px'
-        }}
-      >
-        <CircularProgress size={20} />
-        <Typography variant="body2" sx={{ ml: 1 }}>
-          Loading credit...
-        </Typography>
-      </Box>
+      <div className="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-1.5">
+        <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+        <span className="text-xs text-slate-500">Loading credit...</span>
+      </div>
     );
   }
 
   return (
-    <>
-      {/* Error Alert */}
-      <Collapse in={showError}>
-        <Alert
-          severity="error"
-          action={
-            <IconButton
-              color="inherit"
-              size="small"
-              onClick={() => setShowError(false)}
-            >
-              <Close fontSize="inherit" />
-            </IconButton>
-          }
-          sx={{ mb: 1 }}
-        >
-          {error}
-        </Alert>
-      </Collapse>
+    <div className="relative flex items-center">
 
-      {/* Main Credit Bar */}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          p: isMobile ? 1 : 1.5,
-          bgcolor: 'background.paper',
-          borderBottom: `1px solid ${theme.palette.divider}`,
-          minHeight: '48px',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
-      >
-        {/* Left Side - Credit Display */}
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 1
-          }}
-        >
-          <AccountBalanceWallet 
-            color="primary" 
-            sx={{ fontSize: isMobile ? 20 : 24 }}
-          />
-          
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-            <Typography
-              variant={isMobile ? 'body2' : 'body1'}
-              sx={{
-                fontWeight: 600,
-                color: theme.palette.primary.main,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 0.5
-              }}
-            >
-              {getCreditFormatted()}
-              {getChangeIcon()}
-            </Typography>
-            
-            {!isMobile && (
-              <Chip
-                label={getCreditFormattedMicro()}
-                size="small"
-                variant="outlined"
-                sx={{
-                  fontSize: '0.7rem',
-                  height: '20px',
-                  '& .MuiChip-label': {
-                    px: 1,
-                    py: 0.2
-                  }
-                }}
-              />
-            )}
-          </Box>
-        </Box>
-
-        {/* Right Side - Actions & Info */}
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 1
-          }}
-        >
-          {/* Last Updated */}
-          {!isMobile && (
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ fontSize: '0.7rem' }}
-            >
-              {formatLastUpdated()}
-            </Typography>
-          )}
-
-          {/* Refresh Button */}
-          <Tooltip title="Refresh credit">
-            <IconButton
-              size="small"
-              onClick={handleRefresh}
-              disabled={loading}
-              sx={{
-                color: theme.palette.text.secondary,
-                '&:hover': {
-                  color: theme.palette.primary.main
-                }
-              }}
-            >
-              {loading ? (
-                <CircularProgress size={16} />
-              ) : (
-                <Refresh fontSize="small" />
-              )}
-            </IconButton>
-          </Tooltip>
-
-          {/* Details Toggle */}
-          <Tooltip title={showDetails ? 'Hide details' : 'Show details'}>
-            <IconButton
-              size="small"
-              onClick={() => setShowDetails(!showDetails)}
-              sx={{
-                color: showDetails ? theme.palette.primary.main : theme.palette.text.secondary,
-                '&:hover': {
-                  color: theme.palette.primary.main
-                }
-              }}
-            >
-              <Info fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </Box>
-
-        {/* Change Animation Overlay */}
-        {lastChange && (
-          <Fade in={true} timeout={500}>
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 1,
-                pointerEvents: 'none'
-              }}
-            >
-              <Typography
-                variant="caption"
-                sx={{
-                  color: getChangeColor(),
-                  fontWeight: 600,
-                  textShadow: '0 0 8px rgba(0,0,0,0.3)',
-                  animation: 'fadeInOut 2s ease-in-out'
-                }}
-              >
-                {getChangeIcon()}
-              </Typography>
-            </Box>
-          </Fade>
+      {/* ── Error toast ── */}
+      <AnimatePresence>
+        {showError && error && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="absolute top-full mt-2 right-0 z-50 flex items-center gap-2 rounded-xl bg-red-50 px-3 py-2 text-xs text-red-700 shadow-lg ring-1 ring-red-200"
+          >
+            <span className="truncate max-w-[200px]">{error}</span>
+            <button onClick={() => setShowError(false)} className="shrink-0">
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </motion.div>
         )}
-      </Box>
+      </AnimatePresence>
 
-      {/* Details Panel */}
-      <Collapse in={showDetails}>
-        <Box
-          sx={{
-            p: 2,
-            bgcolor: 'background.default',
-            borderBottom: `1px solid ${theme.palette.divider}`,
-            borderTop: `1px solid ${theme.palette.divider}`
-          }}
+      {/* ── Main credit pill ── */}
+      <motion.div
+        layout
+        className="flex items-center gap-1.5 rounded-xl bg-slate-100/80 ring-1 ring-slate-200/60 transition-colors hover:bg-slate-100"
+      >
+        {/* Balance section */}
+        <div className="flex items-center gap-1.5 py-1.5 pl-3 pr-1">
+          <Wallet className="h-4 w-4 text-blue-600" />
+          <motion.span
+            key={getCreditFormatted()}
+            initial={{ y: -6, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="text-sm font-semibold text-blue-700 tabular-nums"
+          >
+            {getCreditFormatted()}
+          </motion.span>
+
+          {/* Micro units badge – desktop only */}
+          <span className="hidden lg:inline-flex items-center rounded-md bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-500 ring-1 ring-slate-200">
+            {getCreditFormattedMicro()}
+          </span>
+        </div>
+
+        {/* Divider */}
+        <div className="h-5 w-px bg-slate-200" />
+
+        {/* Last updated – desktop only */}
+        <span className="hidden md:block px-1 text-[10px] text-slate-400 tabular-nums">
+          {formatLastUpdated()}
+        </span>
+
+        {/* Refresh */}
+        <motion.button
+          whileTap={{ rotate: 180 }}
+          transition={{ duration: 0.3 }}
+          onClick={handleRefresh}
+          disabled={loading}
+          aria-label="Refresh credit"
+          className={cn(
+            'flex h-7 w-7 items-center justify-center rounded-lg transition-colors',
+            'text-slate-400 hover:bg-slate-200/70 hover:text-blue-600',
+            loading && 'pointer-events-none'
+          )}
         >
-          <Typography variant="subtitle2" gutterBottom>
-            Credit Details
-          </Typography>
-          
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography variant="body2" color="text.secondary">
-                Balance (KWD):
-              </Typography>
-              <Typography variant="body2" fontWeight="600">
-                {getCreditFormatted()}
-              </Typography>
-            </Box>
-            
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography variant="body2" color="text.secondary">
-                Balance (Micro):
-              </Typography>
-              <Typography variant="body2" fontWeight="600">
-                {getCreditFormattedMicro()}
-              </Typography>
-            </Box>
-            
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography variant="body2" color="text.secondary">
-                Last Updated:
-              </Typography>
-              <Typography variant="body2">
-                {lastUpdated ? lastUpdated.toLocaleString() : 'Never'}
-              </Typography>
-            </Box>
-            
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography variant="body2" color="text.secondary">
-                Status:
-              </Typography>
-              <Chip
-                label={loading ? 'Loading' : error ? 'Error' : 'Active'}
-                size="small"
-                color={loading ? 'warning' : error ? 'error' : 'success'}
-                variant="outlined"
-              />
-            </Box>
-          </Box>
-        </Box>
-      </Collapse>
+          {loading ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            <RefreshCw className="h-3.5 w-3.5" />
+          )}
+        </motion.button>
 
-      {/* CSS Animation */}
-      <style>
-        {`
-          @keyframes fadeInOut {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
-          }
-        `}
-      </style>
-    </>
+        {/* Info toggle */}
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setShowDetails(!showDetails)}
+          aria-label="Show details"
+          className={cn(
+            'flex h-7 w-7 items-center justify-center rounded-lg transition-colors mr-1',
+            showDetails
+              ? 'bg-blue-100 text-blue-600'
+              : 'text-slate-400 hover:bg-slate-200/70 hover:text-blue-600'
+          )}
+        >
+          <Info className="h-3.5 w-3.5" />
+        </motion.button>
+      </motion.div>
+
+      {/* ── Details popover ── */}
+      <AnimatePresence>
+        {showDetails && (
+          <motion.div
+            initial={{ opacity: 0, y: 6, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.96 }}
+            transition={{ duration: 0.15 }}
+            className="absolute top-full right-0 z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl"
+          >
+            <p className="mb-3 text-xs font-semibold text-slate-800">Credit Details</p>
+            <div className="space-y-2.5">
+              <DetailRow label="Balance (KWD)" value={getCreditFormatted()} highlight />
+              <DetailRow label="Balance (Micro)" value={getCreditFormattedMicro()} />
+              <DetailRow
+                label="Last Updated"
+                value={lastUpdated ? lastUpdated.toLocaleString() : 'Never'}
+              />
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] text-slate-500">Status</span>
+                <span
+                  className={cn(
+                    'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ring-1',
+                    loading
+                      ? 'bg-amber-50 text-amber-700 ring-amber-200'
+                      : error
+                        ? 'bg-red-50 text-red-700 ring-red-200'
+                        : 'bg-emerald-50 text-emerald-700 ring-emerald-200'
+                  )}
+                >
+                  {loading ? 'Loading' : error ? 'Error' : 'Active'}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function DetailRow({ label, value, highlight }) {
+  return (
+    <div className="flex items-center justify-between">
+      <span className="text-[11px] text-slate-500">{label}</span>
+      <span
+        className={cn(
+          'text-[11px] font-medium tabular-nums',
+          highlight ? 'text-blue-700' : 'text-slate-700'
+        )}
+      >
+        {value}
+      </span>
+    </div>
   );
 }
