@@ -1,80 +1,43 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { 
-  Box, 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Button, 
-  Container,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  useTheme,
-  useMediaQuery,
-  Avatar,
-  Chip,
-  Divider
-} from '@mui/material';
-import { keyframes } from '@mui/material/styles';
-import { 
-  Home, 
-  AccountBalance, 
-  Person, 
-  Menu,
-  Logout,
-  VideoLibrary,
-  MonetizationOn
-} from '@mui/icons-material';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Home, Wallet, User, Menu, LogOut, PlayCircle, Sparkles } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
 import CreditBar from './CreditBar';
 import LanguageSwitcher from './LanguageSwitcher';
+import { Button } from './ui/button';
+import { Badge } from './ui/badge';
+import { Avatar, AvatarFallback } from './ui/avatar';
+import { Separator } from './ui/separator';
+import { cn } from '../lib/utils';
 
 export default function ViewerLayout() {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { t } = useTranslation();
   const { isRTL } = useLanguage();
 
-  // Debug mobile state
-  console.log('ViewerLayout - isMobile:', isMobile, 'mobileOpen:', mobileOpen, 'isRTL:', isRTL);
-
-  const fontStack = '"Inter", "Poppins", "Cairo", "Noto Sans Arabic", "Roboto", "Helvetica", "Arial", sans-serif';
-
-  const glow = keyframes`
-    0% { box-shadow: 0 0 0 rgba(25, 118, 210, 0.0); }
-    100% { box-shadow: 0 18px 45px rgba(25, 118, 210, 0.25); }
-  `;
-
-  const navigationItems = [
-    { 
-      to: '/viewer', 
-      label: t('navigation.home'), 
-      icon: <Home />,
+  const navItems = [
+    {
+      to: '/viewer',
+      label: t('navigation.home'),
       description: t('viewer.browseSections'),
-      color: 'primary'
+      icon: Home
     },
-    { 
-      to: '/credits', 
-      label: t('navigation.credits'), 
-      icon: <AccountBalance />,
+    {
+      to: '/credits',
+      label: t('navigation.credits'),
       description: t('viewer.earnCredits'),
-      color: 'success'
+      icon: Wallet
     },
-    { 
-      to: '/profile', 
-      label: t('navigation.profile'), 
-      icon: <Person />,
+    {
+      to: '/profile',
+      label: t('navigation.profile'),
       description: t('profile.subtitle'),
-      color: 'info'
+      icon: User
     }
   ];
 
@@ -83,287 +46,173 @@ export default function ViewerLayout() {
     navigate('/', { replace: true });
   };
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-    console.log('Toggle mobile menu:', !mobileOpen);
-  };
-
-  const drawer = (
-    <Box
+  const drawerContent = (
+    <div
       dir={isRTL ? 'rtl' : 'ltr'}
-      sx={{ 
-        width: 296,
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        background: 'linear-gradient(180deg, #0f1a2b 0%, #0b1320 100%)',
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
+      className="relative flex h-full w-72 flex-col overflow-hidden bg-slate-950 text-white md:w-80"
     >
-      <Box
-        sx={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(circle at top, rgba(25,118,210,0.25), transparent 55%)',
-          pointerEvents: 'none'
-        }}
-      />
-      {/* Header */}
-      <Box sx={{ 
-        p: 3, 
-        textAlign: isRTL ? 'right' : 'left',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
-        position: 'relative'
-      }}>
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: isRTL ? 'flex-end' : 'flex-start',
-          mb: 1.5,
-          gap: 1
-        }}>
-          <Avatar
-            sx={{
-              width: 38,
-              height: 38,
-              bgcolor: 'rgba(25,118,210,0.2)',
-              color: 'primary.main'
-            }}
-          >
-            <VideoLibrary />
-          </Avatar>
-          <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: fontStack }}>
-            {t('viewer.view')}
-          </Typography>
-        </Box>
-        <Typography variant="body2" sx={{ opacity: 0.8, fontFamily: fontStack }}>
-          {t('viewer.viewerDashboard')}
-        </Typography>
-      </Box>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(25,118,210,0.35),_transparent_55%)]" />
+      <div className="relative flex items-center gap-3 px-6 py-6">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600/20 text-blue-200">
+          <PlayCircle className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-lg font-semibold">{t('viewer.view')}</p>
+          <p className="text-sm text-white/70">{t('viewer.viewerDashboard')}</p>
+        </div>
+      </div>
 
-      {/* Navigation Items */}
-      <Box sx={{ flex: 1, p: 2, position: 'relative' }}>
-        {navigationItems.map((item) => (
-          <ListItem
-            key={item.to}
-            component={NavLink}
-            to={item.to}
-            sx={{
-              mb: 1,
-              borderRadius: 2.5,
-              color: 'white',
-              backgroundColor: 'rgba(255,255,255,0.03)',
-              textDecoration: 'none',
-              transition: 'all 180ms ease',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.08)',
-                transform: 'translateY(-1px)'
-              },
-              '&.active': {
-                backgroundColor: 'rgba(25,118,210,0.25)',
-                borderLeft: isRTL ? 'none' : '4px solid #1976d2',
-                borderRight: isRTL ? '4px solid #1976d2' : 'none',
-                animation: `${glow} 260ms ease`
+      <div className="relative px-4">
+        <Badge className="bg-amber-400/20 text-amber-200 border-amber-300/40">
+          <Sparkles className="mr-1 h-3.5 w-3.5" />
+          {t('viewer.earnCredits')}
+        </Badge>
+      </div>
+
+      <div className="relative mt-5 flex-1 space-y-2 px-4">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                cn(
+                  "group flex items-center gap-3 rounded-2xl px-4 py-3 transition-all",
+                  "bg-white/5 hover:bg-white/10",
+                  isActive && "bg-blue-500/20 ring-1 ring-blue-300/40"
+                )
               }
-            }}
-            onClick={() => setMobileOpen(false)}
-          >
-            <ListItemIcon sx={{ color: 'white', minWidth: 40 }}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText 
-              primary={item.label}
-              secondary={item.description}
-              primaryTypographyProps={{ fontWeight: 600, fontFamily: fontStack }}
-              secondaryTypographyProps={{ fontSize: '0.75rem', opacity: 0.8, fontFamily: fontStack }}
-            />
-          </ListItem>
-        ))}
-      </Box>
+              onClick={() => setMobileOpen(false)}
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white">
+                <Icon className="h-5 w-5" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold">{item.label}</p>
+                <p className="text-xs text-white/70">{item.description}</p>
+              </div>
+            </NavLink>
+          );
+        })}
+      </div>
 
-      {/* User Info & Logout */}
-      <Box sx={{ p: 2, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-        {/* Language Switcher for Mobile */}
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: 'center' }}>
-          <LanguageSwitcher variant="button" />
-        </Box>
-        
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <Avatar sx={{ mr: isRTL ? 0 : 2, ml: isRTL ? 2 : 0, bgcolor: 'rgba(25,118,210,0.2)', color: 'primary.main' }}>
-            <Person />
+      <div className="relative px-4 pb-6 pt-4">
+        <Separator className="mb-4 bg-white/10" />
+        <div className="mb-4 flex items-center gap-3">
+          <Avatar className="h-10 w-10 bg-blue-600 text-white">
+            <AvatarFallback className="bg-blue-600 text-white">
+              {user?.name?.charAt(0) || 'V'}
+            </AvatarFallback>
           </Avatar>
-          <Box>
-            <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: fontStack }}>
-              {user?.name || t('viewer.viewer')}
-            </Typography>
-            <Chip 
-              label={t('profile.viewerAccount')} 
-              size="small" 
-              sx={{ 
-                bgcolor: 'rgba(255,255,255,0.12)', 
-                color: 'white',
-                fontSize: '0.7rem',
-                fontFamily: fontStack
-              }} 
-            />
-          </Box>
-        </Box>
-        
+          <div>
+            <p className="text-sm font-semibold">{user?.name || t('viewer.viewer')}</p>
+            <p className="text-xs text-white/60">{t('profile.viewerAccount')}</p>
+          </div>
+        </div>
+        <div className="mb-4 flex items-center justify-center">
+          <LanguageSwitcher variant="button" />
+        </div>
         <Button
-          fullWidth
-          variant="outlined"
+          variant="outline"
+          className="w-full border-white/20 bg-white/5 text-white hover:bg-white/10"
           onClick={handleLogout}
-          startIcon={isRTL ? null : <Logout />}
-          endIcon={isRTL ? <Logout /> : null}
-          sx={{ 
-            color: 'white', 
-            borderColor: 'rgba(255,255,255,0.25)',
-            borderRadius: 2,
-            textTransform: 'none',
-            '&:hover': {
-              borderColor: 'rgba(255,255,255,0.6)',
-              backgroundColor: 'rgba(255,255,255,0.08)'
-            }
-          }}
         >
-          {t('common.logout')}
+          <span className={cn("flex items-center gap-2", isRTL && "flex-row-reverse")}>
+            <LogOut className="h-4 w-4" />
+            {t('common.logout')}
+          </span>
         </Button>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Desktop Navigation */}
-      {!isMobile && (
-        <Box
-          component="nav"
-          sx={{
-            width: 296,
-            flexShrink: 0,
-            position: 'fixed',
-            height: '100vh',
-            zIndex: 1200,
-            right: isRTL ? 0 : 'auto',
-            left: isRTL ? 'auto' : 0
-          }}
+    <div
+      dir={isRTL ? 'rtl' : 'ltr'}
+      className="min-h-screen bg-slate-50 text-slate-900"
+    >
+      <div className="hidden md:fixed md:inset-y-0 md:flex md:w-80">
+        {drawerContent}
+      </div>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-40 bg-black/40 md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+            />
+            <motion.aside
+              className={cn(
+                "fixed inset-y-0 z-50 w-72 md:hidden",
+                isRTL ? "right-0" : "left-0"
+              )}
+              initial={{ x: isRTL ? 320 : -320 }}
+              animate={{ x: 0 }}
+              exit={{ x: isRTL ? 320 : -320 }}
+              transition={{ type: "spring", stiffness: 220, damping: 26 }}
+            >
+              {drawerContent}
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
+      <div className={cn("flex min-h-screen flex-col", isRTL ? "md:mr-80" : "md:ml-80")}>
+        <motion.header
+          className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 backdrop-blur"
+          initial={{ y: -12, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.25 }}
         >
-          {drawer}
-        </Box>
-      )}
+          <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-4 md:px-8">
+            <button
+              type="button"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm transition hover:bg-slate-50 md:hidden"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
 
-      {/* Mobile Navigation */}
-      {isMobile && (
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{ keepMounted: true }}
-          anchor={isRTL ? 'right' : 'left'}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { 
-              width: 296,
-              boxSizing: 'border-box',
-              background: 'linear-gradient(180deg, #0f1a2b 0%, #0b1320 100%)',
-              zIndex: 1300
-            }
-          }}
-        >
-          {drawer}
-        </Drawer>
-      )}
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white">
+                <PlayCircle className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="text-base font-semibold">{t('viewer.viewerDashboard')}</p>
+                <p className="text-xs text-slate-500">{t('viewer.browseSections')}</p>
+              </div>
+            </div>
 
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          ml: { xs: 0, md: isRTL ? 0 : '296px' },
-          mr: { xs: 0, md: isRTL ? '296px' : 0 },
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        {/* Top App Bar */}
-        <AppBar 
-          position="sticky" 
-          sx={{ 
-            bgcolor: 'rgba(255,255,255,0.88)',
-            color: 'text.primary',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
-            backdropFilter: 'blur(14px)',
-            zIndex: 1100
-          }}
-        >
-          <Toolbar sx={{ gap: 2 }}>
-            {isMobile && (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge={isRTL ? 'end' : 'start'}
-                onClick={handleDrawerToggle}
-                sx={{ mr: isRTL ? 0 : 2, ml: isRTL ? 2 : 0, display: { xs: 'flex', md: 'none' } }}
-              >
-                <Menu />
-              </IconButton>
-            )}
-            
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
-                <VideoLibrary sx={{ fontSize: 18 }} />
-              </Avatar>
-              <Typography variant="h6" component="div" sx={{ fontWeight: 700, fontFamily: fontStack }}>
-                {t('viewer.viewerDashboard')}
-              </Typography>
-            </Box>
+            <div className="flex-1" />
 
-            <Box sx={{ flexGrow: 1 }} />
+            <div className="hidden items-center gap-3 lg:flex">
+              <Badge className="bg-blue-100 text-blue-700 border-blue-200">
+                {t('viewer.earnCredits')}
+              </Badge>
+            </div>
 
-            {!isMobile && (
-              <Chip
-                icon={<MonetizationOn />}
-                label={t('viewer.earnCredits')}
-                sx={{
-                  bgcolor: 'rgba(25,118,210,0.1)',
-                  color: 'primary.main',
-                  borderRadius: 2,
-                  fontWeight: 600,
-                  fontFamily: fontStack
-                }}
-              />
-            )}
-
-            {/* Credit Balance Display */}
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <div className="flex items-center gap-3">
               <CreditBar />
-            </Box>
-
-            {/* Language Switcher */}
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <LanguageSwitcher variant="icon" />
-            </Box>
-
-            {/* User Info */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Avatar sx={{ bgcolor: 'primary.main' }}>
-                {user?.name?.charAt(0) || 'V'}
+              <Avatar className="h-9 w-9 bg-blue-600 text-white">
+                <AvatarFallback className="bg-blue-600 text-white">
+                  {user?.name?.charAt(0) || 'V'}
+                </AvatarFallback>
               </Avatar>
-              <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: fontStack }}>
-                {user?.name || t('viewer.viewer')}
-              </Typography>
-            </Box>
-          </Toolbar>
-        </AppBar>
+            </div>
+          </div>
+        </motion.header>
 
-        {/* Page Content */}
-        <Box sx={{ flex: 1, p: { xs: 2, md: 3 } }}>
+        <main className="flex-1 px-4 py-6 md:px-8">
           <Outlet />
-        </Box>
-      </Box>
-    </Box>
+        </main>
+      </div>
+    </div>
   );
 }
