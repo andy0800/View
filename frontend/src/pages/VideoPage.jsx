@@ -24,8 +24,6 @@ import {
 import CreditBar from "../components/CreditBar";
 import ResponsiveLayout from '../components/ResponsiveLayout';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { fadeIn, motionTokens } from '../theme/motion';
 
 import api from '../api';
 import { startWatchingAd, completeWatchingAd } from '../api/viewer';
@@ -365,14 +363,7 @@ export default function VideoPage() {
   }
 
   return (
-    <Box
-      component={motion.div}
-      initial="hidden"
-      animate="visible"
-      variants={fadeIn}
-      transition={{ duration: motionTokens.normal, ease: motionTokens.ease }}
-      sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}
-    >
+    <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
       {/* Fixed Credit Bar */}
       <CreditBar />
       
@@ -389,10 +380,10 @@ export default function VideoPage() {
             onClick={handleBackToSections} 
             color="primary"
             sx={{ 
-              backgroundColor: 'rgba(229,9,20,0.15)',
-              color: 'primary.main',
+              backgroundColor: 'primary.light',
+              color: 'primary.contrastText',
               '&:hover': {
-                backgroundColor: 'rgba(229,9,20,0.28)'
+                backgroundColor: 'primary.main'
               }
             }}
           >
@@ -419,8 +410,7 @@ export default function VideoPage() {
             mb: isMobile ? 2 : 3,
             overflow: 'hidden',
             borderRadius: 3,
-            boxShadow: '0 20px 50px rgba(0,0,0,0.35)',
-            border: '1px solid rgba(255,255,255,0.06)'
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
           }}
         >
           <CardContent sx={{ p: 0 }}>
@@ -523,9 +513,9 @@ export default function VideoPage() {
                     value={videoProgress} 
                     sx={{ 
                       height: 6,
-                      backgroundColor: 'rgba(255,255,255,0.08)',
+                      backgroundColor: 'rgba(255,255,255,0.3)',
                       '& .MuiLinearProgress-bar': {
-                        backgroundColor: 'primary.main',
+                        backgroundColor: 'success.main',
                         borderRadius: theme.shape.borderRadius
                       }
                     }}
@@ -548,12 +538,11 @@ export default function VideoPage() {
         {/* Video Info */}
         {currentVideo && (
           <Card 
-          sx={{ 
-            mb: isMobile ? 2 : 3,
-            borderRadius: 3,
-            boxShadow: '0 12px 36px rgba(0,0,0,0.3)',
-            border: '1px solid rgba(255,255,255,0.06)'
-          }}
+            sx={{ 
+              mb: isMobile ? 2 : 3,
+              borderRadius: 3,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+            }}
           >
             <CardContent>
               <Typography 
@@ -583,7 +572,7 @@ export default function VideoPage() {
                   display: 'flex', 
                   alignItems: 'center', 
                   gap: 0.5,
-                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  backgroundColor: 'grey.100',
                   px: 1.5,
                   py: 0.5,
                   borderRadius: 2
@@ -598,8 +587,8 @@ export default function VideoPage() {
                   display: 'flex', 
                   alignItems: 'center', 
                   gap: 0.5,
-                  backgroundColor: 'rgba(229,9,20,0.15)',
-                  color: 'primary.main',
+                  backgroundColor: 'success.light',
+                  color: 'success.contrastText',
                   px: 1.5,
                   py: 0.5,
                   borderRadius: 2
@@ -635,9 +624,9 @@ export default function VideoPage() {
               py: isMobile ? 1 : 1.5,
               fontSize: isMobile ? '1rem' : '1.1rem',
               borderRadius: 3,
-              boxShadow: '0 16px 40px rgba(229,9,20,0.25)',
+              boxShadow: theme.shadows[4],
               '&:hover': {
-                boxShadow: '0 20px 50px rgba(229,9,20,0.35)'
+                boxShadow: theme.shadows[8]
               }
             }}
           >
@@ -656,8 +645,8 @@ export default function VideoPage() {
             variant={isMobile ? "caption" : "body2"} 
             color="textSecondary"
             sx={{
-              backgroundColor: 'rgba(255,255,255,0.06)',
-              color: 'text.secondary',
+              backgroundColor: 'info.light',
+              color: 'info.contrastText',
               p: isMobile ? 1.5 : 2,
               borderRadius: 2,
               display: 'inline-block'

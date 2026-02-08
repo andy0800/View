@@ -12,8 +12,6 @@ import {
   Alert,
   Collapse
 } from '@mui/material';
-import { motion } from 'framer-motion';
-import { motionTokens } from '../theme/motion';
 import {
   AccountBalanceWallet,
   Refresh,
@@ -113,8 +111,8 @@ export default function CreditBar() {
           alignItems: 'center',
           justifyContent: 'center',
           p: 1,
-          bgcolor: 'rgba(16,18,24,0.9)',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          bgcolor: 'background.paper',
+          borderBottom: `1px solid ${theme.palette.divider}`,
           minHeight: '48px'
         }}
       >
@@ -149,17 +147,13 @@ export default function CreditBar() {
 
       {/* Main Credit Bar */}
       <Box
-        component={motion.div}
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: motionTokens.fast, ease: motionTokens.ease }}
         sx={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           p: isMobile ? 1 : 1.5,
-          bgcolor: 'rgba(16,18,24,0.9)',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          bgcolor: 'background.paper',
+          borderBottom: `1px solid ${theme.palette.divider}`,
           minHeight: '48px',
           position: 'relative',
           overflow: 'hidden'

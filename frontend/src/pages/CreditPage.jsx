@@ -36,8 +36,6 @@ import { useAuth } from "../contexts/AuthContext";
 import ResponsiveLayout from '../components/ResponsiveLayout';
 import { useTranslation } from 'react-i18next';
 import { formatKWD, filsToKwd } from '../utils/currencyUtils';
-import { motion } from 'framer-motion';
-import { fadeIn, motionTokens } from '../theme/motion';
 
 import api from '../api';
 
@@ -199,14 +197,6 @@ export default function CreditPage() {
 
   return (
     <ResponsiveLayout>
-      <Box
-        component={motion.div}
-        initial="hidden"
-        animate="visible"
-        variants={fadeIn}
-        transition={{ duration: motionTokens.normal, ease: motionTokens.ease }}
-        sx={{ minHeight: '100%', backgroundColor: 'background.default' }}
-      >
       <Container maxWidth="lg" sx={{ py: isMobile ? 2 : 4 }}>
         
         
@@ -360,7 +350,6 @@ export default function CreditPage() {
           </Grid>
         </Grid>
       </Container>
-      </Box>
     </ResponsiveLayout>
   );
 }

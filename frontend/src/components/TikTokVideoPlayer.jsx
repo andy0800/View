@@ -28,8 +28,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import CommentSection from './CommentSection';
-import { motion } from 'framer-motion';
-import { fadeIn, motionTokens } from '../theme/motion';
 
 import { startWatchingAd, completeWatchingAd } from '../api/viewer';
 import api from '../api';
@@ -74,7 +72,7 @@ class VideoPlayerErrorBoundary extends React.Component {
           <Button
             variant="contained"
             onClick={() => window.location.reload()}
-            sx={{ backgroundColor: '#E50914' }}
+            sx={{ backgroundColor: '#4CAF50' }}
           >
             {this.props.t?.('common.refresh') || 'Refresh Page'}
           </Button>
@@ -95,8 +93,8 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
     }
     
     @keyframes creditIconGlow {
-      0% { filter: drop-shadow(0 0 5px rgba(229, 9, 20, 0.5)); }
-      100% { filter: drop-shadow(0 0 15px rgba(229, 9, 20, 0.8)); }
+      0% { filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.5)); }
+      100% { filter: drop-shadow(0 0 15px rgba(76, 175, 80, 0.8)); }
     }
     
     @keyframes creditDotPulse {
@@ -113,11 +111,11 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
     @keyframes ctaButtonPulse {
       0%, 100% { 
         transform: scale(1);
-        box-shadow: 0 8px 32px rgba(229, 9, 20, 0.4);
+        box-shadow: 0 8px 32px rgba(255, 64, 129, 0.4);
       }
       50% { 
         transform: scale(1.05);
-        box-shadow: 0 12px 40px rgba(229, 9, 20, 0.6);
+        box-shadow: 0 12px 40px rgba(255, 64, 129, 0.6);
       }
     }
     
@@ -146,10 +144,10 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
     
     @keyframes pulseGlow {
       0%, 100% {
-        box-shadow: 0 0 20px rgba(229, 9, 20, 0.6), 0 0 40px rgba(229, 9, 20, 0.4);
+        box-shadow: 0 0 20px rgba(76, 175, 80, 0.6), 0 0 40px rgba(76, 175, 80, 0.4);
       }
       50% {
-        box-shadow: 0 0 30px rgba(229, 9, 20, 0.8), 0 0 60px rgba(229, 9, 20, 0.6);
+        box-shadow: 0 0 30px rgba(76, 175, 80, 0.8), 0 0 60px rgba(76, 175, 80, 0.6);
       }
     }
     
@@ -880,19 +878,12 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
   return (
     <VideoPlayerErrorBoundary t={t}>
       <style>{creditBarStyles}</style>
-      <Box
-        component={motion.div}
-        initial="hidden"
-        animate="visible"
-        variants={fadeIn}
-        transition={{ duration: motionTokens.normal, ease: motionTokens.ease }}
-        sx={{ 
+      <Box sx={{ 
         position: 'relative', 
         height: '100vh', '@media (min-width: 600px)': { height: '100vh' }, '@media (min-width: 960px)': { height: '100vh' },
         backgroundColor: '#000',
         overflow: 'hidden'
-      }}
-      >
+      }}>
       {/* Main Video Player */}
       <Box sx={{ 
         position: 'relative', 
@@ -989,7 +980,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             <Box sx={{ animation: 'spin 1s linear infinite', mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } }}>
               <PlayArrow sx={{ 
                 fontSize: 32, 
-                color: '#E50914',
+                color: '#4CAF50',
                 '@media (min-width: 600px)': { fontSize: 36 },
                 '@media (min-width: 960px)': { fontSize: 40 }
               }} />
@@ -1024,7 +1015,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             <Box sx={{ animation: 'spin 1s linear infinite', mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } }}>
               <CheckCircle sx={{ 
                 fontSize: 32, '@media (min-width: 600px)': { fontSize: 36 }, '@media (min-width: 960px)': { fontSize: 40 }, 
-                color: '#E50914' 
+                color: '#4CAF50' 
               }} />
             </Box>
             <Typography variant="h6" component="div" sx={{ 
@@ -1050,7 +1041,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           right: 0,
           bottom: 0,
           background: isLoading ? 
-            'linear-gradient(180deg, rgba(229, 9, 20, 0.2) 0%, transparent 20%, transparent 80%, rgba(229, 9, 20, 0.2) 100%)' :
+            'linear-gradient(180deg, rgba(76, 175, 80, 0.2) 0%, transparent 20%, transparent 80%, rgba(76, 175, 80, 0.2) 100%)' :
             'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.3) 100%)',
           pointerEvents: 'none',
           transition: 'background 0.3s ease'
@@ -1072,7 +1063,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               height: '100%',
               backgroundColor: 'transparent',
               '& .MuiLinearProgress-bar': {
-                backgroundColor: isLoading ? '#E50914' : (currentVideo?.is_watched ? '#2196F3' : (rewardEarned ? '#E50914' : '#1a237e'))
+                backgroundColor: isLoading ? '#4CAF50' : (currentVideo?.is_watched ? '#2196F3' : (rewardEarned ? '#4CAF50' : '#1a237e'))
               }
             }}
           />
@@ -1084,8 +1075,8 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               width: '10px',
               height: '10px',
               borderRadius: '50%',
-              backgroundColor: '#E50914',
-              boxShadow: '0 0 8px rgba(229,9,20,0.8)'
+              backgroundColor: '#4CAF50',
+              boxShadow: '0 0 8px rgba(76,175,80,0.8)'
             }} />
           )}
         </Box>
@@ -1138,7 +1129,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                 icon={isLoading ? <Box sx={{ animation: prefersReducedMotion ? 'none' : 'spin 1s linear infinite' }}><CheckCircle /></Box> : (currentVideo?.is_watched ? <InfoOutlined /> : <AttachMoney />)}
                 label={isLoading ? (t('viewer.loading') || 'Loading...') : `${t('currency.kwd')} ${displayReward}`}
                 sx={{
-                  backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : (currentVideo?.is_watched ? 'rgba(96, 125, 139, 0.9)' : (rewardEarned ? 'rgba(229, 9, 20, 0.9)' : 'rgba(26, 35, 126, 0.9)')),
+                  backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : (currentVideo?.is_watched ? 'rgba(96, 125, 139, 0.9)' : (rewardEarned ? 'rgba(76, 175, 80, 0.9)' : 'rgba(26, 35, 126, 0.9)')),
                   color: 'white',
                   fontWeight: 600
                 }}
@@ -1305,11 +1296,11 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               disabled={isProcessingReward}
               aria-label={t('viewer.nextVideo') || 'Go to next video'}
               sx={{
-                backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : 'rgba(229, 9, 20, 0.9)',
+                backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : 'rgba(76, 175, 80, 0.9)',
                 color: 'white',
                 width: 80,
                 height: 80,
-                '&:hover': { backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : 'rgba(229, 9, 20, 1)' },
+                '&:hover': { backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.9)' : 'rgba(76, 175, 80, 1)' },
                 '&:disabled': {
                   backgroundColor: 'rgba(128, 128, 128, 0.9)',
                   cursor: 'not-allowed'
@@ -1359,7 +1350,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               disabled={isProcessingReward}
               aria-label={t('viewer.nextVideo') || 'Continue to next video'}
               sx={{
-                backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(229, 9, 20, 0.98)',
+                backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(76, 175, 80, 0.98)',
                 color: 'white',
                 fontWeight: 700,
                 fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
@@ -1368,16 +1359,16 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                 borderRadius: { xs: 2.5, sm: 2.75, md: 3 },
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                boxShadow: isLoading ? 'none' : '0 0 30px rgba(229, 9, 20, 0.7), 0 8px 32px rgba(229, 9, 20, 0.5)',
+                boxShadow: isLoading ? 'none' : '0 0 30px rgba(76, 175, 80, 0.7), 0 8px 32px rgba(76, 175, 80, 0.5)',
                 minHeight: { xs: '54px', sm: '58px', md: '62px' },
                 minWidth: { xs: '140px', sm: '160px', md: '180px' },
                 animation: isLoading ? 'none' : 'pulseGlow 2s ease-in-out infinite', // ✅ NEW: Pulsing glow
                 border: '2px solid rgba(255, 255, 255, 0.4)', // ✅ NEW: White border for visibility
                 backdropFilter: 'blur(4px)', // ✅ NEW: Blur background for visibility
                 '&:hover': {
-                  backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(229, 9, 20, 1)',
+                  backgroundColor: isLoading ? 'rgba(128, 128, 128, 0.95)' : 'rgba(76, 175, 80, 1)',
                   transform: isLoading ? 'none' : 'scale(1.08)',
-                  boxShadow: isLoading ? 'none' : '0 0 40px rgba(229, 9, 20, 0.9), 0 12px 40px rgba(229, 9, 20, 0.7)',
+                  boxShadow: isLoading ? 'none' : '0 0 40px rgba(76, 175, 80, 0.9), 0 12px 40px rgba(76, 175, 80, 0.7)',
                   border: '2px solid rgba(255, 255, 255, 0.6)',
                 },
                 '&:active': {
@@ -1501,7 +1492,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             <Box sx={{ animation: 'spin 1s linear infinite', mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } }}>
               <CheckCircle sx={{ 
                 fontSize: 32, '@media (min-width: 600px)': { fontSize: 36 }, '@media (min-width: 960px)': { fontSize: 40 }, 
-                color: '#E50914' 
+                color: '#4CAF50' 
               }} />
             </Box>
             <Typography variant="h6" component="div" sx={{ 
@@ -1534,7 +1525,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           }}>
             <CheckCircle sx={{ 
               fontSize: 60, '@media (min-width: 600px)': { fontSize: 70 }, '@media (min-width: 960px)': { fontSize: 80 }, 
-              color: '#E50914', 
+              color: '#4CAF50', 
               mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } 
             }} />
             <Typography variant="h5" component="div" sx={{ 
@@ -1545,14 +1536,14 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               {t('viewer.videoCompleted')}
             </Typography>
             <Typography variant="h6" component="div" sx={{ 
-              color: '#E50914', 
+              color: '#4CAF50', 
               mb: 1, '@media (min-width: 600px)': { mb: 1.25 }, '@media (min-width: 960px)': { mb: 1 },
               fontSize: '1.125rem', '@media (min-width: 600px)': { fontSize: '1.25rem' }, '@media (min-width: 960px)': { fontSize: '1.25rem' }
             }}>
               +{t('currency.kwd')} {rewardAmount.toFixed(6)}
             </Typography>
             <Typography variant="body1" component="div" sx={{ 
-              color: '#E50914', 
+              color: '#4CAF50', 
               opacity: 0.9,
               fontSize: '0.875rem', '@media (min-width: 600px)': { fontSize: '0.9375rem' }, '@media (min-width: 960px)': { fontSize: '1rem' }
             }}>
@@ -1601,13 +1592,13 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           }}>
             <CheckCircle sx={{ 
               fontSize: 60, '@media (min-width: 600px)': { fontSize: 70 }, '@media (min-width: 960px)': { fontSize: 80 }, 
-              color: '#E50914', 
+              color: '#4CAF50', 
               mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 } 
             }} />
             <Typography variant="h4" component="div" sx={{ 
               fontWeight: 700, 
               mb: 1.5, '@media (min-width: 600px)': { mb: 1.75 }, '@media (min-width: 960px)': { mb: 2 }, 
-              color: '#E50914',
+              color: '#4CAF50',
               fontSize: '1.5rem', '@media (min-width: 600px)': { fontSize: '1.75rem' }, '@media (min-width: 960px)': { fontSize: '2.125rem' }
             }}>
               🎉 {t('viewer.allVideosCompleted') || 'All Videos Completed!'}
@@ -1636,7 +1627,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
               }}
               fullWidth={{ xs: true, sm: true, md: false }}
               sx={{
-                backgroundColor: '#E50914',
+                backgroundColor: '#4CAF50',
                 color: 'white',
                 fontWeight: 700,
                 px: 3, '@media (min-width: 600px)': { px: 3.5 }, '@media (min-width: 960px)': { px: 4 },
@@ -1646,7 +1637,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                 fontSize: '0.875rem', '@media (min-width: 600px)': { fontSize: '1rem' }, '@media (min-width: 960px)': { fontSize: '1.1rem' },
                 minHeight: '44px', '@media (min-width: 600px)': { minHeight: '48px' }, '@media (min-width: 960px)': { minHeight: '52px' },
                 '&:hover': {
-                  backgroundColor: '#B50710',
+                  backgroundColor: '#45a049',
                   transform: 'translateY(-2px)'
                 }
               }}
@@ -1700,7 +1691,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             <Box sx={{
               width: '100%',
               height: '100%',
-              backgroundColor: isLoading ? 'rgba(229, 9, 20, 0.8)' : (canSkip ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.8)'),
+              backgroundColor: isLoading ? 'rgba(76, 175, 80, 0.8)' : (canSkip ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.8)'),
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -1784,7 +1775,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  backgroundColor: 'rgba(229, 9, 20, 0.9)',
+                  backgroundColor: 'rgba(76, 175, 80, 0.9)',
                   color: 'white',
                   fontSize: '0.5rem', '@media (min-width: 600px)': { fontSize: '0.55rem' }, '@media (min-width: 960px)': { fontSize: '0.6rem' },
                   padding: '1px 3px', '@media (min-width: 600px)': { padding: '1.5px 3.5px' }, '@media (min-width: 960px)': { padding: '2px 4px' },
@@ -1847,7 +1838,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
           gap: 1.5, '@media (min-width: 600px)': { gap: 1.75 }, '@media (min-width: 960px)': { gap: 2 }
         }}>
           <AttachMoney sx={{ 
-            color: '#E50914', 
+            color: '#4CAF50', 
             fontSize: 18, '@media (min-width: 600px)': { fontSize: 19 }, '@media (min-width: 960px)': { fontSize: 20 },
             animation: 'creditIconGlow 2s ease-in-out infinite alternate'
           }} />
@@ -1871,7 +1862,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             <Box sx={{
               width: '6px', '@media (min-width: 600px)': { width: '7px' }, '@media (min-width: 960px)': { width: '8px' },
               height: '6px', '@media (min-width: 600px)': { height: '7px' }, '@media (min-width: 960px)': { height: '8px' },
-              backgroundColor: '#E50914',
+              backgroundColor: '#4CAF50',
               borderRadius: '50%',
               animation: 'creditDotPulse 1.5s ease-in-out infinite'
             }} />
@@ -1905,7 +1896,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                   <OpenInNew />
                 )}
                 sx={{
-                  background: canSkip && !isLoading ? 'linear-gradient(135deg, #E50914, #B50710)' : (isLoading ? 'rgba(229, 9, 20, 0.95)' : 'rgba(128, 128, 128, 0.6)'),
+                  background: canSkip && !isLoading ? 'linear-gradient(135deg, #FF4081, #F50057)' : (isLoading ? 'rgba(76, 175, 80, 0.95)' : 'rgba(128, 128, 128, 0.6)'),
                   color: 'white',
                   fontWeight: 700,
                   fontSize: '0.8rem', '@media (min-width: 600px)': { fontSize: '0.85rem' }, '@media (min-width: 960px)': { fontSize: '0.9rem' },
@@ -1914,7 +1905,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
                   borderRadius: 2.5, '@media (min-width: 600px)': { borderRadius: 2.75 }, '@media (min-width: 960px)': { borderRadius: 3 },
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
-                  boxShadow: canSkip && !isLoading ? '0 8px 32px rgba(229, 9, 20, 0.4)' : (isLoading ? '0 8px 32px rgba(229, 9, 20, 0.4)' : 'none'),
+                  boxShadow: canSkip && !isLoading ? '0 8px 32px rgba(255, 64, 129, 0.4)' : (isLoading ? '0 8px 32px rgba(76, 175, 80, 0.4)' : 'none'),
                   transition: 'all 0.3s ease',
                   animation: prefersReducedMotion ? 'none' : (canSkip ? 'ctaButtonPulse 2s ease-in-out infinite' : 'none'),
                   minHeight: '40px', '@media (min-width: 600px)': { minHeight: '44px' }, '@media (min-width: 960px)': { minHeight: '48px' },
@@ -1962,7 +1953,7 @@ export default function TikTokVideoPlayer({ videos, onVideoComplete, onEarnCredi
             '@media (min-width: 600px)': { top: -40 },
             '@media (min-width: 960px)': { top: -45 },
               right: 0,
-              backgroundColor: 'rgba(229, 9, 20, 0.9)',
+              backgroundColor: 'rgba(76, 175, 80, 0.9)',
               color: 'white',
               fontSize: '0.6rem', '@media (min-width: 600px)': { fontSize: '0.65rem' }, '@media (min-width: 960px)': { fontSize: '0.7rem' },
               padding: '3px 6px', '@media (min-width: 600px)': { padding: '3.5px 7px' }, '@media (min-width: 960px)': { padding: '4px 8px' },

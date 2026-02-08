@@ -10,8 +10,6 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
-import { motion } from 'framer-motion';
-import { fadeIn, motionTokens } from '../theme/motion';
 
 import TikTokVideoPlayer from './TikTokVideoPlayer';
 import CreditBar from './CreditBar';
@@ -183,18 +181,10 @@ export default function AllAdsTab() {
   }
 
   return (
-    <Box
-      component={motion.div}
-      initial="hidden"
-      animate="visible"
-      variants={fadeIn}
-      transition={{ duration: motionTokens.normal, ease: motionTokens.ease }}
-      sx={{ 
-        minHeight: '100vh',
-        backgroundColor: 'background.default',
-        backgroundImage: 'radial-gradient(circle at top, rgba(229,9,20,0.12), transparent 45%)'
-      }}
-    >
+    <Box sx={{ 
+      minHeight: '100vh',
+      backgroundColor: theme.palette.background.default
+    }}>
       <TikTokVideoPlayer
         videos={videos}
         onVideoComplete={handleVideoComplete}
