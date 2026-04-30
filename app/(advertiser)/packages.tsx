@@ -20,6 +20,27 @@ export default function PackagesScreen() {
   const [budget, setBudget] = useState('');
   const [purchasing, setPurchasing] = useState(false);
 
+  // REAL-TIME SUBSCRIPTION
+  React.useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel('advertiser-packages-realtime')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'advertiser_packages' },
+        () => {
+          console.log('REALTIME: Advertiser packages changed, refreshing...');
+          queryClient.invalidateQueries({ queryKey: ['advertiser-packages'] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
+
   const { data: packages = [], isLoading } = useQuery({
     queryKey: ['advertiser-packages'],
     queryFn: async () => {
@@ -52,8 +73,9 @@ export default function PackagesScreen() {
         budget_kwd: budgetKWD,
       });
 
-      // Invalidate purchased packages cache so dashboard refreshes
-      await queryClient.invalidateQueries({ queryKey: ['purchased-packages'] });
+      // Invalidate relevant queries so dashboard and ads list refresh immediately
+      await queryClient.invalidateQueries({ queryKey: ['available-pkgs'] });
+      await queryClient.invalidateQueries({ queryKey: ['advertiser-stats'] });
 
       Alert.alert(
         '✅ Package Purchased!',

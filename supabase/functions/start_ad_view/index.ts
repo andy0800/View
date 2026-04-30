@@ -27,22 +27,16 @@ serve(async (req) => {
     )
 
     // Check 24h cooldown — same viewer cannot re-watch same ad within 24h
-    const { data: existingEvent } = await supabaseAdmin
-      .from('view_events')
-      .select('id, started_at, is_rewarded')
-      .eq('viewer_id', user.id)
-      .eq('ad_id', ad_id)
-      .order('started_at', { ascending: false })
-      .limit(1)
-      .single()
+    // FIXED: Use the exact same logic as rpc_get_viewer_ads to ensure consistency!
+    const { data: isCooldownActive, error: cooldownError } = await supabaseAdmin
+      .rpc('is_in_reward_cooldown', { p_user_id: user.id, p_ad_id: ad_id })
 
-    if (existingEvent) {
-      const hoursSince = (Date.now() - new Date(existingEvent.started_at).getTime()) / 1000 / 3600
-      if (hoursSince < 24) {
-        return new Response(JSON.stringify({ success: false, error: 'Cooldown active', cooldown_remaining_hours: 24 - hoursSince }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 429,
-        })
-      }
+    if (cooldownError) throw cooldownError
+
+    if (isCooldownActive) {
+      return new Response(JSON.stringify({ success: false, error: 'Cooldown active', cooldown_remaining_hours: 24 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 429,
+      })
     }
 
     // Create new view event

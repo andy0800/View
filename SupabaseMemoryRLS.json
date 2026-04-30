@@ -1,0 +1,90 @@
+[
+  {
+    "table_name": "ads",
+    "policy_name": "Public Read Access",
+    "operation": "SELECT",
+    "roles": "{public}",
+    "using_condition": "true",
+    "check_condition": null
+  },
+  {
+    "table_name": "ads",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  },
+  {
+    "table_name": "advertiser_packages",
+    "policy_name": "Public Read Access",
+    "operation": "SELECT",
+    "roles": "{public}",
+    "using_condition": "true",
+    "check_condition": null
+  },
+  {
+    "table_name": "advertiser_packages",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  },
+  {
+    "table_name": "kyc_documents",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  },
+  {
+    "table_name": "purchased_packages",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  },
+  {
+    "table_name": "transactions",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  },
+  {
+    "table_name": "users",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  },
+  {
+    "table_name": "view_events",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  },
+  {
+    "table_name": "wallets",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  },
+  {
+    "table_name": "withdrawals",
+    "policy_name": "Universal App Access",
+    "operation": "ALL",
+    "roles": "{authenticated}",
+    "using_condition": "true",
+    "check_condition": "true"
+  }
+]

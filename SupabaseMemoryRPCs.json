@@ -1,0 +1,42 @@
+[
+  {
+    "function_name": "is_admin",
+    "return_type": "boolean",
+    "sql_logic": "\r\n  SELECT EXISTS (\r\n    SELECT 1 FROM public.users WHERE id = auth.uid() AND role = 'admin'\r\n  );\r\n"
+  },
+  {
+    "function_name": "is_in_reward_cooldown",
+    "return_type": "boolean",
+    "sql_logic": "\r\nBEGIN\r\n    RETURN EXISTS (\r\n        SELECT 1 FROM public.transactions\r\n        WHERE wallet_id IN (SELECT id FROM public.wallets WHERE user_id = p_user_id)\r\n        AND reference_id = p_ad_id\r\n        AND type = 'reward'\r\n        AND created_at > (NOW() - INTERVAL '24 hours')\r\n    );\r\nEND;\r\n"
+  },
+  {
+    "function_name": "process_ledger_transaction",
+    "return_type": "trigger",
+    "sql_logic": "\r\nBEGIN\r\n  UPDATE public.wallets \r\n  SET balance = balance + NEW.amount, \r\n      updated_at = NOW()\r\n  WHERE id = NEW.wallet_id;\r\n  RETURN NEW;\r\nEND;\r\n"
+  },
+  {
+    "function_name": "rls_auto_enable",
+    "return_type": "event_trigger",
+    "sql_logic": "\nDECLARE\n  cmd record;\nBEGIN\n  FOR cmd IN\n    SELECT *\n    FROM pg_event_trigger_ddl_commands()\n    WHERE command_tag IN ('CREATE TABLE', 'CREATE TABLE AS', 'SELECT INTO')\n      AND object_type IN ('table','partitioned table')\n  LOOP\n     IF cmd.schema_name IS NOT NULL AND cmd.schema_name IN ('public') AND cmd.schema_name NOT IN ('pg_catalog','information_schema') AND cmd.schema_name NOT LIKE 'pg_toast%' AND cmd.schema_name NOT LIKE 'pg_temp%' THEN\n      BEGIN\n        EXECUTE format('alter table if exists %s enable row level security', cmd.object_identity);\n        RAISE LOG 'rls_auto_enable: enabled RLS on %', cmd.object_identity;\n      EXCEPTION\n        WHEN OTHERS THEN\n          RAISE LOG 'rls_auto_enable: failed to enable RLS on %', cmd.object_identity;\n      END;\n     ELSE\n        RAISE LOG 'rls_auto_enable: skip % (either system schema or not in enforced list: %.)', cmd.object_identity, cmd.schema_name;\n     END IF;\n  END LOOP;\nEND;\n"
+  },
+  {
+    "function_name": "rpc_complete_ad_view",
+    "return_type": "jsonb",
+    "sql_logic": "\r\nDECLARE\r\n    v_ad RECORD;\r\n    v_package RECORD;\r\n    v_viewer_wallet_id UUID;\r\n    v_company_wallet_id UUID;\r\nBEGIN\r\n    -- CHECK COOLDOWN\r\n    IF public.is_in_reward_cooldown(p_viewer_id, p_ad_id) THEN\r\n        RETURN jsonb_build_object('success', false, 'error', 'You have already been rewarded for this ad in the last 24 hours');\r\n    END IF;\r\n\r\n    SELECT * INTO v_ad FROM public.ads WHERE id = p_ad_id FOR UPDATE;\r\n    IF NOT FOUND THEN RETURN jsonb_build_object('success', false, 'error', 'Ad not found'); END IF;\r\n\r\n    SELECT pp.*, ap.reward_amount, ap.company_amount, ap.price_per_view \r\n    INTO v_package FROM public.purchased_packages pp\r\n    JOIN public.advertiser_packages ap ON pp.package_id = ap.id\r\n    WHERE pp.id = v_ad.purchased_package_id FOR UPDATE;\r\n\r\n    SELECT id INTO v_viewer_wallet_id FROM public.wallets WHERE user_id = p_viewer_id;\r\n    v_company_wallet_id := '00000000-0000-0000-0000-000000000000'::UUID;\r\n\r\n    UPDATE public.view_events SET is_rewarded = true, completed_at = NOW() \r\n    WHERE id = p_view_event_id AND is_rewarded = false AND viewer_id = p_viewer_id;\r\n    IF NOT FOUND THEN RETURN jsonb_build_object('success', false, 'error', 'View event already rewarded or invalid'); END IF;\r\n\r\n    UPDATE public.ads SET current_views = current_views + 1 WHERE id = p_ad_id;\r\n    UPDATE public.purchased_packages SET remaining_budget = remaining_budget - v_package.price_per_view WHERE id = v_package.id;\r\n\r\n    INSERT INTO public.transactions (wallet_id, amount, type, reference_id, description) VALUES\r\n    (v_viewer_wallet_id, v_package.reward_amount, 'reward', p_ad_id, 'Ad view reward'),\r\n    (v_company_wallet_id, v_package.company_amount, 'company_share', p_ad_id, 'Company share for ad view');\r\n\r\n    RETURN jsonb_build_object('success', true);\r\nEXCEPTION WHEN OTHERS THEN\r\n    RETURN jsonb_build_object('success', false, 'error', SQLERRM);\r\nEND;\r\n"
+  },
+  {
+    "function_name": "rpc_get_viewer_ads",
+    "return_type": "record",
+    "sql_logic": "\r\nDECLARE\r\n  v_wallet_id UUID;\r\nBEGIN\r\n  SELECT w.id INTO v_wallet_id \r\n  FROM public.wallets w \r\n  WHERE w.user_id = p_user_id;\r\n\r\n  RETURN QUERY\r\n  SELECT\r\n    a.id,\r\n    a.video_url,\r\n    a.title,\r\n    COALESCE(ap.duration_seconds, 30)::INT AS duration_seconds,\r\n    \r\n    -- FIXED: This line now reads the exact reward amount!\r\n    COALESCE(ap.reward_amount, 0)::BIGINT AS reward_amount,\r\n    \r\n    CASE WHEN v_wallet_id IS NULL THEN FALSE\r\n    ELSE EXISTS (\r\n      SELECT 1 FROM public.transactions t\r\n      WHERE t.wallet_id = v_wallet_id\r\n        AND t.reference_id = a.id\r\n        AND t.type = 'reward'\r\n        AND t.created_at > NOW() - INTERVAL '24 hours'\r\n    ) END AS is_on_cooldown\r\n  FROM public.ads a\r\n  LEFT JOIN public.purchased_packages pp ON a.purchased_package_id = pp.id\r\n  LEFT JOIN public.advertiser_packages ap ON pp.package_id = ap.id\r\n  WHERE a.status = 'active';\r\nEND;\r\n"
+  },
+  {
+    "function_name": "rpc_request_withdrawal",
+    "return_type": "jsonb",
+    "sql_logic": "\r\nDECLARE\r\n    v_wallet RECORD;\r\n    v_withdrawal_id UUID;\r\nBEGIN\r\n    -- 1. Lock Wallet\r\n    SELECT * INTO v_wallet FROM public.wallets WHERE user_id = p_user_id FOR UPDATE;\r\n    IF NOT FOUND THEN RETURN jsonb_build_object('success', false, 'error', 'Wallet not found'); END IF;\r\n\r\n    IF v_wallet.balance < p_amount THEN\r\n        RETURN jsonb_build_object('success', false, 'error', 'Insufficient balance');\r\n    END IF;\r\n\r\n    -- 2. Create Withdrawal Record\r\n    INSERT INTO public.withdrawals (user_id, amount, status, bank_details)\r\n    VALUES (p_user_id, p_amount, 'pending', p_bank_details)\r\n    RETURNING id INTO v_withdrawal_id;\r\n\r\n    -- 3. Insert Ledger Transaction (Debit)\r\n    INSERT INTO public.transactions (wallet_id, amount, type, reference_id, description)\r\n    VALUES (v_wallet.id, -p_amount, 'withdrawal', v_withdrawal_id, 'Withdrawal request hold');\r\n\r\n    RETURN jsonb_build_object('success', true, 'withdrawal_id', v_withdrawal_id);\r\nEXCEPTION WHEN OTHERS THEN\r\n    RETURN jsonb_build_object('success', false, 'error', SQLERRM);\r\nEND;\r\n"
+  },
+  {
+    "function_name": "rpc_void_ad_view",
+    "return_type": "jsonb",
+    "sql_logic": "\r\nDECLARE\r\n  v_wallet_id UUID;\r\nBEGIN\r\n  -- Get viewer's wallet\r\n  SELECT id INTO v_wallet_id FROM public.wallets WHERE user_id = p_viewer_id;\r\n\r\n  -- Insert violation record (Removed the non-existent 'status' column)\r\n  INSERT INTO public.transactions (\r\n    wallet_id, amount, type, reference_id, description\r\n  ) VALUES (\r\n    v_wallet_id,\r\n    0,\r\n    'reward',\r\n    p_ad_id,\r\n    'VIOLATION: Ad abandoned mid-view. 24h cooldown applied.'\r\n  );\r\n\r\n  -- Mark view event as ended but NOT rewarded (Removed the non-existent 'status' column)\r\n  UPDATE public.view_events\r\n  SET completed_at = NOW()\r\n  WHERE ad_id = p_ad_id AND viewer_id = p_viewer_id AND is_rewarded = false;\r\n\r\n  RETURN jsonb_build_object('success', true);\r\nEXCEPTION WHEN OTHERS THEN\r\n  RETURN jsonb_build_object('success', false, 'error', SQLERRM);\r\nEND;\r\n"
+  }
+]

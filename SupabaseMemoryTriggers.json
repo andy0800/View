@@ -1,0 +1,9 @@
+[
+  {
+    "table_name": "transactions",
+    "trigger_name": "on_transaction_inserted",
+    "timing": "AFTER",
+    "event": "INSERT",
+    "trigger_logic": "EXECUTE FUNCTION process_ledger_transaction()"
+  }
+]

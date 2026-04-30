@@ -6,9 +6,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '../../src/lib/supabase';
 import { useAuthStore } from '../../src/store/useAuthStore';
 import { Colors, FontFamily, Spacing, BorderRadius, formatKWD } from '../../src/lib/theme';
+import CommentSheet from '../../src/components/CommentSheet';
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   active:         { label: 'Active',          color: Colors.success },
@@ -33,6 +35,16 @@ export default function AdsScreen() {
         () => {
           console.log('REALTIME: Ad update detected, refreshing list...');
           queryClient.invalidateQueries({ queryKey: ['my-ads'] });
+          queryClient.invalidateQueries({ queryKey: ['available-pkgs'] });
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'purchased_packages' },
+        () => {
+          console.log('REALTIME: Package update detected, refreshing list...');
+          queryClient.invalidateQueries({ queryKey: ['my-ads'] });
+          queryClient.invalidateQueries({ queryKey: ['available-pkgs'] });
         }
       )
       .subscribe();
@@ -46,7 +58,9 @@ export default function AdsScreen() {
   const [selectedPkgId, setSelectedPkgId] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   const [adTitle, setAdTitle] = useState('');
+  const [ctaUrl, setCtaUrl] = useState('');
   const [creating, setCreating] = useState(false);
+  const [commentAdId, setCommentAdId] = useState<string | null>(null);
 
   const { data: ads = [], isLoading } = useQuery({
     queryKey: ['my-ads', user?.id],
@@ -54,7 +68,7 @@ export default function AdsScreen() {
       const { data } = await supabase
         .from('ads')
         .select(`
-          id, title, video_url, status, current_views, target_views, created_at,
+          id, title, video_url, status, current_views, target_views, created_at, likes_count,
           purchased_packages (
             remaining_budget, total_budget,
             advertiser_packages ( duration_seconds )
@@ -100,6 +114,7 @@ export default function AdsScreen() {
         purchased_package_id: selectedPkgId,
         video_url: videoUrl,
         title: adTitle,
+        cta_url: ctaUrl || null,
         status: 'pending_review',
       });
       if (error) throw error;
@@ -107,6 +122,7 @@ export default function AdsScreen() {
       setShowCreateModal(false);
       setVideoUrl('');
       setAdTitle('');
+      setCtaUrl('');
       setSelectedPkgId('');
       queryClient.invalidateQueries({ queryKey: ['my-ads'] });
     } catch (err: any) {
@@ -152,6 +168,22 @@ export default function AdsScreen() {
                     <Text style={[styles.statusText, { color: cfg.color }]}>{cfg.label}</Text>
                   </View>
                 </View>
+                
+                {/* ── Engagement Stats Row ── */}
+                <View style={styles.engagementRow}>
+                  <View style={styles.engagementBadge}>
+                    <Text style={styles.engagementIcon}>❤️</Text>
+                    <Text style={styles.engagementText}>{item.likes_count || 0}</Text>
+                  </View>
+                  <TouchableOpacity 
+                    style={styles.engagementBadge} 
+                    onPress={() => setCommentAdId(item.id)}
+                  >
+                    <Ionicons name="chatbubble-outline" size={16} color={Colors.textSecondary} />
+                    <Text style={styles.engagementText}>View Comments</Text>
+                  </TouchableOpacity>
+                </View>
+
                 <View style={styles.adStats}>
                   <Text style={styles.adStatText}>{item.current_views?.toLocaleString() || 0} / {item.target_views?.toLocaleString() || '—'} views</Text>
                   <Text style={styles.adStatText}>{Math.round(progress * 100)}%</Text>
@@ -218,6 +250,16 @@ export default function AdsScreen() {
             autoCapitalize="none"
           />
 
+          <Text style={styles.fieldLabel}>CTA Button Link (Optional)</Text>
+          <TextInput
+            style={styles.modalInput}
+            value={ctaUrl}
+            onChangeText={setCtaUrl}
+            placeholder="https://your-website.com"
+            placeholderTextColor={Colors.textMuted}
+            autoCapitalize="none"
+          />
+
           <TouchableOpacity style={styles.createAdBtn} onPress={handleCreateAd} disabled={creating}>
             <LinearGradient colors={['#F5B400', '#D49E00']} style={styles.createAdBtnGradient}>
               {creating ? <ActivityIndicator color={Colors.primary} /> : <Text style={styles.createAdBtnText}>Submit Ad for Review</Text>}
@@ -225,6 +267,13 @@ export default function AdsScreen() {
           </TouchableOpacity>
         </View>
       </Modal>
+
+      {/* Render the Comment Sheet over the entire screen */}
+      <CommentSheet
+        adId={commentAdId}
+        onClose={() => setCommentAdId(null)}
+        isReadOnly={true}
+      />
     </SafeAreaView>
   );
 }
@@ -238,6 +287,12 @@ const styles = StyleSheet.create({
   createBtnText: { fontFamily: FontFamily.bold, fontSize: 14, color: Colors.primary },
   listContent: { paddingHorizontal: Spacing.lg, paddingBottom: 100, gap: Spacing.sm },
   adCard: { backgroundColor: Colors.surface, borderRadius: BorderRadius.xl, padding: Spacing.lg, borderWidth: 1, borderColor: Colors.border, gap: Spacing.sm },
+  
+  engagementRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: 4 },
+  engagementBadge: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: 'rgba(255,255,255,0.03)', paddingHorizontal: 12, paddingVertical: 6, borderRadius: BorderRadius.full, borderWidth: 1, borderColor: 'rgba(255,255,255,0.05)' },
+  engagementIcon: { fontSize: 14 },
+  engagementText: { fontFamily: FontFamily.medium, fontSize: 13, color: Colors.textSecondary },
+
   adCardHeader: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
   adTitle: { fontFamily: FontFamily.semiBold, fontSize: 16, color: Colors.white },
   adDuration: { fontFamily: FontFamily.regular, fontSize: 12, color: Colors.textSecondary },
